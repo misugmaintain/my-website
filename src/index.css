@@ -1,0 +1,28 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+```
+
+Do the same with `src/App.css` — either empty it or delete it entirely, since all styling is handled inline within the component.
+
+**Step 6 — Add your photo.** Place your professional headshot in the `public/` folder (e.g., `public/headshot.jpg`). Then update the photo placeholder section in `App.jsx` to reference it with an `<img>` tag instead of the placeholder icon.
+
+**Step 7 — Update your links.** Search the file for placeholder URLs (LinkedIn, Google Scholar, ResearchGate) and replace them with your actual profile addresses.
+
+**Step 8 — Test locally.** Run `npm run dev` in your terminal. This starts a local development server, typically at `http://localhost:5173`. Open that in your browser to review everything before deploying.
+
+---
+
+## Phase 2: Deploy to Vercel (Recommended)
+
+Vercel offers free hosting for personal sites, automatic HTTPS, and excellent performance. Here is how to get your site live.
+
+**Step 9 — Create a GitHub repository.** If you don't already have a GitHub account, create one at [github.com](https://github.com). Then create a new repository (e.g., `my-website`), and push your local project to it:
+```
+git init
+git add .
+git commit -m "Initial commit"
+git branch -M main
+git remote add origin https://github.com/misugmaintain/my-website.git
+git push -u origin main
