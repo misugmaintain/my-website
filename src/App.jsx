@@ -614,10 +614,10 @@ export default function AcademicWebsite() {
                   marginBottom: 32,
                 }}
               >
-                Research data analyst and biostatistical consultant at SUNY Downstate Health Sciences
-                University, with 8+ years of expertise spanning the FDA, CDC, academic institutions, and
-                state/local health departments. My work bridges epidemiology, computational genomics,
-                and advanced biostatistics to transform complex data into actionable public health insights.
+                Biostatistical consultant and an academic at SUNY Downstate Health Sciences
+                University, with over 8 years of expertise spanning the FDA, CDC, academic institutions, and
+                state/local health departments. My work spans cancer and infectious disease epidemiology, computational genomics, mathematical modeling, predictive modeling, health disparities, research methods,
+                and advanced biostatistics, and more recently, the application of AI and ML to population health events with the aim to transform complex data into actionable public health insights.
               </p>
 
               <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
@@ -823,10 +823,11 @@ export default function AcademicWebsite() {
 
           <ExpEntry
             org="SUNY Downstate Health Sciences University"
-            role="Associate for Institutional Research / Research Data Analyst"
+            role="Associate for Institutional Research"
             unit="Office of the Senior Vice President for Research"
             period="Feb 2025 – Present"
             highlights={[
+	      "Teach biostatistics and epidemiology courses, such as survival analysis, among others, at the School of Public Health and the School of Health Profession, SUNY Downstate",
               "Provide biostatistical consulting to 20+ researchers monthly across study design, analysis, and interpretation",
               "Develop and lead a monthly biostatistical webinar series attended by 15+ faculty, students, and fellows",
               "Design hands-on SAS/R training modules with real-world biomedical applications for multiple departments",
@@ -835,7 +836,7 @@ export default function AcademicWebsite() {
           />
           <ExpEntry
             org="SUNY Downstate Health Sciences University"
-            role="Adjunct Instructor"
+            role="Instructor"
             unit="HINF 5111 – Research Methods, School of Health Professions"
             period="Fall 2025"
             highlights={[
