@@ -617,7 +617,7 @@ export default function AcademicWebsite() {
                 Biostatistical consultant and an academic at SUNY Downstate Health Sciences
                 University, with over 8 years of expertise spanning the FDA, CDC, academic institutions, and
                 state/local health departments. My work spans cancer and infectious disease epidemiology, computational genomics, mathematical modeling, predictive modeling, health disparities, research methods,
-                and advanced biostatistics, and more recently, the application of AI and ML to population health events with the aim to transform complex data into actionable public health insights.
+                and advanced biostatistics, and more recently, the application of AI and ML to population health events with the aim of transforming complex data into actionable public health insights.
               </p>
 
               <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
@@ -803,7 +803,7 @@ export default function AcademicWebsite() {
             unit="Office of the Senior Vice President for Research"
             period="Feb 2025 – Present"
             highlights={[
-	      "Teach biostatistics and epidemiology courses, such as survival analysis, among others, at the School of Public Health and the School of Health Profession, SUNY Downstate",
+	      "Teach biostatistics and epidemiology courses, such as survival analysis, among others, in the School of Public Health and the School of Health Professions, SUNY Downstate.",
               "Provide biostatistical consulting to 20+ researchers monthly across study design, analysis, and interpretation",
               "Develop and lead a monthly biostatistical webinar series attended by 15+ faculty, students, and fellows",
               "Design hands-on SAS/R training modules with real-world biomedical applications for multiple departments",
