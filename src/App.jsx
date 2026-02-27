@@ -692,42 +692,18 @@ export default function AcademicWebsite() {
 
             {/* Photo placeholder */}
             <div style={{ flexShrink: 0 }}>
-              <div
+              <img
+                src="/headshot.jpg"
+                alt="Dr. Olumide M. Arigbede"
                 style={{
                   width: 260,
                   height: 320,
                   borderRadius: 12,
-                  background: "linear-gradient(145deg, rgba(139,69,19,0.08), rgba(139,69,19,0.03))",
+                  objectFit: "cover",
+                  objectPosition: "top",
                   border: "1px solid rgba(139,69,19,0.1)",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: 12,
-                  position: "relative",
-                  overflow: "hidden",
                 }}
-              >
-                <div style={{
-                  position: "absolute",
-                  inset: 0,
-                  background: "linear-gradient(180deg, transparent 60%, rgba(139,69,19,0.06))",
-                }} />
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#8B4513" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.4 }}>
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                  <circle cx="12" cy="7" r="4" />
-                </svg>
-                <span style={{
-                  fontFamily: "'Source Sans 3', sans-serif",
-                  fontSize: "11px",
-                  color: "#8B4513",
-                  opacity: 0.5,
-                  letterSpacing: "0.08em",
-                  textTransform: "uppercase",
-                }}>
-                  "/Users/olumidearigbede/Downloads/passport1.jpg"
-                </span>
-              </div>
+              />
             </div>
           </div>
         </div>
