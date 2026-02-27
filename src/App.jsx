@@ -663,9 +663,9 @@ export default function AcademicWebsite() {
               {/* Social links */}
               <div style={{ display: "flex", gap: 20, marginTop: 32 }}>
                 {[
-                  { label: "LinkedIn", url: "https://www.linkedin.com/in/olumide-arigbede" },
-                  { label: "Google Scholar", url: "#" },
-                  { label: "ResearchGate", url: "#" },
+                  { label: "LinkedIn", url: "https://www.linkedin.com/in/dr-olumide-arigbede/?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BzmdRxLStTuSvZpRvvjAjhw%3D%3D" },
+                  { label: "Google Scholar", url: "https://scholar.google.com/citations?user=iNAHPDMAAAAJ&hl=en" },
+                  { label: "ResearchGate", url: "https://www.researchgate.net/profile/Olumide-Arigbede?ev=hdr_xprf" },
                 ].map(({ label, url }) => (
                   <a
                     key={label}
@@ -725,7 +725,7 @@ export default function AcademicWebsite() {
                   letterSpacing: "0.08em",
                   textTransform: "uppercase",
                 }}>
-                  Your Photo
+                  "/Users/olumidearigbede/Downloads/passport1.jpg"
                 </span>
               </div>
             </div>
