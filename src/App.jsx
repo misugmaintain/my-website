@@ -87,7 +87,7 @@ const ARTICLES_DATA = [
     category: "Public Health",
     readTime: "6 min read",
     excerpt: "Syndromic surveillance uses real-time health data, primarily from emergency department visits, to detect disease outbreaks earlier than traditional reporting methods. Here is why this approach is transforming public health response.",
-    content: `Syndromic surveillance represents a paradigm shift in how public health agencies detect and respond to disease outbreaks, even right from the community level. Unlike traditional surveillance, which relies on confirmed laboratory diagnoses, syndromic surveillance analyzes pre-diagnostic data, such as chief complaints, discharge diagnoses, and other clinical indicators, to identify potential outbreaks in near real-time.\n\nDuring my time at the CDC’s National Syndromic Surveillance Program, I worked extensively with emergency department data from across the United States. What struck me most was the power of timeliness: syndromic systems can flag or censor unusual patterns days or even weeks before traditional reporting systems would detect them.\n\nThe implications are profound. Earlier detection means earlier response, which can translate into lives saved and resources deployed more efficiently. As we continue to face emerging infectious disease threats, investing in and refining these surveillance systems remains one of our most important public health priorities.\n\nKey takeaway: Public health practitioners and policymakers should advocate for continued investment in syndromic surveillance infrastructure, including data quality improvements and workforce training in these methodologies.`,
+    content: `Syndromic surveillance represents a paradigm shift in how public health agencies detect and respond to disease outbreaks, even right from the community level. Unlike traditional surveillance, which relies on confirmed laboratory diagnoses, syndromic surveillance analyzes pre-diagnostic data, such as chief complaints, discharge diagnoses, and other clinical indicators, to identify potential outbreaks in near real-time.\n\nDuring my time at the CDC's National Syndromic Surveillance Program, I worked extensively with emergency department data from across the United States. What struck me most was the power of timeliness: syndromic systems can flag or censor unusual patterns days or even weeks before traditional reporting systems would detect them.\n\nThe implications are profound. Earlier detection means earlier response, which can translate into lives saved and resources deployed more efficiently. As we continue to face emerging infectious disease threats, investing in and refining these surveillance systems remains one of our most important public health priorities.\n\nKey takeaway: Public health practitioners and policymakers should advocate for continued investment in syndromic surveillance infrastructure, including data quality improvements and workforce training in these methodologies.`,
   },
   {
     title: "Racial Disparities in Cancer Genomics: What the Data Says",
@@ -734,6 +734,141 @@ function PodcastCard({ episode }) {
   );
 }
 
+// ── Contact Form ──
+// FIX: This was previously placed INSIDE the JSX return of AcademicWebsite.
+// It must be defined here as a standalone component so it can be used via <ContactForm />.
+function ContactForm() {
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [status, setStatus] = useState("idle");
+
+  const inputStyle = {
+    fontFamily: "'Source Sans 3', sans-serif",
+    fontSize: "14.5px",
+    color: "#2c2520",
+    background: "rgba(255,255,255,0.7)",
+    border: "1px solid rgba(58,50,40,0.15)",
+    borderRadius: 8,
+    padding: "12px 16px",
+    width: "100%",
+    outline: "none",
+    transition: "border-color 0.25s",
+  };
+
+  const handleChange = (field) => (e) => {
+    setFormData((prev) => ({ ...prev, [field]: e.target.value }));
+  };
+
+  const handleSubmit = async () => {
+    if (!formData.name || !formData.email || !formData.message) {
+      setStatus("incomplete");
+      return;
+    }
+    setStatus("sending");
+    try {
+      const res = await fetch("https://formspree.io/f/maqdznwd", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({ name: formData.name, email: formData.email, message: formData.message }),
+      });
+      if (res.ok) {
+        setStatus("success");
+        setFormData({ name: "", email: "", message: "" });
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
+  };
+
+  return (
+    <div style={{ padding: "32px", background: "rgba(255,255,255,0.5)", border: "1px solid rgba(58,50,40,0.08)", borderRadius: 12 }}>
+      <h3 style={{ fontFamily: "'Lora', serif", fontSize: "20px", fontWeight: 600, color: "#2c2520", margin: "0 0 6px 0" }}>
+        Send a Message
+      </h3>
+      <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13.5px", color: "#7a7068", margin: "0 0 24px 0" }}>
+        Fill out the form below and I will get back to you as soon as possible.
+      </p>
+
+      <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+        <div>
+          <label style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "12px", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "#5c5147", display: "block", marginBottom: 6 }}>
+            Name
+          </label>
+          <input
+            type="text"
+            value={formData.name}
+            onChange={handleChange("name")}
+            placeholder="Your full name"
+            style={inputStyle}
+            onFocus={(e) => (e.target.style.borderColor = "#8B4513")}
+            onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")}
+          />
+        </div>
+        <div>
+          <label style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "12px", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "#5c5147", display: "block", marginBottom: 6 }}>
+            Email
+          </label>
+          <input
+            type="email"
+            value={formData.email}
+            onChange={handleChange("email")}
+            placeholder="your.email@example.com"
+            style={inputStyle}
+            onFocus={(e) => (e.target.style.borderColor = "#8B4513")}
+            onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")}
+          />
+        </div>
+        <div>
+          <label style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "12px", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "#5c5147", display: "block", marginBottom: 6 }}>
+            Message
+          </label>
+          <textarea
+            value={formData.message}
+            onChange={handleChange("message")}
+            placeholder="How can I help you?"
+            rows={5}
+            style={{ ...inputStyle, resize: "vertical", minHeight: 120 }}
+            onFocus={(e) => (e.target.style.borderColor = "#8B4513")}
+            onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")}
+          />
+        </div>
+
+        <button
+          onClick={handleSubmit}
+          disabled={status === "sending"}
+          style={{
+            fontFamily: "'Source Sans 3', sans-serif", fontSize: "13px", fontWeight: 600,
+            letterSpacing: "0.1em", textTransform: "uppercase",
+            color: "#fff", background: status === "sending" ? "#7a7068" : "#2c2520",
+            border: "none", borderRadius: 6, padding: "14px 28px",
+            cursor: status === "sending" ? "wait" : "pointer",
+            transition: "background 0.3s", alignSelf: "flex-start",
+          }}
+        >
+          {status === "sending" ? "Sending..." : "Send Message"}
+        </button>
+
+        {status === "success" && (
+          <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#228B22", margin: 0, fontWeight: 500 }}>
+            Thank you! Your message has been sent successfully. I will be in touch soon.
+          </p>
+        )}
+        {status === "error" && (
+          <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#B22222", margin: 0 }}>
+            Something went wrong. Please try again or email me directly.
+          </p>
+        )}
+        {status === "incomplete" && (
+          <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#B8860B", margin: 0 }}>
+            Please fill in all fields before submitting.
+          </p>
+        )}
+      </div>
+    </div>
+  );
+}
+
 // ════════════════════════════════════════════
 // MAIN APP
 // ════════════════════════════════════════════
@@ -901,7 +1036,7 @@ export default function AcademicWebsite() {
               { degree: "Master of Public Health (MPH)", field: "Epidemiology & Biostatistics", school: "Florida A&M University", year: "2021" },
               { degree: "Master of Health Administration (MHA)", field: "Health Business & Finance", school: "Florida A&M University", year: "2019" },
               { degree: "Bachelor of Technology (B.Tech)", field: "Statistics", school: "Federal University of Technology, Akure", year: "2017" },
-	      { field: "Computer Science", school: "The Polytechnic, Ibadan", year: "2010" },
+              { field: "Computer Science", school: "The Polytechnic, Ibadan", year: "2010" },
             ].map((e, i) => (
               <div key={i} style={{ padding: "14px 0", borderBottom: "1px solid rgba(58,50,40,0.06)", display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: 8 }}>
                 <div>
@@ -914,7 +1049,7 @@ export default function AcademicWebsite() {
             ))}
           </div>
 
-	  {/* Core Skills */}
+          {/* Core Skills */}
           <div style={{ marginTop: 48 }}>
             <h3 style={{ fontFamily: "'Lora', serif", fontSize: "20px", fontWeight: 600, color: "#2c2520", marginBottom: 16 }}>Technical Proficiencies</h3>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
@@ -1169,139 +1304,6 @@ export default function AcademicWebsite() {
         </div>
       </Section>
 
-      function ContactForm() {
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
-  const [status, setStatus] = useState("idle");
-
-  const inputStyle = {
-    fontFamily: "'Source Sans 3', sans-serif",
-    fontSize: "14.5px",
-    color: "#2c2520",
-    background: "rgba(255,255,255,0.7)",
-    border: "1px solid rgba(58,50,40,0.15)",
-    borderRadius: 8,
-    padding: "12px 16px",
-    width: "100%",
-    outline: "none",
-    transition: "border-color 0.25s",
-  };
-
-  const handleChange = (field) => (e) => {
-    setFormData((prev) => ({ ...prev, [field]: e.target.value }));
-  };
-
-  const handleSubmit = async () => {
-    if (!formData.name || !formData.email || !formData.message) {
-      setStatus("incomplete");
-      return;
-    }
-    setStatus("sending");
-    try {
-      // REPLACE "YOUR_FORMSPREE_ID" with your actual Formspree form ID
-      const res = await fetch("https://formspree.io/f/maqdznwd", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({ name: formData.name, email: formData.email, message: formData.message }),
-      });
-      if (res.ok) {
-        setStatus("success");
-        setFormData({ name: "", email: "", message: "" });
-      } else {
-        setStatus("error");
-      }
-    } catch {
-      setStatus("error");
-    }
-  };
-
-  return (
-    <div style={{ padding: "32px", background: "rgba(255,255,255,0.5)", border: "1px solid rgba(58,50,40,0.08)", borderRadius: 12 }}>
-      <h3 style={{ fontFamily: "'Lora', serif", fontSize: "20px", fontWeight: 600, color: "#2c2520", margin: "0 0 6px 0" }}>
-        Send a Message
-      </h3>
-      <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13.5px", color: "#7a7068", margin: "0 0 24px 0" }}>
-        Fill out the form below and I will get back to you as soon as possible.
-      </p>
-
-      <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-        <div>
-          <label style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "12px", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "#5c5147", display: "block", marginBottom: 6 }}>
-            Name
-          </label>
-          <input
-            type="text"
-            value={formData.name}
-            onChange={handleChange("name")}
-            placeholder="Your full name"
-            style={inputStyle}
-            onFocus={(e) => (e.target.style.borderColor = "#8B4513")}
-            onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")}
-          />
-        </div>
-        <div>
-          <label style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "12px", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "#5c5147", display: "block", marginBottom: 6 }}>
-            Email
-          </label>
-          <input
-            type="email"
-            value={formData.email}
-            onChange={handleChange("email")}
-            placeholder="your.email@example.com"
-            style={inputStyle}
-            onFocus={(e) => (e.target.style.borderColor = "#8B4513")}
-            onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")}
-          />
-        </div>
-        <div>
-          <label style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "12px", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "#5c5147", display: "block", marginBottom: 6 }}>
-            Message
-          </label>
-          <textarea
-            value={formData.message}
-            onChange={handleChange("message")}
-            placeholder="How can I help you?"
-            rows={5}
-            style={{ ...inputStyle, resize: "vertical", minHeight: 120 }}
-            onFocus={(e) => (e.target.style.borderColor = "#8B4513")}
-            onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")}
-          />
-        </div>
-
-        <button
-          onClick={handleSubmit}
-          disabled={status === "sending"}
-          style={{
-            fontFamily: "'Source Sans 3', sans-serif", fontSize: "13px", fontWeight: 600,
-            letterSpacing: "0.1em", textTransform: "uppercase",
-            color: "#fff", background: status === "sending" ? "#7a7068" : "#2c2520",
-            border: "none", borderRadius: 6, padding: "14px 28px",
-            cursor: status === "sending" ? "wait" : "pointer",
-            transition: "background 0.3s", alignSelf: "flex-start",
-          }}
-        >
-          {status === "sending" ? "Sending..." : "Send Message"}
-        </button>
-
-        {status === "success" && (
-          <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#228B22", margin: 0, fontWeight: 500 }}>
-            Thank you! Your message has been sent successfully. I will be in touch soon.
-          </p>
-        )}
-        {status === "error" && (
-          <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#B22222", margin: 0 }}>
-            Something went wrong. Please try again or email me directly.
-          </p>
-        )}
-        {status === "incomplete" && (
-          <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#B8860B", margin: 0 }}>
-            Please fill in all fields before submitting.
-          </p>
-        )}
-      </div>
-    </div>
-  );
-}
-
       {/* ═══════════ CONTACT ═══════════ */}
       <Section id="contact" style={{ padding: "80px 0", background: "rgba(255,255,255,0.4)" }}>
         <div style={containerStyle}>
@@ -1324,9 +1326,9 @@ export default function AcademicWebsite() {
             ))}
           </div>
 
-	  {/* Contact Form */}
+          {/* Contact Form */}
           <ContactForm />
-		
+
           <div style={{ marginTop: 48 }}>
             <h3 style={{ fontFamily: "'Lora', serif", fontSize: "18px", fontWeight: 600, color: "#2c2520", marginBottom: 14 }}>Professional Affiliations</h3>
             <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#5c5147", lineHeight: 1.8 }}>
