@@ -718,24 +718,24 @@ export default function AcademicWebsite() {
 
           <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
             <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "15.5px", lineHeight: 1.8, color: "#3a3228" }}>
-              I am a health/research scientist, biostatistician, and epidemiologist with over eight years of progressive
-              expertise in public health, epidemiology, and biostatistics. My specializations span infectious diseases,
-              computational genomics, cancer, and cardiovascular disease surveillance — research that I have carried out
-              across federal agencies, academic institutions, and public health departments.
+              Dr. Olu Arigbede is a health/research scientist, biostatistician, and epidemiologist with over eight years of progressive
+              expertise in public health, epidemiology, and biostatistics. His specializations include infectious diseases,
+              computational genomics, cancer, and cardiovascular disease surveillance, among others — research that I have carried out
+              across federal agencies, academic institutions, and state and county-level public health departments.
             </p>
             <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "15.5px", lineHeight: 1.8, color: "#3a3228" }}>
-              Currently serving as Associate for Institutional Research and Research Data Analyst at
-              <strong> SUNY Downstate Health Sciences University</strong>, I provide comprehensive biostatistical
-              consulting services, develop webinar series on statistical methodologies, and mentor graduate students
-              and junior researchers. Previously, I contributed to regulatory science analysis at the
+              Currently serving as Associate for Institutional Research and Biostatistics instructor at
+              <strong> SUNY Downstate Health Sciences University</strong>, Office of the Senior Vice President for Research and School of Public Health, respectively, where he provides comprehensive biostatistical
+              consulting services, develop webinar series on statistical methodologies, teaches biostatistics courses, and mentor graduate students
+              and junior researchers. Previously, Dr. Arigbede contributed to regulatory science analysis at the
               <strong> Food and Drug Administration (FDA)</strong>, developed syndromic surveillance systems at the
               <strong> Centers for Disease Control and Prevention (CDC)</strong>, and led epidemiological investigations
               at state and local health departments in Florida, Texas, and Washington, D.C.
             </p>
             <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "15.5px", lineHeight: 1.8, color: "#3a3228" }}>
-              I earned my Doctor of Public Health (DrPH) in Epidemiology and Biostatistics from Florida A&M University,
-              where my doctoral research applied mathematical modeling to analyze emerging and reemerging infectious disease
-              outbreaks. I am proficient in R, SAS, Python, and SQL, with demonstrated capabilities in machine learning,
+              He earned his Doctor of Public Health (DrPH) in Epidemiology and Biostatistics from Florida A&M University,
+              where his doctoral research applied mathematical modeling to analyze emerging and reemerging infectious disease
+              outbreaks. He is very proficient in R, SAS, Python, and SQL, with demonstrated capabilities in machine learning,
               spatial epidemiology, and real-world evidence analysis.
             </p>
           </div>
@@ -824,9 +824,9 @@ export default function AcademicWebsite() {
             org="Food and Drug Administration (FDA)"
             role="Health Scientist"
             unit="Office of Minority Health — Office of the Commissioner"
-            period="Nov 2024 – Feb 2025"
+            period="Nov 2024 – Jun 2025"
             highlights={[
-              "Developed an automated data extraction (ADE) tool in R achieving 95–96% reduction in processing time",
+              "Developed an automated data extraction (ADE) tool in R, achieving over 90% reduction in processing time",
               "Provided demographic analyses and interactive dashboards for regulatory submission data (NDA)",
               "Collaborated with CDER to enhance safety and efficacy data analysis from pivotal clinical studies",
             ]}
@@ -838,7 +838,7 @@ export default function AcademicWebsite() {
             period="Jun 2022 – Nov 2024"
             highlights={[
               "Developed syndromic case definitions using ICD-10-CM, ICD-9-CM, and SNOMED classification systems",
-              "Implemented electronic surveillance system improving outbreak detection timeliness by 31%",
+              "Implemented electronic surveillance system, improving outbreak detection timeliness by 31%",
               "Applied machine learning techniques to free-text data, improving signal detection accuracy",
               "Built interactive dashboards and optimized data pipelines for ED, mortality, and laboratory data",
             ]}
@@ -1157,7 +1157,7 @@ export default function AcademicWebsite() {
             {[
               { label: "Email", value: "misugmaintain@gmail.com", href: "mailto:misugmaintain@gmail.com" },
               { label: "Phone", value: "(850) 960-6609", href: "tel:+18509606609" },
-              { label: "LinkedIn", value: "linkedin.com/in/olumide-arigbede", href: "https://www.linkedin.com/in/olumide-arigbede" },
+              { label: "LinkedIn", value: "https://www.linkedin.com/in/dr-olumide-arigbede/?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BzmdRxLStTuSvZpRvvjAjhw%3D%3D", href: "https://www.linkedin.com/in/dr-olumide-arigbede/?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BzmdRxLStTuSvZpRvvjAjhw%3D%3D" },
             ].map(({ label, value, href }) => (
               <div key={label} style={{ display: "flex", gap: 16, alignItems: "baseline" }}>
                 <span style={{
@@ -1231,7 +1231,7 @@ export default function AcademicWebsite() {
             textAlign: "center",
             letterSpacing: "0.04em",
           }}>
-            © {new Date().getFullYear()} Olumide M. Arigbede. All rights reserved.
+            © {new Date().getFullYear()} Dr. Olumide M. Arigbede. All rights reserved.
           </p>
         </div>
       </footer>
