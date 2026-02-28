@@ -511,6 +511,18 @@ function ArticleCard({ article, onRead }) {
 }
 
 function ArticleReader({ article, onClose }) {
+  const [showCitation, setShowCitation] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const citationAPA = `Arigbede, O. M. (${article.date.split(" ")[1] || new Date().getFullYear()}). ${article.title}. The Olu Arigbede — Insights & Commentary. Retrieved from https://www.theoluarigbede.com/#articles`;
+  const citationBibTeX = `@article{arigbede${article.date.split(" ")[1] || "2026"},\n  author = {Arigbede, Olumide M.},\n  title = {${article.title}},\n  journal = {The Olu Arigbede — Insights \\& Commentary},\n  year = {${article.date.split(" ")[1] || new Date().getFullYear()}},\n  month = {${article.date.split(" ")[0]}},\n  url = {https://www.theoluarigbede.com/#articles}\n}`;
+
+  const handleCopy = (text) => {
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   useEffect(() => {
     document.body.style.overflow = "hidden";
     return () => { document.body.style.overflow = ""; };
@@ -546,6 +558,49 @@ function ArticleReader({ article, onClose }) {
             {para}
           </p>
         ))}
+
+        {/* Citation block */}
+        <div style={{ marginTop: 36, borderTop: "1px solid rgba(58,50,40,0.1)", paddingTop: 24 }}>
+          <button
+            onClick={() => setShowCitation(!showCitation)}
+            style={{
+              fontFamily: "'Source Sans 3', sans-serif", fontSize: "13px", fontWeight: 600,
+              color: "#8B4513", background: "rgba(139,69,19,0.06)",
+              border: "1px solid rgba(139,69,19,0.15)", borderRadius: 6,
+              padding: "9px 18px", cursor: "pointer", letterSpacing: "0.04em",
+              transition: "all 0.2s",
+            }}
+          >
+            {showCitation ? "Hide Citation" : "Cite This Article"}
+          </button>
+
+          {showCitation && (
+            <div style={{ marginTop: 16, display: "flex", flexDirection: "column", gap: 16 }}>
+              <div>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
+                  <span style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "11.5px", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "#8B4513" }}>APA Format</span>
+                  <button onClick={() => handleCopy(citationAPA)} style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "12px", color: copied ? "#228B22" : "#8B4513", background: "none", border: "none", cursor: "pointer", fontWeight: 600 }}>
+                    {copied ? "Copied!" : "Copy"}
+                  </button>
+                </div>
+                <div style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13.5px", color: "#3a3228", background: "rgba(139,69,19,0.03)", border: "1px solid rgba(139,69,19,0.08)", borderRadius: 8, padding: "14px 16px", lineHeight: 1.65 }}>
+                  {citationAPA}
+                </div>
+              </div>
+              <div>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
+                  <span style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "11.5px", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "#8B4513" }}>BibTeX</span>
+                  <button onClick={() => handleCopy(citationBibTeX)} style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "12px", color: "#8B4513", background: "none", border: "none", cursor: "pointer", fontWeight: 600 }}>
+                    Copy
+                  </button>
+                </div>
+                <pre style={{ fontFamily: "monospace", fontSize: "12.5px", color: "#3a3228", background: "rgba(139,69,19,0.03)", border: "1px solid rgba(139,69,19,0.08)", borderRadius: 8, padding: "14px 16px", lineHeight: 1.6, whiteSpace: "pre-wrap", margin: 0 }}>
+                  {citationBibTeX}
+                </pre>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -713,6 +768,30 @@ export default function AcademicWebsite() {
   return (
     <div style={{ background: "#faf7f3", color: "#3a3228", minHeight: "100vh", position: "relative", fontFamily: "'Source Sans 3', sans-serif" }}>
       <GrainOverlay />
+
+      {/* Dynamic favicon */}
+      {(() => {
+        if (typeof document !== "undefined") {
+          const existing = document.querySelector("link[rel='icon']");
+          if (existing) existing.remove();
+          const canvas = document.createElement("canvas");
+          canvas.width = 64;
+          canvas.height = 64;
+          const ctx = canvas.getContext("2d");
+          ctx.fillStyle = "#2c2520";
+          ctx.fillRect(0, 0, 64, 64);
+          ctx.fillStyle = "#faf7f3";
+          ctx.font = "bold 36px serif";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillText("OA", 32, 34);
+          const link = document.createElement("link");
+          link.rel = "icon";
+          link.href = canvas.toDataURL("image/png");
+          document.head.appendChild(link);
+        }
+        return null;
+      })()}
 
       <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
@@ -1090,6 +1169,139 @@ export default function AcademicWebsite() {
         </div>
       </Section>
 
+      function ContactForm() {
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [status, setStatus] = useState("idle");
+
+  const inputStyle = {
+    fontFamily: "'Source Sans 3', sans-serif",
+    fontSize: "14.5px",
+    color: "#2c2520",
+    background: "rgba(255,255,255,0.7)",
+    border: "1px solid rgba(58,50,40,0.15)",
+    borderRadius: 8,
+    padding: "12px 16px",
+    width: "100%",
+    outline: "none",
+    transition: "border-color 0.25s",
+  };
+
+  const handleChange = (field) => (e) => {
+    setFormData((prev) => ({ ...prev, [field]: e.target.value }));
+  };
+
+  const handleSubmit = async () => {
+    if (!formData.name || !formData.email || !formData.message) {
+      setStatus("incomplete");
+      return;
+    }
+    setStatus("sending");
+    try {
+      // REPLACE "YOUR_FORMSPREE_ID" with your actual Formspree form ID
+      const res = await fetch("https://formspree.io/f/maqdznwd", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({ name: formData.name, email: formData.email, message: formData.message }),
+      });
+      if (res.ok) {
+        setStatus("success");
+        setFormData({ name: "", email: "", message: "" });
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
+  };
+
+  return (
+    <div style={{ padding: "32px", background: "rgba(255,255,255,0.5)", border: "1px solid rgba(58,50,40,0.08)", borderRadius: 12 }}>
+      <h3 style={{ fontFamily: "'Lora', serif", fontSize: "20px", fontWeight: 600, color: "#2c2520", margin: "0 0 6px 0" }}>
+        Send a Message
+      </h3>
+      <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13.5px", color: "#7a7068", margin: "0 0 24px 0" }}>
+        Fill out the form below and I will get back to you as soon as possible.
+      </p>
+
+      <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+        <div>
+          <label style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "12px", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "#5c5147", display: "block", marginBottom: 6 }}>
+            Name
+          </label>
+          <input
+            type="text"
+            value={formData.name}
+            onChange={handleChange("name")}
+            placeholder="Your full name"
+            style={inputStyle}
+            onFocus={(e) => (e.target.style.borderColor = "#8B4513")}
+            onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")}
+          />
+        </div>
+        <div>
+          <label style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "12px", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "#5c5147", display: "block", marginBottom: 6 }}>
+            Email
+          </label>
+          <input
+            type="email"
+            value={formData.email}
+            onChange={handleChange("email")}
+            placeholder="your.email@example.com"
+            style={inputStyle}
+            onFocus={(e) => (e.target.style.borderColor = "#8B4513")}
+            onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")}
+          />
+        </div>
+        <div>
+          <label style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "12px", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "#5c5147", display: "block", marginBottom: 6 }}>
+            Message
+          </label>
+          <textarea
+            value={formData.message}
+            onChange={handleChange("message")}
+            placeholder="How can I help you?"
+            rows={5}
+            style={{ ...inputStyle, resize: "vertical", minHeight: 120 }}
+            onFocus={(e) => (e.target.style.borderColor = "#8B4513")}
+            onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")}
+          />
+        </div>
+
+        <button
+          onClick={handleSubmit}
+          disabled={status === "sending"}
+          style={{
+            fontFamily: "'Source Sans 3', sans-serif", fontSize: "13px", fontWeight: 600,
+            letterSpacing: "0.1em", textTransform: "uppercase",
+            color: "#fff", background: status === "sending" ? "#7a7068" : "#2c2520",
+            border: "none", borderRadius: 6, padding: "14px 28px",
+            cursor: status === "sending" ? "wait" : "pointer",
+            transition: "background 0.3s", alignSelf: "flex-start",
+          }}
+        >
+          {status === "sending" ? "Sending..." : "Send Message"}
+        </button>
+
+        {status === "success" && (
+          <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#228B22", margin: 0, fontWeight: 500 }}>
+            Thank you! Your message has been sent successfully. I will be in touch soon.
+          </p>
+        )}
+        {status === "error" && (
+          <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#B22222", margin: 0 }}>
+            Something went wrong. Please try again or email me directly.
+          </p>
+        )}
+        {status === "incomplete" && (
+          <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#B8860B", margin: 0 }}>
+            Please fill in all fields before submitting.
+          </p>
+        )}
+      </div>
+    </div>
+  );
+}
+
       {/* ═══════════ CONTACT ═══════════ */}
       <Section id="contact" style={{ padding: "80px 0", background: "rgba(255,255,255,0.4)" }}>
         <div style={containerStyle}>
@@ -1099,11 +1311,11 @@ export default function AcademicWebsite() {
           <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "15.5px", lineHeight: 1.8, color: "#3a3228", marginBottom: 32, maxWidth: 580 }}>
             I welcome collaborations, consulting inquiries, speaking invitations, and questions from fellow researchers, students, or public health professionals. Please feel free to reach out through any of the channels below.
           </p>
-          <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 20, marginBottom: 40 }}>
             {[
               { label: "Email", value: "misugmaintain@gmail.com", href: "mailto:misugmaintain@gmail.com" },
               { label: "Phone", value: "(850) 960-6609", href: "tel:+18509606609" },
-              { label: "LinkedIn", value: "https://www.linkedin.com/in/dr-olumide-arigbede/?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BzmdRxLStTuSvZpRvvjAjhw%3D%3D", href: "https://www.linkedin.com/in/dr-olumide-arigbede/" },
+              { label: "LinkedIn", value: "https://www.linkedin.com/in/dr-olumide-arigbede/?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BzmdRxLStTuSvZpRvvjAjhw%3D%3D", href: "https://www.linkedin.com/in/dr-olumide-arigbede" },
             ].map(({ label, value, href }) => (
               <div key={label} style={{ display: "flex", gap: 16, alignItems: "baseline" }}>
                 <span style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "11.5px", letterSpacing: "0.12em", textTransform: "uppercase", color: "#8B4513", fontWeight: 600, minWidth: 72 }}>{label}</span>
@@ -1111,6 +1323,10 @@ export default function AcademicWebsite() {
               </div>
             ))}
           </div>
+
+	  {/* Contact Form */}
+          <ContactForm />
+		
           <div style={{ marginTop: 48 }}>
             <h3 style={{ fontFamily: "'Lora', serif", fontSize: "18px", fontWeight: 600, color: "#2c2520", marginBottom: 14 }}>Professional Affiliations</h3>
             <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#5c5147", lineHeight: 1.8 }}>
