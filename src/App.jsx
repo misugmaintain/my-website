@@ -1313,17 +1313,7 @@ export default function AcademicWebsite() {
           <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "15.5px", lineHeight: 1.8, color: "#3a3228", marginBottom: 32, maxWidth: 580 }}>
             I welcome collaborations, consulting inquiries, speaking invitations, and questions from fellow researchers, students, or public health professionals.
           </p>
-          <div style={{ display: "flex", flexDirection: "column", gap: 20, marginBottom: 40 }}>
-            {[
-              { label: "Email", value: "misugmaintain@gmail.com", href: "mailto:misugmaintain@gmail.com" },
-              { label: "LinkedIn", value: "https://www.linkedin.com/in/dr-olumide-arigbede", href: "https://www.linkedin.com/in/dr-olumide-arigbede" },
-            ].map(({ label, value, href }) => (
-              <div key={label} style={{ display: "flex", gap: 16, alignItems: "baseline" }}>
-                <span style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "11.5px", letterSpacing: "0.12em", textTransform: "uppercase", color: "#8B4513", fontWeight: 600, minWidth: 72 }}>{label}</span>
-                <a href={href} style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "15px", color: "#2c2520", textDecoration: "none" }}>{value}</a>
-              </div>
-            ))}
-          </div>
+          
 
           {/* Contact Form */}
           <ContactForm />
