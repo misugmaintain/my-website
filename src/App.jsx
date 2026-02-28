@@ -20,7 +20,7 @@ const NAV_IDS = {
 };
 
 // ════════════════════════════════════════════
-// DATA — Edit these arrays to add/update content
+// DATA
 // ════════════════════════════════════════════
 
 const EVENTS_DATA = [
@@ -1311,13 +1311,12 @@ export default function AcademicWebsite() {
           <SectionTitle text="Get in Touch" />
           <Divider />
           <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "15.5px", lineHeight: 1.8, color: "#3a3228", marginBottom: 32, maxWidth: 580 }}>
-            I welcome collaborations, consulting inquiries, speaking invitations, and questions from fellow researchers, students, or public health professionals. Please feel free to reach out through any of the channels below.
+            I welcome collaborations, consulting inquiries, speaking invitations, and questions from fellow researchers, students, or public health professionals.
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: 20, marginBottom: 40 }}>
             {[
               { label: "Email", value: "misugmaintain@gmail.com", href: "mailto:misugmaintain@gmail.com" },
-              { label: "Phone", value: "(850) 960-6609", href: "tel:+18509606609" },
-              { label: "LinkedIn", value: "https://www.linkedin.com/in/dr-olumide-arigbede/?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BzmdRxLStTuSvZpRvvjAjhw%3D%3D", href: "https://www.linkedin.com/in/dr-olumide-arigbede" },
+              { label: "LinkedIn", value: "https://www.linkedin.com/in/dr-olumide-arigbede", href: "https://www.linkedin.com/in/dr-olumide-arigbede" },
             ].map(({ label, value, href }) => (
               <div key={label} style={{ display: "flex", gap: 16, alignItems: "baseline" }}>
                 <span style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "11.5px", letterSpacing: "0.12em", textTransform: "uppercase", color: "#8B4513", fontWeight: 600, minWidth: 72 }}>{label}</span>
