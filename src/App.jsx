@@ -198,7 +198,7 @@ const SCHOLARSHIP_PROGRAMS = [
     award: "₦100,000",
     slots: 3,
     icon: "📑",
-    theme: "The Importance of AI/Robotics in Healthcare Systems in Nigeria",
+    theme: "The Future of Nigeria's Healthcare System: Assessing the Role of Artificial Intelligence and Robotics",
     description:
       "The Research Scholarship supports rising final-year undergraduate students in Nigerian universities who demonstrate exceptional research aptitude. Selected scholars will produce a thorough research article on a designated annual theme, contributing original thought and rigorous analysis to the discourse on healthcare innovation in Nigeria.",
     eligibility: [
