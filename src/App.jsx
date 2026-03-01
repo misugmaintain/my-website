@@ -207,7 +207,7 @@ const SCHOLARSHIP_PROGRAMS = [
       "Must demonstrate academic merit with a minimum CGPA of 3.50/5.00 or Second Class Upper Division equivalent",
     ],
     requirements: [
-      "Submit a research article on the 2025/2026 theme: \"The Importance of AI/Robotics in Healthcare Systems in Nigeria\"",
+      "Submit a research article on the 2025/2026 theme: \"The Future of Nigeria's Healthcare System: Assessing the Role of Artificial Intelligence and Robotics\"",
       "The article must be written in one of the following formats: a systematic review and meta-analysis, a review paper, or an original research article",
       "Alternatively, applicants may submit a relevant portion of their final-year project, provided it falls within the scholarship theme (AI/robotics in healthcare systems)",
       "All submissions must follow APA (7th edition) formatting and citation style",
