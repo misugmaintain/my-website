@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 
 const SECTIONS = [
   "Home", "About", "Experience", "Research", "Publications",
-  "Teaching", "Events", "Articles", "Opportunities", "Podcasts", "Contact"
+  "Teaching", "Events", "Articles", "Opportunities", "Podcasts", "Scholarship", "Contact"
 ];
 
 const NAV_IDS = {
@@ -16,6 +16,7 @@ const NAV_IDS = {
   Articles: "articles",
   Opportunities: "opportunities",
   Podcasts: "podcasts",
+  Scholarship: "scholarship",
   Contact: "contact",
 };
 
@@ -186,6 +187,73 @@ const PODCASTS_DATA = [
     status: "upcoming",
     description: "A discussion on career pathways in epidemiology, from graduate school to federal agencies, with practical advice for emerging professionals.",
     tags: ["Career Development", "Epidemiology"],
+  },
+];
+
+// ── Scholarship Programs Data ──
+const SCHOLARSHIP_PROGRAMS = [
+  {
+    id: "research",
+    title: "Research Scholarship",
+    award: "₦100,000",
+    slots: 3,
+    icon: "📑",
+    theme: "The Importance of AI/Robotics in Healthcare Systems in Nigeria",
+    description:
+      "The Research Scholarship supports rising final-year undergraduate students in Nigerian universities who demonstrate exceptional research aptitude. Selected scholars will produce a thorough research article on a designated annual theme, contributing original thought and rigorous analysis to the discourse on healthcare innovation in Nigeria.",
+    eligibility: [
+      "Must be an undergraduate student in a recognized Nigerian university, approaching the final year of their program (i.e., 300-level for 4-year programs, 400-level for 5-year programs, or equivalent)",
+      "Must be enrolled in a health sciences, biomedical sciences, medicine, computer science, engineering, statistics, mathematics, or closely related discipline",
+      "Must demonstrate academic merit with a minimum CGPA of 3.50/5.00 or Second Class Upper Division equivalent",
+    ],
+    requirements: [
+      "Submit a research article on the 2025/2026 theme: \"The Importance of AI/Robotics in Healthcare Systems in Nigeria\"",
+      "The article must be written in one of the following formats: a systematic review and meta-analysis, a review paper, or an original research article",
+      "Alternatively, applicants may submit a relevant portion of their final-year project, provided it falls within the scholarship theme (AI/robotics in healthcare systems)",
+      "All submissions must follow APA (7th edition) formatting and citation style",
+      "Submissions must be entirely the applicant's own work — absolutely no use of AI writing tools (e.g., ChatGPT, Gemini, Copilot, or similar), and zero tolerance for plagiarism of any kind. All submissions will be subjected to AI-detection and plagiarism screening",
+      "Minimum article length: 3,000 words (excluding references and appendices)",
+    ],
+    documents: [
+      "Research article or final-year project excerpt (PDF format)",
+      "Unofficial academic transcript",
+      "International passport (data page)",
+      "Passport-sized photograph (white background, recent)",
+      "Bank account details including sort code",
+      "Two recommendation letters — one must be from the Head of Department (HOD) of the applicant's program, and the second from another faculty member in the department",
+      "Current résumé or curriculum vitae",
+    ],
+  },
+  {
+    id: "innovation",
+    title: "Innovation Scholarship",
+    award: "₦100,000",
+    slots: 3,
+    icon: "💡",
+    theme: "Innovative Solutions for Healthcare Challenges in Nigeria",
+    description:
+      "The Innovation Scholarship recognizes and rewards creative, forward-thinking undergraduate students in Nigerian universities who are developing practical and scalable solutions to real healthcare challenges. Selected scholars will receive funding to support the further development and refinement of their innovative ideas.",
+    eligibility: [
+      "Must be an undergraduate student in a recognized Nigerian university, approaching the final year of their program (i.e., 300-level for 4-year programs, 400-level for 5-year programs, or equivalent)",
+      "Must be enrolled in any discipline — the scholarship welcomes cross-disciplinary innovation (health sciences, engineering, computer science, social sciences, business, etc.)",
+      "Must demonstrate academic merit with a minimum CGPA of 3.50/5.00 or Second Class Upper Division equivalent",
+    ],
+    requirements: [
+      "Submit a detailed innovation proposal (minimum 1,500 words) describing the problem being addressed, the proposed solution, its feasibility, scalability, and expected impact on healthcare delivery in Nigeria",
+      "The proposal must include a clear implementation timeline, resource requirements, and a sustainability plan",
+      "If the innovation involves technology (app, device, platform, etc.), include wireframes, diagrams, or prototypes where applicable",
+      "Submissions must be entirely the applicant's own work — absolutely no use of AI writing tools, and zero tolerance for plagiarism",
+      "All proposals must be formatted in APA (7th edition) style",
+    ],
+    documents: [
+      "Innovation proposal document (PDF format)",
+      "Unofficial academic transcript",
+      "International passport (data page)",
+      "Passport-sized photograph (white background, recent)",
+      "Bank account details including sort code",
+      "Two recommendation letters — one must be from the Head of Department (HOD) of the applicant's program, and the second from another faculty member in the department",
+      "Current résumé or curriculum vitae",
+    ],
   },
 ];
 
@@ -735,8 +803,6 @@ function PodcastCard({ episode }) {
 }
 
 // ── Contact Form ──
-// FIX: This was previously placed INSIDE the JSX return of AcademicWebsite.
-// It must be defined here as a standalone component so it can be used via <ContactForm />.
 function ContactForm() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [status, setStatus] = useState("idle");
@@ -869,6 +935,480 @@ function ContactForm() {
   );
 }
 
+// ── Scholarship Program Detail Viewer ──
+function ScholarshipDetail({ program, onClose, onApply }) {
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = ""; };
+  }, []);
+
+  const listItemStyle = {
+    fontFamily: "'Source Sans 3', sans-serif",
+    fontSize: "14px",
+    lineHeight: 1.75,
+    color: "#3a3228",
+    margin: "0 0 10px 0",
+    paddingLeft: 16,
+    position: "relative",
+  };
+
+  return (
+    <div
+      style={{ position: "fixed", inset: 0, zIndex: 200, background: "rgba(44,37,32,0.5)", backdropFilter: "blur(4px)", display: "flex", justifyContent: "center", alignItems: "flex-start", padding: "50px 20px", overflowY: "auto" }}
+      onClick={onClose}
+    >
+      <div
+        style={{ background: "#faf7f3", borderRadius: 16, maxWidth: 760, width: "100%", padding: "44px 40px", position: "relative", boxShadow: "0 20px 60px rgba(44,37,32,0.15)" }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button onClick={onClose} style={{ position: "absolute", top: 20, right: 20, background: "none", border: "none", cursor: "pointer", fontSize: "24px", color: "#7a7068", lineHeight: 1 }} aria-label="Close">×</button>
+
+        <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 8 }}>
+          <span style={{ fontSize: 36 }}>{program.icon}</span>
+          <div>
+            <StatusBadge status="active" label="Accepting Applications" />
+          </div>
+        </div>
+
+        <h2 style={{ fontFamily: "'Lora', serif", fontSize: "clamp(22px, 3vw, 30px)", fontWeight: 600, color: "#2c2520", margin: "12px 0 6px 0", lineHeight: 1.3 }}>
+          {program.title}
+        </h2>
+        <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#8B4513", fontWeight: 600, marginBottom: 6 }}>
+          Award: {program.award} per recipient · {program.slots} scholars selected annually
+        </p>
+        <div style={{ width: 40, height: 2, background: "#8B4513", borderRadius: 1, margin: "16px 0 24px 0" }} />
+
+        <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "15px", lineHeight: 1.8, color: "#3a3228", margin: "0 0 24px 0" }}>
+          {program.description}
+        </p>
+
+        {/* Theme */}
+        <div style={{ padding: "18px 22px", background: "rgba(139,69,19,0.04)", border: "1px solid rgba(139,69,19,0.12)", borderRadius: 10, marginBottom: 28 }}>
+          <span style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "11px", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "#8B4513" }}>2025/2026 Theme</span>
+          <p style={{ fontFamily: "'Lora', serif", fontSize: "15.5px", fontWeight: 500, color: "#2c2520", lineHeight: 1.55, margin: "8px 0 0 0" }}>
+            {program.theme}
+          </p>
+        </div>
+
+        {/* Eligibility */}
+        <h3 style={{ fontFamily: "'Lora', serif", fontSize: "18px", fontWeight: 600, color: "#2c2520", margin: "0 0 14px 0" }}>Eligibility Criteria</h3>
+        {program.eligibility.map((item, i) => (
+          <p key={i} style={listItemStyle}>
+            <span style={{ position: "absolute", left: 0, color: "#8B4513", fontWeight: 600 }}>{i + 1}.</span>
+            {item}
+          </p>
+        ))}
+
+        {/* Requirements */}
+        <h3 style={{ fontFamily: "'Lora', serif", fontSize: "18px", fontWeight: 600, color: "#2c2520", margin: "28px 0 14px 0" }}>Submission Requirements</h3>
+        {program.requirements.map((item, i) => (
+          <p key={i} style={listItemStyle}>
+            <span style={{ position: "absolute", left: 0, color: "#8B4513", fontWeight: 600 }}>·</span>
+            {item}
+          </p>
+        ))}
+
+        {/* Required Documents */}
+        <h3 style={{ fontFamily: "'Lora', serif", fontSize: "18px", fontWeight: 600, color: "#2c2520", margin: "28px 0 14px 0" }}>Required Documents</h3>
+        {program.documents.map((item, i) => (
+          <p key={i} style={listItemStyle}>
+            <span style={{ position: "absolute", left: 0, color: "#8B4513", fontWeight: 600 }}>{i + 1}.</span>
+            {item}
+          </p>
+        ))}
+
+        {/* Important Notice */}
+        <div style={{ padding: "18px 22px", background: "rgba(178,34,34,0.04)", border: "1px solid rgba(178,34,34,0.12)", borderRadius: 10, marginTop: 28, marginBottom: 28 }}>
+          <span style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "11px", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "#B22222" }}>Important Notice</span>
+          <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13.5px", color: "#3a3228", lineHeight: 1.7, margin: "8px 0 0 0" }}>
+            All submissions will be screened for plagiarism and AI-generated content. Any application found to contain work produced by AI tools (including but not limited to ChatGPT, Gemini, Copilot, or similar platforms) or that contains plagiarized material will be immediately disqualified. Academic integrity is non-negotiable.
+          </p>
+        </div>
+
+        <button
+          onClick={() => { onClose(); onApply(program.id); }}
+          style={{
+            fontFamily: "'Source Sans 3', sans-serif", fontSize: "13px", fontWeight: 600,
+            letterSpacing: "0.1em", textTransform: "uppercase",
+            color: "#fff", background: "#2c2520", border: "none", borderRadius: 6,
+            padding: "14px 32px", cursor: "pointer", transition: "background 0.3s",
+          }}
+        >
+          Apply for This Scholarship →
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ── Scholarship Application Form ──
+function ScholarshipApplicationForm({ programId, onClose }) {
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    phone: "",
+    university: "",
+    department: "",
+    yearOfStudy: "",
+    cgpa: "",
+    program: programId || "research",
+    articleType: "",
+    abstractSummary: "",
+  });
+  const [files, setFiles] = useState({
+    submission: null,
+    transcript: null,
+    passport: null,
+    photo: null,
+    bankDetails: null,
+    recLetterHOD: null,
+    recLetterFaculty: null,
+    resume: null,
+  });
+  const [status, setStatus] = useState("idle");
+
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = ""; };
+  }, []);
+
+  const inputStyle = {
+    fontFamily: "'Source Sans 3', sans-serif",
+    fontSize: "14px",
+    color: "#2c2520",
+    background: "rgba(255,255,255,0.7)",
+    border: "1px solid rgba(58,50,40,0.15)",
+    borderRadius: 8,
+    padding: "11px 14px",
+    width: "100%",
+    outline: "none",
+    transition: "border-color 0.25s",
+  };
+
+  const labelStyle = {
+    fontFamily: "'Source Sans 3', sans-serif",
+    fontSize: "11.5px",
+    fontWeight: 600,
+    letterSpacing: "0.08em",
+    textTransform: "uppercase",
+    color: "#5c5147",
+    display: "block",
+    marginBottom: 5,
+  };
+
+  const fileInputStyle = {
+    fontFamily: "'Source Sans 3', sans-serif",
+    fontSize: "13px",
+    color: "#5c5147",
+    background: "rgba(255,255,255,0.5)",
+    border: "1.5px dashed rgba(139,69,19,0.2)",
+    borderRadius: 8,
+    padding: "12px 14px",
+    width: "100%",
+    cursor: "pointer",
+  };
+
+  const handleChange = (field) => (e) => {
+    setFormData((prev) => ({ ...prev, [field]: e.target.value }));
+  };
+
+  const handleFileChange = (field) => (e) => {
+    const file = e.target.files[0];
+    if (file) setFiles((prev) => ({ ...prev, [field]: file }));
+  };
+
+  const handleSubmit = async () => {
+    // Validate required text fields
+    const requiredText = ["fullName", "email", "phone", "university", "department", "yearOfStudy", "cgpa", "abstractSummary"];
+    if (formData.program === "research") requiredText.push("articleType");
+    const missingText = requiredText.some((f) => !formData[f].trim());
+
+    // Validate required files
+    const requiredFiles = ["submission", "transcript", "passport", "photo", "bankDetails", "recLetterHOD", "recLetterFaculty", "resume"];
+    const missingFiles = requiredFiles.some((f) => !files[f]);
+
+    if (missingText || missingFiles) {
+      setStatus("incomplete");
+      return;
+    }
+
+    setStatus("sending");
+
+    try {
+      const fd = new FormData();
+      fd.append("_subject", `Scholarship Application: ${formData.program === "research" ? "Research Scholarship" : "Innovation Scholarship"} — ${formData.fullName}`);
+      fd.append("Full Name", formData.fullName);
+      fd.append("Email", formData.email);
+      fd.append("Phone", formData.phone);
+      fd.append("University", formData.university);
+      fd.append("Department/Program", formData.department);
+      fd.append("Year of Study", formData.yearOfStudy);
+      fd.append("CGPA", formData.cgpa);
+      fd.append("Scholarship Program", formData.program === "research" ? "Research Scholarship" : "Innovation Scholarship");
+      if (formData.program === "research") {
+        fd.append("Article Type", formData.articleType);
+      }
+      fd.append("Abstract/Summary", formData.abstractSummary);
+
+      // Attach all files
+      fd.append("Research Article or Proposal", files.submission);
+      fd.append("Unofficial Transcript", files.transcript);
+      fd.append("International Passport", files.passport);
+      fd.append("Passport Photograph", files.photo);
+      fd.append("Bank Details", files.bankDetails);
+      fd.append("Recommendation Letter (HOD)", files.recLetterHOD);
+      fd.append("Recommendation Letter (Faculty)", files.recLetterFaculty);
+      fd.append("Resume/CV", files.resume);
+
+      // NOTE: Replace this Formspree endpoint with a dedicated scholarship form endpoint.
+      // Formspree paid plans support file uploads. You may also use an alternative
+      // form backend such as Getform, Basin, or a custom server.
+      const res = await fetch("https://formspree.io/f/maqdznwd", {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: fd,
+      });
+
+      if (res.ok) {
+        setStatus("success");
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
+  };
+
+  const programLabel = formData.program === "research" ? "Research Scholarship" : "Innovation Scholarship";
+
+  return (
+    <div
+      style={{ position: "fixed", inset: 0, zIndex: 200, background: "rgba(44,37,32,0.5)", backdropFilter: "blur(4px)", display: "flex", justifyContent: "center", alignItems: "flex-start", padding: "40px 16px", overflowY: "auto" }}
+      onClick={onClose}
+    >
+      <div
+        style={{ background: "#faf7f3", borderRadius: 16, maxWidth: 720, width: "100%", padding: "40px 36px", position: "relative", boxShadow: "0 20px 60px rgba(44,37,32,0.15)", marginBottom: 40 }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button onClick={onClose} style={{ position: "absolute", top: 18, right: 18, background: "none", border: "none", cursor: "pointer", fontSize: "24px", color: "#7a7068", lineHeight: 1 }} aria-label="Close">×</button>
+
+        <StatusBadge status="active" label={programLabel} />
+        <h2 style={{ fontFamily: "'Lora', serif", fontSize: "clamp(20px, 2.8vw, 26px)", fontWeight: 600, color: "#2c2520", margin: "14px 0 6px 0", lineHeight: 1.3 }}>
+          Scholarship Application
+        </h2>
+        <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13.5px", color: "#7a7068", margin: "0 0 8px 0" }}>
+          The Olu Arigbede Scholarship · 2025/2026 Cycle
+        </p>
+        <div style={{ width: 40, height: 2, background: "#8B4513", borderRadius: 1, margin: "12px 0 28px 0" }} />
+
+        {status === "success" ? (
+          <div style={{ textAlign: "center", padding: "40px 20px" }}>
+            <div style={{ fontSize: 48, marginBottom: 16 }}>✓</div>
+            <h3 style={{ fontFamily: "'Lora', serif", fontSize: "22px", fontWeight: 600, color: "#228B22", margin: "0 0 12px 0" }}>Application Submitted Successfully</h3>
+            <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "15px", color: "#3a3228", lineHeight: 1.7 }}>
+              Thank you for applying to the {programLabel}. Your application and all supporting documents have been received. You will be notified of the outcome via the email address you provided.
+            </p>
+            <button onClick={onClose} style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13px", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "#fff", background: "#2c2520", border: "none", borderRadius: 6, padding: "12px 28px", cursor: "pointer", marginTop: 24 }}>
+              Close
+            </button>
+          </div>
+        ) : (
+          <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+
+            {/* Scholarship Program Selector */}
+            <div>
+              <label style={labelStyle}>Scholarship Program</label>
+              <div style={{ display: "flex", gap: 10 }}>
+                {[
+                  { key: "research", label: "Research Scholarship" },
+                  { key: "innovation", label: "Innovation Scholarship" },
+                ].map(({ key, label }) => (
+                  <button
+                    key={key}
+                    onClick={() => setFormData((prev) => ({ ...prev, program: key }))}
+                    style={{
+                      fontFamily: "'Source Sans 3', sans-serif", fontSize: "12.5px", fontWeight: formData.program === key ? 600 : 400,
+                      color: formData.program === key ? "#fff" : "#5c5147",
+                      background: formData.program === key ? "#8B4513" : "transparent",
+                      border: `1.5px solid ${formData.program === key ? "#8B4513" : "rgba(58,50,40,0.2)"}`,
+                      borderRadius: 24, padding: "8px 18px", cursor: "pointer", transition: "all 0.25s",
+                    }}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* ── Personal Information ── */}
+            <div style={{ padding: "16px 0 0 0", borderTop: "1px solid rgba(58,50,40,0.06)" }}>
+              <span style={{ fontFamily: "'Lora', serif", fontSize: "16px", fontWeight: 600, color: "#2c2520" }}>Personal Information</span>
+            </div>
+
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }} className="scholarship-form-grid">
+              <div>
+                <label style={labelStyle}>Full Name</label>
+                <input type="text" value={formData.fullName} onChange={handleChange("fullName")} placeholder="Surname First, e.g., Arigbede Olumide" style={inputStyle} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} />
+              </div>
+              <div>
+                <label style={labelStyle}>Email Address</label>
+                <input type="email" value={formData.email} onChange={handleChange("email")} placeholder="your.email@university.edu.ng" style={inputStyle} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} />
+              </div>
+              <div>
+                <label style={labelStyle}>Phone Number</label>
+                <input type="tel" value={formData.phone} onChange={handleChange("phone")} placeholder="+234 800 000 0000" style={inputStyle} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} />
+              </div>
+              <div>
+                <label style={labelStyle}>CGPA (on a 5.0 scale)</label>
+                <input type="text" value={formData.cgpa} onChange={handleChange("cgpa")} placeholder="e.g., 4.25" style={inputStyle} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} />
+              </div>
+            </div>
+
+            {/* ── Academic Information ── */}
+            <div style={{ padding: "16px 0 0 0", borderTop: "1px solid rgba(58,50,40,0.06)" }}>
+              <span style={{ fontFamily: "'Lora', serif", fontSize: "16px", fontWeight: 600, color: "#2c2520" }}>Academic Information</span>
+            </div>
+
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }} className="scholarship-form-grid">
+              <div>
+                <label style={labelStyle}>University</label>
+                <input type="text" value={formData.university} onChange={handleChange("university")} placeholder="e.g., University of Lagos" style={inputStyle} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} />
+              </div>
+              <div>
+                <label style={labelStyle}>Department / Program</label>
+                <input type="text" value={formData.department} onChange={handleChange("department")} placeholder="e.g., Computer Science" style={inputStyle} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} />
+              </div>
+              <div>
+                <label style={labelStyle}>Current Year / Level</label>
+                <input type="text" value={formData.yearOfStudy} onChange={handleChange("yearOfStudy")} placeholder="e.g., 300-Level (approaching final year)" style={inputStyle} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} />
+              </div>
+              {formData.program === "research" && (
+                <div>
+                  <label style={labelStyle}>Article Type</label>
+                  <select
+                    value={formData.articleType}
+                    onChange={handleChange("articleType")}
+                    style={{ ...inputStyle, cursor: "pointer", appearance: "auto" }}
+                  >
+                    <option value="">Select article type...</option>
+                    <option value="Systematic Review and Meta-Analysis">Systematic Review and Meta-Analysis</option>
+                    <option value="Review Paper">Review Paper</option>
+                    <option value="Original Research Article">Original Research Article</option>
+                    <option value="Final-Year Project Excerpt">Final-Year Project Excerpt (within theme)</option>
+                  </select>
+                </div>
+              )}
+            </div>
+
+            {/* Abstract / Summary */}
+            <div>
+              <label style={labelStyle}>
+                {formData.program === "research" ? "Abstract / Research Summary" : "Innovation Proposal Summary"}
+              </label>
+              <textarea
+                value={formData.abstractSummary}
+                onChange={handleChange("abstractSummary")}
+                placeholder={formData.program === "research"
+                  ? "Provide a brief abstract of your research article (200–300 words)..."
+                  : "Briefly describe your innovation, the problem it addresses, and its expected impact (200–400 words)..."
+                }
+                rows={5}
+                style={{ ...inputStyle, resize: "vertical", minHeight: 120 }}
+                onFocus={(e) => (e.target.style.borderColor = "#8B4513")}
+                onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")}
+              />
+            </div>
+
+            {/* ── Document Uploads ── */}
+            <div style={{ padding: "16px 0 0 0", borderTop: "1px solid rgba(58,50,40,0.06)" }}>
+              <span style={{ fontFamily: "'Lora', serif", fontSize: "16px", fontWeight: 600, color: "#2c2520" }}>Document Uploads</span>
+              <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "12.5px", color: "#7a7068", margin: "4px 0 0 0" }}>All documents must be uploaded in PDF format unless otherwise stated. Maximum file size: 10 MB per file.</p>
+            </div>
+
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }} className="scholarship-form-grid">
+              <div>
+                <label style={labelStyle}>
+                  {formData.program === "research" ? "Research Article / Project Excerpt (PDF)" : "Innovation Proposal (PDF)"}
+                </label>
+                <input type="file" accept=".pdf,.doc,.docx" onChange={handleFileChange("submission")} style={fileInputStyle} />
+                {files.submission && <span style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "11.5px", color: "#228B22", marginTop: 4, display: "block" }}>✓ {files.submission.name}</span>}
+              </div>
+              <div>
+                <label style={labelStyle}>Unofficial Academic Transcript (PDF)</label>
+                <input type="file" accept=".pdf,.jpg,.jpeg,.png" onChange={handleFileChange("transcript")} style={fileInputStyle} />
+                {files.transcript && <span style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "11.5px", color: "#228B22", marginTop: 4, display: "block" }}>✓ {files.transcript.name}</span>}
+              </div>
+              <div>
+                <label style={labelStyle}>International Passport — Data Page (PDF/Image)</label>
+                <input type="file" accept=".pdf,.jpg,.jpeg,.png" onChange={handleFileChange("passport")} style={fileInputStyle} />
+                {files.passport && <span style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "11.5px", color: "#228B22", marginTop: 4, display: "block" }}>✓ {files.passport.name}</span>}
+              </div>
+              <div>
+                <label style={labelStyle}>Passport Photograph (White Background)</label>
+                <input type="file" accept=".jpg,.jpeg,.png" onChange={handleFileChange("photo")} style={fileInputStyle} />
+                {files.photo && <span style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "11.5px", color: "#228B22", marginTop: 4, display: "block" }}>✓ {files.photo.name}</span>}
+              </div>
+              <div>
+                <label style={labelStyle}>Bank Account Details with Sort Code (PDF/Image)</label>
+                <input type="file" accept=".pdf,.jpg,.jpeg,.png" onChange={handleFileChange("bankDetails")} style={fileInputStyle} />
+                {files.bankDetails && <span style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "11.5px", color: "#228B22", marginTop: 4, display: "block" }}>✓ {files.bankDetails.name}</span>}
+              </div>
+              <div>
+                <label style={labelStyle}>Résumé / Curriculum Vitae (PDF)</label>
+                <input type="file" accept=".pdf,.doc,.docx" onChange={handleFileChange("resume")} style={fileInputStyle} />
+                {files.resume && <span style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "11.5px", color: "#228B22", marginTop: 4, display: "block" }}>✓ {files.resume.name}</span>}
+              </div>
+              <div>
+                <label style={labelStyle}>Recommendation Letter — HOD (PDF)</label>
+                <input type="file" accept=".pdf" onChange={handleFileChange("recLetterHOD")} style={fileInputStyle} />
+                {files.recLetterHOD && <span style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "11.5px", color: "#228B22", marginTop: 4, display: "block" }}>✓ {files.recLetterHOD.name}</span>}
+              </div>
+              <div>
+                <label style={labelStyle}>Recommendation Letter — Faculty Member (PDF)</label>
+                <input type="file" accept=".pdf" onChange={handleFileChange("recLetterFaculty")} style={fileInputStyle} />
+                {files.recLetterFaculty && <span style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "11.5px", color: "#228B22", marginTop: 4, display: "block" }}>✓ {files.recLetterFaculty.name}</span>}
+              </div>
+            </div>
+
+            {/* Declaration */}
+            <div style={{ padding: "18px 22px", background: "rgba(139,69,19,0.03)", border: "1px solid rgba(139,69,19,0.1)", borderRadius: 10 }}>
+              <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13px", color: "#3a3228", lineHeight: 1.7, margin: 0 }}>
+                By submitting this application, I affirm that all information and documents provided are accurate, authentic, and entirely my own work. I understand that any evidence of plagiarism, AI-generated content, or falsified documents will result in immediate disqualification and potential academic consequences.
+              </p>
+            </div>
+
+            <button
+              onClick={handleSubmit}
+              disabled={status === "sending"}
+              style={{
+                fontFamily: "'Source Sans 3', sans-serif", fontSize: "13px", fontWeight: 600,
+                letterSpacing: "0.1em", textTransform: "uppercase",
+                color: "#fff", background: status === "sending" ? "#7a7068" : "#2c2520",
+                border: "none", borderRadius: 6, padding: "14px 32px",
+                cursor: status === "sending" ? "wait" : "pointer",
+                transition: "background 0.3s", alignSelf: "flex-start",
+              }}
+            >
+              {status === "sending" ? "Submitting Application..." : "Submit Application"}
+            </button>
+
+            {status === "error" && (
+              <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#B22222", margin: 0 }}>
+                Something went wrong submitting your application. Please try again or contact Dr. Arigbede directly via the Contact section.
+              </p>
+            )}
+            {status === "incomplete" && (
+              <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#B8860B", margin: 0 }}>
+                Please complete all required fields and upload all required documents before submitting.
+              </p>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 // ════════════════════════════════════════════
 // MAIN APP
 // ════════════════════════════════════════════
@@ -879,6 +1419,8 @@ export default function AcademicWebsite() {
   const [readingArticle, setReadingArticle] = useState(null);
   const [eventFilter, setEventFilter] = useState("all");
   const [oppFilter, setOppFilter] = useState("all");
+  const [viewingScholarship, setViewingScholarship] = useState(null);
+  const [applyingScholarship, setApplyingScholarship] = useState(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -940,8 +1482,9 @@ export default function AcademicWebsite() {
           .mobile-menu-btn { display: block !important; }
           .hero-grid { flex-direction: column !important; text-align: center !important; }
           .hero-grid > div:first-child { align-items: center !important; }
-          .research-grid, .events-grid, .articles-grid, .opps-grid, .podcasts-grid { grid-template-columns: 1fr !important; }
+          .research-grid, .events-grid, .articles-grid, .opps-grid, .podcasts-grid, .scholarship-grid { grid-template-columns: 1fr !important; }
           .footer-cols { flex-direction: column !important; gap: 24px !important; }
+          .scholarship-form-grid { grid-template-columns: 1fr !important; }
         }
         @media (min-width: 901px) {
           .mobile-menu-btn { display: none !important; }
@@ -953,6 +1496,23 @@ export default function AcademicWebsite() {
       {/* Article reader overlay */}
       {readingArticle !== null && (
         <ArticleReader article={ARTICLES_DATA[readingArticle]} onClose={() => setReadingArticle(null)} />
+      )}
+
+      {/* Scholarship detail overlay */}
+      {viewingScholarship !== null && (
+        <ScholarshipDetail
+          program={SCHOLARSHIP_PROGRAMS.find((p) => p.id === viewingScholarship)}
+          onClose={() => setViewingScholarship(null)}
+          onApply={(id) => setApplyingScholarship(id)}
+        />
+      )}
+
+      {/* Scholarship application overlay */}
+      {applyingScholarship !== null && (
+        <ScholarshipApplicationForm
+          programId={applyingScholarship}
+          onClose={() => setApplyingScholarship(null)}
+        />
       )}
 
       {/* ═══════════ HERO ═══════════ */}
@@ -1009,14 +1569,13 @@ export default function AcademicWebsite() {
           <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
             <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "15.5px", lineHeight: 1.8, color: "#3a3228" }}>
               Dr. Olu Arigbede is a health/research scientist, biostatistician, and epidemiologist with over eight years of progressive
-              expertise in public health, epidemiology, and biostatistics. His specializations include infectious diseases,
-              computational genomics, cancer, and cardiovascular disease surveillance, among others — research that I have carried out
-              across federal agencies, academic institutions, and state and county-level public health departments.
+              expertise in public health, epidemiology, and biostatistics. His specializations include infectious diseases, health disparities, health outcomes, research methods, health policy, computational genomics, cancer education, and cardiovascular disease surveillance, among other research that he has carried out
+              across federal agencies, academic institutions, and state- and county-level public health departments.
             </p>
             <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "15.5px", lineHeight: 1.8, color: "#3a3228" }}>
-              Currently serving as Associate for Institutional Research and Biostatistics instructor at
+              Currently serving as an Associate for Institutional Research and Biostatistics instructor at
               <strong> SUNY Downstate Health Sciences University</strong>, Office of the Senior Vice President for Research and School of Public Health, respectively, where he provides comprehensive biostatistical
-              consulting services, develop webinar series on statistical methodologies, teaches biostatistics courses, and mentor graduate students
+              consulting services, develop a webinar series on statistical methodologies, teach biostatistics courses, and mentor graduate students
               and junior researchers. Previously, Dr. Arigbede contributed to regulatory science analysis at the
               <strong> Food and Drug Administration (FDA)</strong>, developed syndromic surveillance systems at the
               <strong> Centers for Disease Control and Prevention (CDC)</strong>, and led epidemiological investigations
@@ -1036,7 +1595,7 @@ export default function AcademicWebsite() {
               { degree: "Master of Public Health (MPH)", field: "Epidemiology & Biostatistics", school: "Florida A&M University", year: "2021" },
               { degree: "Master of Health Administration (MHA)", field: "Health Business & Finance", school: "Florida A&M University", year: "2019" },
               { degree: "Bachelor of Technology (B.Tech)", field: "Statistics", school: "Federal University of Technology, Akure", year: "2017" },
-              { field: "Computer Science", school: "The Polytechnic, Ibadan", year: "2010" },
+              { degree: "Higher National Diploma (HND)", field: "Computer Science", school: "The Polytechnic, Ibadan", year: "2010" },
             ].map((e, i) => (
               <div key={i} style={{ padding: "14px 0", borderBottom: "1px solid rgba(58,50,40,0.06)", display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: 8 }}>
                 <div>
@@ -1304,8 +1863,125 @@ export default function AcademicWebsite() {
         </div>
       </Section>
 
+      {/* ═══════════ SCHOLARSHIP ═══════════ */}
+      <Section id="scholarship" style={{ padding: "80px 0", background: "rgba(255,255,255,0.4)" }}>
+        <div style={containerStyle}>
+          <SectionLabel text="Scholarship" />
+          <SectionTitle text="The Olu Arigbede Scholarship" />
+          <Divider />
+
+          {/* Mission statement */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 20, marginBottom: 40 }}>
+            <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "15.5px", lineHeight: 1.8, color: "#3a3228" }}>
+              The Olu Arigbede Scholarship was established in 2025 to support the academic futures of outstanding undergraduate students at Nigerian universities. Rooted in a commitment to research excellence and innovation, this scholarship provides financial support and recognition to rising final-year students who demonstrate exceptional intellectual curiosity, academic merit, and a genuine desire to advance healthcare systems through rigorous research or creative problem-solving.
+            </p>
+            <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "15.5px", lineHeight: 1.8, color: "#3a3228" }}>
+              Each year, the scholarship supports two distinct tracks: a <strong>Research Scholarship</strong> for students producing high-quality academic articles on a designated public health theme, and an <strong>Innovation Scholarship</strong> for students developing practical, scalable solutions to real healthcare challenges in Nigeria. Three scholars are selected per track, each receiving <strong>₦100,000</strong> to support their academic and professional development.
+            </p>
+          </div>
+
+          {/* Key highlights bar */}
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16, marginBottom: 40 }} className="scholarship-grid">
+            {[
+              { label: "Scholars Per Track", value: "3", sub: "6 total annually" },
+              { label: "Award Amount", value: "₦100,000", sub: "Per recipient" },
+              { label: "Application Cycle", value: "2025/2026", sub: "Now accepting applications" },
+            ].map((stat, i) => (
+              <div key={i} style={{ padding: "22px 20px", background: "rgba(139,69,19,0.03)", border: "1px solid rgba(139,69,19,0.1)", borderRadius: 10, textAlign: "center" }}>
+                <p style={{ fontFamily: "'Lora', serif", fontSize: "24px", fontWeight: 700, color: "#8B4513", margin: "0 0 4px 0" }}>{stat.value}</p>
+                <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "12px", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "#2c2520", margin: "0 0 2px 0" }}>{stat.label}</p>
+                <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "12px", color: "#7a7068", margin: 0 }}>{stat.sub}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Scholarship program cards */}
+          <div className="scholarship-grid" style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 20, marginBottom: 36 }}>
+            {SCHOLARSHIP_PROGRAMS.map((prog) => {
+              const [hovered, setHovered] = useState(false);
+              return (
+                <div
+                  key={prog.id}
+                  onMouseEnter={() => setHovered(true)}
+                  onMouseLeave={() => setHovered(false)}
+                  style={{
+                    padding: "32px 28px",
+                    background: hovered ? "rgba(139,69,19,0.04)" : "rgba(255,255,255,0.6)",
+                    border: "1px solid rgba(58,50,40,0.08)",
+                    borderRadius: 12,
+                    transition: "all 0.35s ease",
+                    transform: hovered ? "translateY(-3px)" : "translateY(0)",
+                    boxShadow: hovered ? "0 8px 30px rgba(58,50,40,0.06)" : "none",
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
+                  <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
+                    <span style={{ fontSize: 32 }}>{prog.icon}</span>
+                    <StatusBadge status="active" label="Open" />
+                  </div>
+
+                  <h4 style={{ fontFamily: "'Lora', serif", fontSize: "19px", fontWeight: 600, color: "#2c2520", margin: "0 0 6px 0", lineHeight: 1.3 }}>
+                    {prog.title}
+                  </h4>
+                  <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#8B4513", fontWeight: 600, margin: "0 0 12px 0" }}>
+                    Award: {prog.award} · {prog.slots} recipients
+                  </p>
+
+                  <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#5c5147", lineHeight: 1.7, margin: "0 0 16px 0", flex: 1 }}>
+                    {prog.description}
+                  </p>
+
+                  {/* Theme callout */}
+                  <div style={{ padding: "12px 16px", background: "rgba(139,69,19,0.04)", border: "1px solid rgba(139,69,19,0.1)", borderRadius: 8, marginBottom: 20 }}>
+                    <span style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "10.5px", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "#8B4513" }}>2025/2026 Theme</span>
+                    <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13px", color: "#2c2520", fontWeight: 500, lineHeight: 1.5, margin: "4px 0 0 0" }}>
+                      {prog.theme}
+                    </p>
+                  </div>
+
+                  <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+                    <button
+                      onClick={() => setViewingScholarship(prog.id)}
+                      style={{
+                        fontFamily: "'Source Sans 3', sans-serif", fontSize: "12px", fontWeight: 600,
+                        letterSpacing: "0.06em", textTransform: "uppercase",
+                        color: "#8B4513", background: "rgba(139,69,19,0.06)",
+                        border: "1px solid rgba(139,69,19,0.15)", borderRadius: 6,
+                        padding: "10px 18px", cursor: "pointer", transition: "all 0.25s",
+                      }}
+                    >
+                      Full Details & Requirements
+                    </button>
+                    <button
+                      onClick={() => setApplyingScholarship(prog.id)}
+                      style={{
+                        fontFamily: "'Source Sans 3', sans-serif", fontSize: "12px", fontWeight: 600,
+                        letterSpacing: "0.06em", textTransform: "uppercase",
+                        color: "#fff", background: "#2c2520",
+                        border: "none", borderRadius: 6,
+                        padding: "10px 18px", cursor: "pointer", transition: "all 0.25s",
+                      }}
+                    >
+                      Apply Now →
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Important note */}
+          <div style={{ padding: "22px 26px", background: "rgba(178,34,34,0.03)", border: "1px solid rgba(178,34,34,0.1)", borderRadius: 10 }}>
+            <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#3a3228", lineHeight: 1.75, margin: 0 }}>
+              <strong style={{ color: "#B22222" }}>Academic Integrity Statement:</strong> All submissions to The Olu Arigbede Scholarship must be entirely the applicant's own original work. Applications containing content generated by AI tools (including ChatGPT, Gemini, Copilot, or similar platforms), plagiarized material, or falsified documents will be immediately disqualified. Every submission undergoes rigorous AI-detection and plagiarism screening. This scholarship exists to celebrate and reward authentic intellectual effort.
+            </p>
+          </div>
+        </div>
+      </Section>
+
       {/* ═══════════ CONTACT ═══════════ */}
-      <Section id="contact" style={{ padding: "80px 0", background: "rgba(255,255,255,0.4)" }}>
+      <Section id="contact" style={{ padding: "80px 0" }}>
         <div style={containerStyle}>
           <SectionLabel text="Contact" />
           <SectionTitle text="Get in Touch" />
