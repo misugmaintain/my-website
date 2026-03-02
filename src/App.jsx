@@ -2698,7 +2698,7 @@ const [applyingVolunteer, setApplyingVolunteer] = useState(null);
       </Section>
 
 {/* ═══ BLOCK 6: Insert these three sections BETWEEN the Scholarship section and the Contact section ═══ */}
-{/* ═══ i.e., right AFTER </Section> that closes Scholarship, and right BEFORE the {/* ═══════════ CONTACT ═══════════ */} comment ═══ */}
+{/* ═══ i.e., right AFTER </Section> that closes Scholarship, and right BEFORE the {/* ═══════════ CONTACT ═══════════ */}
 
 {/* ═══════════ MENTORSHIP ═══════════ */}
 <Section id="mentorship" style={{ padding: "80px 0" }}>
