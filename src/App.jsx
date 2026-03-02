@@ -279,6 +279,7 @@ const SERVICES_DATA = [
       "Funding and scholarship identification",
       "Pre-arrival orientation and transition guidance",
     ],
+stripeLink: "https://buy.stripe.com/test_5kQeVdfqZ5JX3An0ak5AQ04",
   },
   {
     id: "data-analysis",
@@ -295,6 +296,7 @@ const SERVICES_DATA = [
       "Results interpretation and visualization",
       "Detailed methods and results write-up",
     ],
+stripeLink: "https://buy.stripe.com/test_5kQeVd5Qp0pD3AnaOY5AQ02",
   },
   {
     id: "grant-writing",
@@ -311,6 +313,7 @@ const SERVICES_DATA = [
       "Budget and budget justification preparation",
       "Up to 3 rounds of revision and feedback",
     ],
+stripeLink: "https://buy.stripe.com/test_6oU5kDceN6O18UH2is5AQ01",
   },
   {
     id: "grant-assessment",
@@ -327,6 +330,7 @@ const SERVICES_DATA = [
       "Specific, actionable recommendations for strengthening",
       "One follow-up consultation call (up to 1 hour)",
     ],
+stripeLink: "https://buy.stripe.com/test_4gMeVd7Yxc8lb2PbT25AQ05",
   },
   {
     id: "scientific-writing",
@@ -343,6 +347,7 @@ const SERVICES_DATA = [
       "Journal selection and formatting guidance",
       "Revision support for peer reviewer feedback",
     ],
+stripeLink: "https://buy.stripe.com/test_9B614n0w54FT0ob3mw5AQ03",
   },
   {
     id: "biostat-consulting",
@@ -359,6 +364,7 @@ const SERVICES_DATA = [
       "Results interpretation and peer-review response",
       "Ad-hoc statistical questions and troubleshooting",
     ],
+stripeLink: "https://buy.stripe.com/test_14A4gzdiR3BP8UH3mw5AQ00",
   },
 ];
 
@@ -1812,30 +1818,23 @@ function ServiceRequestForm({ service, onClose }) {
     phone: "",
     affiliation: "",
     synopsis: "",
-    cardholderName: "",
-    cardNumber: "",
-    expiry: "",
-    cvv: "",
   });
-  const [agreed, setAgreed] = useState(false);
-  const [status, setStatus] = useState("idle");
+  const [status, setStatus] = useState("idle"); // idle | sending | submitted | error | incomplete
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
     return () => { document.body.style.overflow = ""; };
   }, []);
 
-  const inputStyle = { fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#2c2520", background: "rgba(255,255,255,0.7)", border: "1px solid rgba(58,50,40,0.15)", borderRadius: 8, padding: "11px 14px", width: "100%", outline: "none", transition: "border-color 0.25s" };
-  const labelStyle = { fontFamily: "'Source Sans 3', sans-serif", fontSize: "11.5px", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "#5c5147", display: "block", marginBottom: 5 };
+  const inputStyle = { fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#2c2520", background: "rgba(255,255,255,0.7)", border: "1px solid rgba(58,50,40,0.15)", borderRadius: 8, padding: "11px 14px", width: "100%", outline: "none", transition: "border-color 0.25s", };
+  const labelStyle = { fontFamily: "'Source Sans 3', sans-serif", fontSize: "11.5px", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "#5c5147", display: "block", marginBottom: 5, };
   const handleChange = (field) => (e) => setFormData((p) => ({ ...p, [field]: e.target.value }));
 
   const handleSubmit = async () => {
-    const required = ["fullName", "email", "phone", "affiliation", "synopsis", "cardholderName", "cardNumber", "expiry", "cvv"];
-    if (required.some((f) => !formData[f].trim()) || !agreed) { setStatus("incomplete"); return; }
+    const required = ["fullName", "email", "phone", "affiliation", "synopsis"];
+    if (required.some((f) => !formData[f].trim())) { setStatus("incomplete"); return; }
     setStatus("sending");
     try {
-      // NOTE: In production, integrate a real payment processor (Stripe, PayPal, etc.)
-      // Do NOT send raw card details via Formspree. This form is a placeholder structure.
       const res = await fetch("https://formspree.io/f/maqdznwd", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
@@ -1848,11 +1847,31 @@ function ServiceRequestForm({ service, onClose }) {
           phone: formData.phone,
           affiliation: formData.affiliation,
           synopsis: formData.synopsis,
-          payment: "Card details submitted (integrate payment processor for production)",
         }),
       });
-      setStatus(res.ok ? "success" : "error");
-    } catch { setStatus("error"); }
+      if (res.ok) {
+        setStatus("submitted");
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
+  };
+
+// Step 2: Redirect to Stripe Checkout for payment
+  const handlePayment = () => {
+    // If using Stripe Payment Links (Option A):
+    if (service.stripeLink) {
+      // Append prefilled email so Stripe pre-fills the customer info
+      const url = `${service.stripeLink}?prefilled_email=${encodeURIComponent(formData.email)}`;
+      window.open(url, "_blank");
+    } else {
+      // Fallback: alert the user that payment links are not yet configured
+      alert(
+        "Payment processing is being configured. Please contact Dr. Arigbede directly to arrange payment."
+      );
+    }
   };
 
   return (
@@ -1867,60 +1886,398 @@ function ServiceRequestForm({ service, onClose }) {
         <h2 style={{ fontFamily: "'Lora', serif", fontSize: "clamp(20px, 2.8vw, 24px)", fontWeight: 600, color: "#2c2520", margin: "10px 0 6px 0" }}>Request: {service.title}</h2>
         <div style={{ width: 40, height: 2, background: "#8B4513", borderRadius: 1, margin: "12px 0 24px 0" }} />
 
-        {status === "success" ? (
-          <div style={{ textAlign: "center", padding: "40px 20px" }}>
-            <div style={{ fontSize: 48, marginBottom: 16 }}>✓</div>
-            <h3 style={{ fontFamily: "'Lora', serif", fontSize: "22px", fontWeight: 600, color: "#228B22", margin: "0 0 12px 0" }}>Request Submitted</h3>
-            <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "15px", color: "#3a3228", lineHeight: 1.7 }}>Your service request has been received. You will receive a confirmation email with next steps within 2–3 business days.</p>
-            <button onClick={onClose} style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13px", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "#fff", background: "#2c2520", border: "none", borderRadius: 6, padding: "12px 28px", cursor: "pointer", marginTop: 24 }}>Close</button>
-          </div>
-        ) : (
+       {/* ─── PHASE 1: Collect contact details + synopsis ─── */}
+        {status !== "submitted" ? (
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-            <div style={{ padding: "16px 0 0 0", borderTop: "1px solid rgba(58,50,40,0.06)" }}>
-              <span style={{ fontFamily: "'Lora', serif", fontSize: "16px", fontWeight: 600, color: "#2c2520" }}>Contact Information</span>
+            <div
+              style={{
+                padding: "16px 0 0 0",
+                borderTop: "1px solid rgba(58,50,40,0.06)",
+              }}
+            >
+              <span
+                style={{
+                  fontFamily: "'Lora', serif",
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#2c2520",
+                }}
+              >
+                Contact Information
+              </span>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }} className="scholarship-form-grid">
-              <div><label style={labelStyle}>Full Name</label><input type="text" value={formData.fullName} onChange={handleChange("fullName")} placeholder="Your full name" style={inputStyle} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} /></div>
-              <div><label style={labelStyle}>Email Address</label><input type="email" value={formData.email} onChange={handleChange("email")} placeholder="you@example.com" style={inputStyle} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} /></div>
-              <div><label style={labelStyle}>Phone Number</label><input type="tel" value={formData.phone} onChange={handleChange("phone")} placeholder="+1 000 000 0000" style={inputStyle} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} /></div>
-              <div><label style={labelStyle}>Affiliation / Organization</label><input type="text" value={formData.affiliation} onChange={handleChange("affiliation")} placeholder="University, company, or independent" style={inputStyle} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} /></div>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: 14,
+              }}
+              className="scholarship-form-grid"
+            >
+              <div>
+                <label style={labelStyle}>Full Name</label>
+                <input
+                  type="text"
+                  value={formData.fullName}
+                  onChange={handleChange("fullName")}
+                  placeholder="Your full name"
+                  style={inputStyle}
+                  onFocus={(e) => (e.target.style.borderColor = "#8B4513")}
+                  onBlur={(e) =>
+                    (e.target.style.borderColor = "rgba(58,50,40,0.15)")
+                  }
+                />
+              </div>
+              <div>
+                <label style={labelStyle}>Email Address</label>
+                <input
+                  type="email"
+                  value={formData.email}
+                  onChange={handleChange("email")}
+                  placeholder="you@example.com"
+                  style={inputStyle}
+                  onFocus={(e) => (e.target.style.borderColor = "#8B4513")}
+                  onBlur={(e) =>
+                    (e.target.style.borderColor = "rgba(58,50,40,0.15)")
+                  }
+                />
+              </div>
+              <div>
+                <label style={labelStyle}>Phone Number</label>
+                <input
+                  type="tel"
+                  value={formData.phone}
+                  onChange={handleChange("phone")}
+                  placeholder="+1 000 000 0000"
+                  style={inputStyle}
+                  onFocus={(e) => (e.target.style.borderColor = "#8B4513")}
+                  onBlur={(e) =>
+                    (e.target.style.borderColor = "rgba(58,50,40,0.15)")
+                  }
+                />
+              </div>
+              <div>
+                <label style={labelStyle}>Affiliation / Organization</label>
+                <input
+                  type="text"
+                  value={formData.affiliation}
+                  onChange={handleChange("affiliation")}
+                  placeholder="University, company, or independent"
+                  style={inputStyle}
+                  onFocus={(e) => (e.target.style.borderColor = "#8B4513")}
+                  onBlur={(e) =>
+                    (e.target.style.borderColor = "rgba(58,50,40,0.15)")
+                  }
+                />
+              </div>
             </div>
             <div>
               <label style={labelStyle}>Synopsis of Service Needed</label>
-              <textarea value={formData.synopsis} onChange={handleChange("synopsis")} placeholder="Describe your project, research question, timeline, and what you need help with..." rows={5} style={{ ...inputStyle, resize: "vertical", minHeight: 120 }} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} />
-            </div>
-
-            <div style={{ padding: "16px 0 0 0", borderTop: "1px solid rgba(58,50,40,0.06)" }}>
-              <span style={{ fontFamily: "'Lora', serif", fontSize: "16px", fontWeight: 600, color: "#2c2520" }}>Payment Information</span>
-              <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "12px", color: "#7a7068", margin: "4px 0 0 0" }}>Service fee: <strong style={{ color: "#8B4513" }}>${service.price} {service.unit}</strong></p>
-            </div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }} className="scholarship-form-grid">
-              <div><label style={labelStyle}>Cardholder Name</label><input type="text" value={formData.cardholderName} onChange={handleChange("cardholderName")} placeholder="Name on card" style={inputStyle} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} /></div>
-              <div><label style={labelStyle}>Card Number</label><input type="text" value={formData.cardNumber} onChange={handleChange("cardNumber")} placeholder="0000 0000 0000 0000" style={inputStyle} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} /></div>
-              <div><label style={labelStyle}>Expiry Date</label><input type="text" value={formData.expiry} onChange={handleChange("expiry")} placeholder="MM/YY" style={inputStyle} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} /></div>
-              <div><label style={labelStyle}>CVV</label><input type="text" value={formData.cvv} onChange={handleChange("cvv")} placeholder="123" style={inputStyle} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} /></div>
+              <textarea
+                value={formData.synopsis}
+                onChange={handleChange("synopsis")}
+                placeholder="Describe your project, research question, timeline, and what you need help with..."
+                rows={5}
+                style={{
+                  ...inputStyle,
+                  resize: "vertical",
+                  minHeight: 120,
+                }}
+                onFocus={(e) => (e.target.style.borderColor = "#8B4513")}
+                onBlur={(e) =>
+                  (e.target.style.borderColor = "rgba(58,50,40,0.15)")
+                }
+              />
             </div>
 
             {/* Refund policy */}
-            <div style={{ padding: "16px 20px", background: "rgba(178,34,34,0.04)", border: "1px solid rgba(178,34,34,0.12)", borderRadius: 10 }}>
-              <span style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "11px", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "#B22222" }}>Refund Policy</span>
-              <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13px", color: "#3a3228", lineHeight: 1.7, margin: "6px 0 0 0" }}>
-                Once a service engagement has commenced, the service fee is non-refundable. For hourly services, if the engagement is terminated before completion, the fee will be prorated based on hours worked and the remaining balance refunded. By submitting this form, you acknowledge and agree to this policy.
+            <div
+              style={{
+                padding: "16px 20px",
+                background: "rgba(178,34,34,0.04)",
+                border: "1px solid rgba(178,34,34,0.12)",
+                borderRadius: 10,
+              }}
+            >
+              <span
+                style={{
+                  fontFamily: "'Source Sans 3', sans-serif",
+                  fontSize: "11px",
+                  fontWeight: 600,
+                  letterSpacing: "0.12em",
+                  textTransform: "uppercase",
+                  color: "#B22222",
+                }}
+              >
+                Refund Policy
+              </span>
+              <p
+                style={{
+                  fontFamily: "'Source Sans 3', sans-serif",
+                  fontSize: "13px",
+                  color: "#3a3228",
+                  lineHeight: 1.7,
+                  margin: "6px 0 0 0",
+                }}
+              >
+                Once a service engagement has commenced, the service fee is
+                non-refundable. For hourly services, if the engagement is
+                terminated before completion, the fee will be prorated based on
+                hours worked and the remaining balance refunded. By proceeding,
+                you acknowledge and agree to this policy.
               </p>
             </div>
 
-            <label style={{ display: "flex", alignItems: "flex-start", gap: 10, cursor: "pointer" }}>
-              <input type="checkbox" checked={agreed} onChange={() => setAgreed(!agreed)} style={{ marginTop: 3, accentColor: "#8B4513" }} />
-              <span style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13px", color: "#3a3228", lineHeight: 1.6 }}>
-                I acknowledge the service fee of <strong>${service.price} {service.unit}</strong> and agree to the refund policy stated above.
-              </span>
-            </label>
-
-            <button onClick={handleSubmit} disabled={status === "sending"} style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13px", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "#fff", background: status === "sending" ? "#7a7068" : "#2c2520", border: "none", borderRadius: 6, padding: "14px 32px", cursor: status === "sending" ? "wait" : "pointer", transition: "background 0.3s", alignSelf: "flex-start" }}>
-              {status === "sending" ? "Submitting..." : "Submit Service Request"}
+            <button
+              onClick={handleSubmitDetails}
+              disabled={status === "sending"}
+              style={{
+                fontFamily: "'Source Sans 3', sans-serif",
+                fontSize: "13px",
+                fontWeight: 600,
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                color: "#fff",
+                background: status === "sending" ? "#7a7068" : "#2c2520",
+                border: "none",
+                borderRadius: 6,
+                padding: "14px 32px",
+                cursor: status === "sending" ? "wait" : "pointer",
+                transition: "background 0.3s",
+                alignSelf: "flex-start",
+              }}
+            >
+              {status === "sending"
+                ? "Submitting..."
+                : "Continue to Payment →"}
             </button>
-            {status === "incomplete" && <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#B8860B", margin: 0 }}>Please complete all fields and acknowledge the refund policy.</p>}
-            {status === "error" && <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#B22222", margin: 0 }}>Something went wrong. Please try again or contact Dr. Arigbede directly.</p>}
+
+            {status === "incomplete" && (
+              <p
+                style={{
+                  fontFamily: "'Source Sans 3', sans-serif",
+                  fontSize: "14px",
+                  color: "#B8860B",
+                  margin: 0,
+                }}
+              >
+                Please complete all fields before continuing.
+              </p>
+            )}
+            {status === "error" && (
+              <p
+                style={{
+                  fontFamily: "'Source Sans 3', sans-serif",
+                  fontSize: "14px",
+                  color: "#B22222",
+                  margin: 0,
+                }}
+              >
+                Something went wrong. Please try again or contact Dr. Arigbede
+                directly.
+              </p>
+            )}
+          </div>
+        ) : (
+          /* ─── PHASE 2: Details submitted → prompt Stripe payment ─── */
+          <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+            <div
+              style={{
+                padding: "24px",
+                background: "rgba(34,139,34,0.05)",
+                border: "1px solid rgba(34,139,34,0.15)",
+                borderRadius: 10,
+                textAlign: "center",
+              }}
+            >
+              <div style={{ fontSize: 36, marginBottom: 10 }}>✓</div>
+              <h3
+                style={{
+                  fontFamily: "'Lora', serif",
+                  fontSize: "20px",
+                  fontWeight: 600,
+                  color: "#228B22",
+                  margin: "0 0 8px 0",
+                }}
+              >
+                Request Details Received
+              </h3>
+              <p
+                style={{
+                  fontFamily: "'Source Sans 3', sans-serif",
+                  fontSize: "14px",
+                  color: "#3a3228",
+                  lineHeight: 1.7,
+                  margin: 0,
+                }}
+              >
+                Your service request for{" "}
+                <strong>{service.title}</strong> has been recorded.
+                Please proceed to complete payment securely via Stripe.
+              </p>
+            </div>
+
+            {/* Payment summary */}
+            <div
+              style={{
+                padding: "20px 24px",
+                background: "rgba(139,69,19,0.03)",
+                border: "1px solid rgba(139,69,19,0.1)",
+                borderRadius: 10,
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <div>
+                  <p
+                    style={{
+                      fontFamily: "'Source Sans 3', sans-serif",
+                      fontSize: "13px",
+                      color: "#7a7068",
+                      margin: "0 0 4px 0",
+                    }}
+                  >
+                    Service
+                  </p>
+                  <p
+                    style={{
+                      fontFamily: "'Lora', serif",
+                      fontSize: "16px",
+                      fontWeight: 600,
+                      color: "#2c2520",
+                      margin: 0,
+                    }}
+                  >
+                    {service.title}
+                  </p>
+                </div>
+                <div style={{ textAlign: "right" }}>
+                  <p
+                    style={{
+                      fontFamily: "'Source Sans 3', sans-serif",
+                      fontSize: "13px",
+                      color: "#7a7068",
+                      margin: "0 0 4px 0",
+                    }}
+                  >
+                    Fee
+                  </p>
+                  <p
+                    style={{
+                      fontFamily: "'Lora', serif",
+                      fontSize: "22px",
+                      fontWeight: 700,
+                      color: "#8B4513",
+                      margin: 0,
+                    }}
+                  >
+                    ${service.price}
+                    <span
+                      style={{
+                        fontFamily: "'Source Sans 3', sans-serif",
+                        fontSize: "12px",
+                        fontWeight: 400,
+                        color: "#7a7068",
+                      }}
+                    >
+                      {" "}
+                      {service.unit}
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Secure payment badges */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                justifyContent: "center",
+              }}
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#228B22"
+                strokeWidth="2"
+              >
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                <path d="M7 11V7a5 5 0 0110 0v4" />
+              </svg>
+              <span
+                style={{
+                  fontFamily: "'Source Sans 3', sans-serif",
+                  fontSize: "12px",
+                  color: "#228B22",
+                  fontWeight: 600,
+                  letterSpacing: "0.04em",
+                }}
+              >
+                Secure payment processed by Stripe
+              </span>
+            </div>
+
+            <button
+              onClick={handlePayment}
+              style={{
+                fontFamily: "'Source Sans 3', sans-serif",
+                fontSize: "14px",
+                fontWeight: 600,
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+                color: "#fff",
+                background: "#635BFF", // Stripe purple
+                border: "none",
+                borderRadius: 8,
+                padding: "16px 36px",
+                cursor: "pointer",
+                transition: "background 0.3s",
+                alignSelf: "center",
+                width: "100%",
+                maxWidth: 360,
+              }}
+            >
+              Pay with Stripe →
+            </button>
+
+            <p
+              style={{
+                fontFamily: "'Source Sans 3', sans-serif",
+                fontSize: "12px",
+                color: "#9a8e82",
+                textAlign: "center",
+                lineHeight: 1.6,
+              }}
+            >
+              You will be redirected to Stripe's secure checkout page.
+              <br />
+              Your card details are never stored on this website.
+            </p>
+
+            <button
+              onClick={onClose}
+              style={{
+                fontFamily: "'Source Sans 3', sans-serif",
+                fontSize: "12px",
+                color: "#7a7068",
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+                textDecoration: "underline",
+                alignSelf: "center",
+              }}
+            >
+              Close
+            </button>
           </div>
         )}
       </div>
