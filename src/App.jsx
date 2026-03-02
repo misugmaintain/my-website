@@ -2029,7 +2029,7 @@ function ServiceRequestForm({ service, onClose }) {
             </div>
 
             <button
-              onClick={handleSubmitDetails}
+              onClick={handleSubmit}
               disabled={status === "sending"}
               style={{
                 fontFamily: "'Source Sans 3', sans-serif",
