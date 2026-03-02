@@ -2,7 +2,8 @@ import { useState, useEffect, useRef } from "react";
 
 const SECTIONS = [
   "Home", "About", "Experience", "Research", "Publications",
-  "Teaching", "Events", "Articles", "Opportunities", "Podcasts", "Scholarship", "Contact"
+  "Teaching", "Events", "Articles", "Opportunities", "Podcasts",
+  "Scholarship", "Mentorship", "Services", "Volunteering", "Contact"
 ];
 
 const NAV_IDS = {
@@ -17,6 +18,9 @@ const NAV_IDS = {
   Opportunities: "opportunities",
   Podcasts: "podcasts",
   Scholarship: "scholarship",
+  Mentorship: "mentorship",
+  Services: "services",
+  Volunteering: "volunteering",
   Contact: "contact",
 };
 
@@ -253,6 +257,193 @@ const SCHOLARSHIP_PROGRAMS = [
       "Bank account details including sort code",
       "Two recommendation letters — one must be from the Head of Department (HOD) of the applicant's program, and the second from another faculty member in the department",
       "Current résumé or curriculum vitae",
+    ],
+  },
+];
+
+// ═══ BLOCK 2: Add these data constants AFTER the SCHOLARSHIP_PROGRAMS array ═══
+
+const SERVICES_DATA = [
+  {
+    id: "international exposure",
+    title: "International Graduate Education",
+    icon: "🌍",
+    price: 500,
+    unit: "per engagement",
+    description:
+      "Structured guidance for international students planning to relocate for graduate education in the United States. Covers program selection strategy, application positioning, visa preparation, personal statement/statement of purpose, funding identification, and cultural transition planning.",
+    includes: [
+      "One-on-one consultation sessions (up to 4 hours)",
+      "Program shortlisting and fit assessment",
+      "Personal statement and CV review",
+      "Funding and scholarship identification",
+      "Pre-arrival orientation and transition guidance",
+    ],
+  },
+  {
+    id: "data-analysis",
+    title: "Statistical & Data Analysis",
+    icon: "📊",
+    price: 150,
+    unit: "per hour",
+    description:
+      "Comprehensive biostatistical analysis using appropriate methods for your research design. Includes descriptive and inferential statistics, regression modeling, survival analysis, meta-analysis, and advanced techniques, among others, in R, SAS, or Python.",
+    includes: [
+      "Study design consultation and power analysis",
+      "Data cleaning, management, and quality checks",
+      "Statistical analysis and model building",
+      "Results interpretation and visualization",
+      "Detailed methods and results write-up",
+    ],
+  },
+  {
+    id: "grant-writing",
+    title: "Grant Writing",
+    icon: "✍️",
+    price: 2500,
+    unit: "per grant",
+    description:
+      "End-to-end grant writing support for NIH, NSF, PCORI, foundation, and institutional grant applications. Includes specific aims development, research strategy drafting, budget justification, and iterative review.",
+    includes: [
+      "Specific aims page development",
+      "Research strategy and significance drafting",
+      "Statistical analysis plan and power calculations",
+      "Budget and budget justification preparation",
+      "Up to 3 rounds of revision and feedback",
+    ],
+  },
+  {
+    id: "grant-assessment",
+    title: "Grant Proposal Assessment",
+    icon: "🔍",
+    price: 800,
+    unit: "per proposal",
+    description:
+      "Critical review and scoring of draft grant proposals using NIH-style review criteria. Provides detailed written feedback on significance, innovation, approach, investigator qualifications, and environment with actionable recommendations.",
+    includes: [
+      "Full proposal review against funder criteria",
+      "Detailed written critique with scored evaluation",
+      "Statistical methods and analysis plan assessment",
+      "Specific, actionable recommendations for strengthening",
+      "One follow-up consultation call (up to 1 hour)",
+    ],
+  },
+  {
+    id: "scientific-writing",
+    title: "Scientific Research Writing",
+    icon: "📝",
+    price: 175,
+    unit: "per hour",
+    description:
+      "Professional support for manuscript preparation, systematic reviews, and scientific publications. Assistance with drafting, editing, statistical reporting, and formatting for target journals.",
+    includes: [
+      "Manuscript structuring and outline development",
+      "Methods and results section drafting",
+      "Statistical results reporting (tables, figures)",
+      "Journal selection and formatting guidance",
+      "Revision support for peer reviewer feedback",
+    ],
+  },
+  {
+    id: "biostat-consulting",
+    title: "General Biostatistical Consulting",
+    icon: "🧮",
+    price: 150,
+    unit: "per hour",
+    description:
+      "Flexible consulting for researchers who need biostatistical guidance on study design, sample size calculations, analytical strategy, results interpretation, or peer-review response.",
+    includes: [
+      "Study design and methodology consultation",
+      "Sample size and power calculations",
+      "Analytical strategy and statistical plan development",
+      "Results interpretation and peer-review response",
+      "Ad-hoc statistical questions and troubleshooting",
+    ],
+  },
+];
+
+const VOLUNTEERING_DATA = [
+  {
+    id: "research-assistant",
+    title: "Volunteer Research Assistant",
+    commitment: "5–10 hours/week",
+    duration: "3–6 months",
+    mode: "Remote",
+    status: "open",
+    description:
+      "Assist with ongoing epidemiological and biostatistical research projects. Tasks may include literature reviews, data entry and cleaning, preliminary analyses, and manuscript preparation support.",
+    qualifications: [
+      "Enrolled in or recently completed a public health, statistics, epidemiology, or related program",
+      "Basic proficiency in R, SAS, or Python preferred",
+      "Strong attention to detail and commitment to data quality",
+    ],
+    benefits: [
+      "Hands-on research experience with published outputs",
+      "Mentorship from Dr. Arigbede and collaborators",
+      "Letter of recommendation upon successful completion",
+      "Co-authorship opportunity on qualifying projects",
+    ],
+  },
+  {
+    id: "webinar-coordinator",
+    title: "Webinar & Events Coordinator",
+    commitment: "3–5 hours/week",
+    duration: "Semester-based",
+    mode: "Remote",
+    status: "open",
+    description:
+      "Help organize and promote the monthly biostatistics webinar series and other academic events. Responsibilities include scheduling, outreach, registration management, and post-event communications.",
+    qualifications: [
+      "Strong organizational and communication skills",
+      "Familiarity with Zoom, Google Workspace, or similar platforms",
+      "Interest in public health education and knowledge dissemination",
+    ],
+    benefits: [
+      "Experience in academic event management",
+      "Networking with public health researchers and professionals",
+      "Certificate of volunteer service",
+      "Letter of recommendation upon successful completion",
+    ],
+  },
+  {
+    id: "content-writer",
+    title: "Public Health Content Writer",
+    commitment: "3–5 hours/week",
+    duration: "Flexible",
+    mode: "Remote",
+    status: "open",
+    description:
+      "Contribute short-form articles, blog posts, and educational content on topics in biostatistics, epidemiology, and public health for this website and associated platforms.",
+    qualifications: [
+      "Graduate student or early-career professional in public health or related field",
+      "Strong scientific writing skills",
+      "Ability to translate technical concepts for diverse audiences",
+    ],
+    benefits: [
+      "Published byline on a professional academic platform",
+      "Editorial mentorship and writing feedback",
+      "Portfolio development for academic and professional growth",
+      "Letter of recommendation upon successful completion",
+    ],
+  },
+  {
+    id: "scholarship-reviewer",
+    title: "Scholarship Application Reviewer",
+    commitment: "10–15 hours total",
+    duration: "Annual review cycle (4–6 weeks)",
+    mode: "Remote",
+    status: "upcoming",
+    description:
+      "Serve on the review panel for The Olu Arigbede Scholarship applications. Review and score submissions based on academic merit, research quality, innovation, and adherence to guidelines.",
+    qualifications: [
+      "Doctoral degree or advanced graduate student in a relevant field",
+      "Experience with academic review or peer evaluation",
+      "Commitment to fair, unbiased evaluation practices",
+    ],
+    benefits: [
+      "Experience in academic grant and scholarship review",
+      "Certificate of service on the review panel",
+      "Networking with scholars across disciplines",
     ],
   },
 ];
@@ -1409,6 +1600,499 @@ function ScholarshipApplicationForm({ programId, onClose }) {
   );
 }
 
+// ═══ BLOCK 3: Add these components AFTER the ScholarshipApplicationForm component ═══
+// ═══ (i.e., right before the "// MAIN APP" comment) ═══
+
+// ── Mentorship Registration Form ──
+function MentorshipForm({ onClose }) {
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    phone: "",
+    country: "",
+    affiliation: "",
+    fieldOfStudy: "",
+    careerStage: "",
+    goals: "",
+    howHeard: "",
+  });
+  const [status, setStatus] = useState("idle");
+
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = ""; };
+  }, []);
+
+  const inputStyle = {
+    fontFamily: "'Source Sans 3', sans-serif",
+    fontSize: "14px",
+    color: "#2c2520",
+    background: "rgba(255,255,255,0.7)",
+    border: "1px solid rgba(58,50,40,0.15)",
+    borderRadius: 8,
+    padding: "11px 14px",
+    width: "100%",
+    outline: "none",
+    transition: "border-color 0.25s",
+  };
+  const labelStyle = {
+    fontFamily: "'Source Sans 3', sans-serif",
+    fontSize: "11.5px",
+    fontWeight: 600,
+    letterSpacing: "0.08em",
+    textTransform: "uppercase",
+    color: "#5c5147",
+    display: "block",
+    marginBottom: 5,
+  };
+
+  const handleChange = (field) => (e) => setFormData((p) => ({ ...p, [field]: e.target.value }));
+
+  const handleSubmit = async () => {
+    const required = ["fullName", "email", "phone", "country", "affiliation", "fieldOfStudy", "careerStage", "goals"];
+    if (required.some((f) => !formData[f].trim())) { setStatus("incomplete"); return; }
+    setStatus("sending");
+    try {
+      const res = await fetch("https://formspree.io/f/maqdznwd", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({ _subject: `Mentorship Registration: ${formData.fullName}`, ...formData }),
+      });
+      setStatus(res.ok ? "success" : "error");
+      if (res.ok) setFormData({ fullName: "", email: "", phone: "", country: "", affiliation: "", fieldOfStudy: "", careerStage: "", goals: "", howHeard: "" });
+    } catch { setStatus("error"); }
+  };
+
+  return (
+    <div style={{ position: "fixed", inset: 0, zIndex: 200, background: "rgba(44,37,32,0.5)", backdropFilter: "blur(4px)", display: "flex", justifyContent: "center", alignItems: "flex-start", padding: "40px 16px", overflowY: "auto" }} onClick={onClose}>
+      <div style={{ background: "#faf7f3", borderRadius: 16, maxWidth: 680, width: "100%", padding: "40px 36px", position: "relative", boxShadow: "0 20px 60px rgba(44,37,32,0.15)", marginBottom: 40 }} onClick={(e) => e.stopPropagation()}>
+        <button onClick={onClose} style={{ position: "absolute", top: 18, right: 18, background: "none", border: "none", cursor: "pointer", fontSize: "24px", color: "#7a7068", lineHeight: 1 }} aria-label="Close">×</button>
+
+        <StatusBadge status="active" label="Open to All" />
+        <h2 style={{ fontFamily: "'Lora', serif", fontSize: "clamp(20px, 2.8vw, 26px)", fontWeight: 600, color: "#2c2520", margin: "14px 0 6px 0" }}>Mentorship Registration</h2>
+        <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13.5px", color: "#7a7068", margin: "0 0 8px 0" }}>Complete the form below to register as a mentee.</p>
+        <div style={{ width: 40, height: 2, background: "#8B4513", borderRadius: 1, margin: "12px 0 28px 0" }} />
+
+        {status === "success" ? (
+          <div style={{ textAlign: "center", padding: "40px 20px" }}>
+            <div style={{ fontSize: 48, marginBottom: 16 }}>✓</div>
+            <h3 style={{ fontFamily: "'Lora', serif", fontSize: "22px", fontWeight: 600, color: "#228B22", margin: "0 0 12px 0" }}>Registration Submitted</h3>
+            <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "15px", color: "#3a3228", lineHeight: 1.7 }}>Thank you for registering. You will receive a confirmation and onboarding details via email shortly.</p>
+            <button onClick={onClose} style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13px", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "#fff", background: "#2c2520", border: "none", borderRadius: 6, padding: "12px 28px", cursor: "pointer", marginTop: 24 }}>Close</button>
+          </div>
+        ) : (
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }} className="scholarship-form-grid">
+              <div><label style={labelStyle}>Full Name</label><input type="text" value={formData.fullName} onChange={handleChange("fullName")} placeholder="Your full name" style={inputStyle} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} /></div>
+              <div><label style={labelStyle}>Email Address</label><input type="email" value={formData.email} onChange={handleChange("email")} placeholder="you@example.com" style={inputStyle} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} /></div>
+              <div><label style={labelStyle}>Phone Number</label><input type="tel" value={formData.phone} onChange={handleChange("phone")} placeholder="+1 000 000 0000" style={inputStyle} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} /></div>
+              <div><label style={labelStyle}>Country of Residence</label><input type="text" value={formData.country} onChange={handleChange("country")} placeholder="e.g., Nigeria, United States" style={inputStyle} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} /></div>
+              <div><label style={labelStyle}>Current Affiliation</label><input type="text" value={formData.affiliation} onChange={handleChange("affiliation")} placeholder="University, organization, or independent" style={inputStyle} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} /></div>
+              <div><label style={labelStyle}>Field of Study / Interest</label><input type="text" value={formData.fieldOfStudy} onChange={handleChange("fieldOfStudy")} placeholder="e.g., Epidemiology, Biostatistics" style={inputStyle} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} /></div>
+            </div>
+            <div>
+              <label style={labelStyle}>Career Stage</label>
+              <select value={formData.careerStage} onChange={handleChange("careerStage")} style={{ ...inputStyle, cursor: "pointer", appearance: "auto" }}>
+                <option value="">Select your current stage...</option>
+                <option value="Undergraduate Student">Undergraduate Student</option>
+                <option value="Graduate Student (Master's)">Graduate Student (Master's)</option>
+                <option value="Graduate Student (Doctoral)">Graduate Student (Doctoral)</option>
+                <option value="Postdoctoral Fellow">Postdoctoral Fellow</option>
+                <option value="Early-Career Professional (0–5 years)">Early-Career Professional (0–5 years)</option>
+                <option value="Mid-Career Professional (5+ years)">Mid-Career Professional (5+ years)</option>
+                <option value="Career Changer">Career Changer</option>
+              </select>
+            </div>
+            <div>
+              <label style={labelStyle}>Mentorship Goals</label>
+              <textarea value={formData.goals} onChange={handleChange("goals")} placeholder="What do you hope to gain from this mentorship? Describe your goals, challenges, and areas where you seek guidance (200–400 words)..." rows={5} style={{ ...inputStyle, resize: "vertical", minHeight: 120 }} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} />
+            </div>
+            <div>
+              <label style={labelStyle}>How Did You Hear About This Program? (Optional)</label>
+              <input type="text" value={formData.howHeard} onChange={handleChange("howHeard")} placeholder="e.g., Google, LinkedIn, a colleague" style={inputStyle} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} />
+            </div>
+
+            <button onClick={handleSubmit} disabled={status === "sending"} style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13px", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "#fff", background: status === "sending" ? "#7a7068" : "#2c2520", border: "none", borderRadius: 6, padding: "14px 32px", cursor: status === "sending" ? "wait" : "pointer", transition: "background 0.3s", alignSelf: "flex-start" }}>
+              {status === "sending" ? "Submitting..." : "Register as Mentee"}
+            </button>
+            {status === "incomplete" && <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#B8860B", margin: 0 }}>Please complete all required fields before submitting.</p>}
+            {status === "error" && <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#B22222", margin: 0 }}>Something went wrong. Please try again or contact Dr. Arigbede directly.</p>}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ── Recommendation Request Form ──
+function RecommendationForm({ onClose }) {
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    menteeStartDate: "",
+    purpose: "",
+    deadline: "",
+    additionalInfo: "",
+  });
+  const [status, setStatus] = useState("idle");
+
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = ""; };
+  }, []);
+
+  const inputStyle = { fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#2c2520", background: "rgba(255,255,255,0.7)", border: "1px solid rgba(58,50,40,0.15)", borderRadius: 8, padding: "11px 14px", width: "100%", outline: "none", transition: "border-color 0.25s" };
+  const labelStyle = { fontFamily: "'Source Sans 3', sans-serif", fontSize: "11.5px", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "#5c5147", display: "block", marginBottom: 5 };
+  const handleChange = (field) => (e) => setFormData((p) => ({ ...p, [field]: e.target.value }));
+
+  const handleSubmit = async () => {
+    const required = ["fullName", "email", "menteeStartDate", "purpose", "deadline"];
+    if (required.some((f) => !formData[f].trim())) { setStatus("incomplete"); return; }
+    setStatus("sending");
+    try {
+      const res = await fetch("https://formspree.io/f/maqdznwd", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({ _subject: `Recommendation Request: ${formData.fullName}`, ...formData }),
+      });
+      setStatus(res.ok ? "success" : "error");
+    } catch { setStatus("error"); }
+  };
+
+  return (
+    <div style={{ position: "fixed", inset: 0, zIndex: 200, background: "rgba(44,37,32,0.5)", backdropFilter: "blur(4px)", display: "flex", justifyContent: "center", alignItems: "flex-start", padding: "40px 16px", overflowY: "auto" }} onClick={onClose}>
+      <div style={{ background: "#faf7f3", borderRadius: 16, maxWidth: 640, width: "100%", padding: "40px 36px", position: "relative", boxShadow: "0 20px 60px rgba(44,37,32,0.15)", marginBottom: 40 }} onClick={(e) => e.stopPropagation()}>
+        <button onClick={onClose} style={{ position: "absolute", top: 18, right: 18, background: "none", border: "none", cursor: "pointer", fontSize: "24px", color: "#7a7068", lineHeight: 1 }} aria-label="Close">×</button>
+
+        <h2 style={{ fontFamily: "'Lora', serif", fontSize: "clamp(20px, 2.8vw, 26px)", fontWeight: 600, color: "#2c2520", margin: "0 0 6px 0" }}>Request a Recommendation Letter</h2>
+        <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13.5px", color: "#7a7068", margin: "0 0 8px 0" }}>You must have been an active mentee for at least 6 months to qualify.</p>
+        <div style={{ width: 40, height: 2, background: "#8B4513", borderRadius: 1, margin: "12px 0 24px 0" }} />
+
+        <div style={{ padding: "14px 18px", background: "rgba(178,34,34,0.04)", border: "1px solid rgba(178,34,34,0.12)", borderRadius: 10, marginBottom: 24 }}>
+          <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13px", color: "#3a3228", lineHeight: 1.7, margin: 0 }}>
+            <strong style={{ color: "#B22222" }}>Eligibility Requirement:</strong> Only mentees who have been actively enrolled in the mentorship program for a minimum of 6 continuous months are eligible to request a recommendation letter. Your mentee start date will be verified against program records.
+          </p>
+        </div>
+
+        {status === "success" ? (
+          <div style={{ textAlign: "center", padding: "40px 20px" }}>
+            <div style={{ fontSize: 48, marginBottom: 16 }}>✓</div>
+            <h3 style={{ fontFamily: "'Lora', serif", fontSize: "22px", fontWeight: 600, color: "#228B22", margin: "0 0 12px 0" }}>Request Submitted</h3>
+            <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "15px", color: "#3a3228", lineHeight: 1.7 }}>Your recommendation request has been received. Dr. Arigbede will review your eligibility and respond within 7–10 business days.</p>
+            <button onClick={onClose} style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13px", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "#fff", background: "#2c2520", border: "none", borderRadius: 6, padding: "12px 28px", cursor: "pointer", marginTop: 24 }}>Close</button>
+          </div>
+        ) : (
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }} className="scholarship-form-grid">
+              <div><label style={labelStyle}>Full Name</label><input type="text" value={formData.fullName} onChange={handleChange("fullName")} placeholder="Your full name" style={inputStyle} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} /></div>
+              <div><label style={labelStyle}>Email Address</label><input type="email" value={formData.email} onChange={handleChange("email")} placeholder="you@example.com" style={inputStyle} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} /></div>
+              <div><label style={labelStyle}>Mentee Start Date</label><input type="date" value={formData.menteeStartDate} onChange={handleChange("menteeStartDate")} style={inputStyle} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} /></div>
+              <div><label style={labelStyle}>Letter Deadline</label><input type="date" value={formData.deadline} onChange={handleChange("deadline")} style={inputStyle} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} /></div>
+            </div>
+            <div><label style={labelStyle}>Purpose of Recommendation</label><textarea value={formData.purpose} onChange={handleChange("purpose")} placeholder="e.g., Graduate school application, fellowship, employment (include program name and institution)..." rows={3} style={{ ...inputStyle, resize: "vertical", minHeight: 80 }} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} /></div>
+            <div><label style={labelStyle}>Additional Context (Optional)</label><textarea value={formData.additionalInfo} onChange={handleChange("additionalInfo")} placeholder="Any specific achievements, skills, or experiences you would like highlighted..." rows={3} style={{ ...inputStyle, resize: "vertical", minHeight: 80 }} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} /></div>
+
+            <button onClick={handleSubmit} disabled={status === "sending"} style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13px", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "#fff", background: status === "sending" ? "#7a7068" : "#2c2520", border: "none", borderRadius: 6, padding: "14px 32px", cursor: status === "sending" ? "wait" : "pointer", transition: "background 0.3s", alignSelf: "flex-start" }}>
+              {status === "sending" ? "Submitting..." : "Submit Request"}
+            </button>
+            {status === "incomplete" && <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#B8860B", margin: 0 }}>Please complete all required fields.</p>}
+            {status === "error" && <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#B22222", margin: 0 }}>Something went wrong. Please try again or contact Dr. Arigbede directly.</p>}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ── Service Request Form ──
+function ServiceRequestForm({ service, onClose }) {
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    phone: "",
+    affiliation: "",
+    synopsis: "",
+    cardholderName: "",
+    cardNumber: "",
+    expiry: "",
+    cvv: "",
+  });
+  const [agreed, setAgreed] = useState(false);
+  const [status, setStatus] = useState("idle");
+
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = ""; };
+  }, []);
+
+  const inputStyle = { fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#2c2520", background: "rgba(255,255,255,0.7)", border: "1px solid rgba(58,50,40,0.15)", borderRadius: 8, padding: "11px 14px", width: "100%", outline: "none", transition: "border-color 0.25s" };
+  const labelStyle = { fontFamily: "'Source Sans 3', sans-serif", fontSize: "11.5px", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "#5c5147", display: "block", marginBottom: 5 };
+  const handleChange = (field) => (e) => setFormData((p) => ({ ...p, [field]: e.target.value }));
+
+  const handleSubmit = async () => {
+    const required = ["fullName", "email", "phone", "affiliation", "synopsis", "cardholderName", "cardNumber", "expiry", "cvv"];
+    if (required.some((f) => !formData[f].trim()) || !agreed) { setStatus("incomplete"); return; }
+    setStatus("sending");
+    try {
+      // NOTE: In production, integrate a real payment processor (Stripe, PayPal, etc.)
+      // Do NOT send raw card details via Formspree. This form is a placeholder structure.
+      const res = await fetch("https://formspree.io/f/maqdznwd", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          _subject: `Service Request: ${service.title} — ${formData.fullName}`,
+          service: service.title,
+          price: `$${service.price} ${service.unit}`,
+          fullName: formData.fullName,
+          email: formData.email,
+          phone: formData.phone,
+          affiliation: formData.affiliation,
+          synopsis: formData.synopsis,
+          payment: "Card details submitted (integrate payment processor for production)",
+        }),
+      });
+      setStatus(res.ok ? "success" : "error");
+    } catch { setStatus("error"); }
+  };
+
+  return (
+    <div style={{ position: "fixed", inset: 0, zIndex: 200, background: "rgba(44,37,32,0.5)", backdropFilter: "blur(4px)", display: "flex", justifyContent: "center", alignItems: "flex-start", padding: "40px 16px", overflowY: "auto" }} onClick={onClose}>
+      <div style={{ background: "#faf7f3", borderRadius: 16, maxWidth: 680, width: "100%", padding: "40px 36px", position: "relative", boxShadow: "0 20px 60px rgba(44,37,32,0.15)", marginBottom: 40 }} onClick={(e) => e.stopPropagation()}>
+        <button onClick={onClose} style={{ position: "absolute", top: 18, right: 18, background: "none", border: "none", cursor: "pointer", fontSize: "24px", color: "#7a7068", lineHeight: 1 }} aria-label="Close">×</button>
+
+        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 8 }}>
+          <span style={{ fontSize: 32 }}>{service.icon}</span>
+          <StatusBadge status="active" label={`$${service.price} ${service.unit}`} />
+        </div>
+        <h2 style={{ fontFamily: "'Lora', serif", fontSize: "clamp(20px, 2.8vw, 24px)", fontWeight: 600, color: "#2c2520", margin: "10px 0 6px 0" }}>Request: {service.title}</h2>
+        <div style={{ width: 40, height: 2, background: "#8B4513", borderRadius: 1, margin: "12px 0 24px 0" }} />
+
+        {status === "success" ? (
+          <div style={{ textAlign: "center", padding: "40px 20px" }}>
+            <div style={{ fontSize: 48, marginBottom: 16 }}>✓</div>
+            <h3 style={{ fontFamily: "'Lora', serif", fontSize: "22px", fontWeight: 600, color: "#228B22", margin: "0 0 12px 0" }}>Request Submitted</h3>
+            <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "15px", color: "#3a3228", lineHeight: 1.7 }}>Your service request has been received. You will receive a confirmation email with next steps within 2–3 business days.</p>
+            <button onClick={onClose} style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13px", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "#fff", background: "#2c2520", border: "none", borderRadius: 6, padding: "12px 28px", cursor: "pointer", marginTop: 24 }}>Close</button>
+          </div>
+        ) : (
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            <div style={{ padding: "16px 0 0 0", borderTop: "1px solid rgba(58,50,40,0.06)" }}>
+              <span style={{ fontFamily: "'Lora', serif", fontSize: "16px", fontWeight: 600, color: "#2c2520" }}>Contact Information</span>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }} className="scholarship-form-grid">
+              <div><label style={labelStyle}>Full Name</label><input type="text" value={formData.fullName} onChange={handleChange("fullName")} placeholder="Your full name" style={inputStyle} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} /></div>
+              <div><label style={labelStyle}>Email Address</label><input type="email" value={formData.email} onChange={handleChange("email")} placeholder="you@example.com" style={inputStyle} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} /></div>
+              <div><label style={labelStyle}>Phone Number</label><input type="tel" value={formData.phone} onChange={handleChange("phone")} placeholder="+1 000 000 0000" style={inputStyle} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} /></div>
+              <div><label style={labelStyle}>Affiliation / Organization</label><input type="text" value={formData.affiliation} onChange={handleChange("affiliation")} placeholder="University, company, or independent" style={inputStyle} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} /></div>
+            </div>
+            <div>
+              <label style={labelStyle}>Synopsis of Service Needed</label>
+              <textarea value={formData.synopsis} onChange={handleChange("synopsis")} placeholder="Describe your project, research question, timeline, and what you need help with..." rows={5} style={{ ...inputStyle, resize: "vertical", minHeight: 120 }} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} />
+            </div>
+
+            <div style={{ padding: "16px 0 0 0", borderTop: "1px solid rgba(58,50,40,0.06)" }}>
+              <span style={{ fontFamily: "'Lora', serif", fontSize: "16px", fontWeight: 600, color: "#2c2520" }}>Payment Information</span>
+              <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "12px", color: "#7a7068", margin: "4px 0 0 0" }}>Service fee: <strong style={{ color: "#8B4513" }}>${service.price} {service.unit}</strong></p>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }} className="scholarship-form-grid">
+              <div><label style={labelStyle}>Cardholder Name</label><input type="text" value={formData.cardholderName} onChange={handleChange("cardholderName")} placeholder="Name on card" style={inputStyle} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} /></div>
+              <div><label style={labelStyle}>Card Number</label><input type="text" value={formData.cardNumber} onChange={handleChange("cardNumber")} placeholder="0000 0000 0000 0000" style={inputStyle} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} /></div>
+              <div><label style={labelStyle}>Expiry Date</label><input type="text" value={formData.expiry} onChange={handleChange("expiry")} placeholder="MM/YY" style={inputStyle} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} /></div>
+              <div><label style={labelStyle}>CVV</label><input type="text" value={formData.cvv} onChange={handleChange("cvv")} placeholder="123" style={inputStyle} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} /></div>
+            </div>
+
+            {/* Refund policy */}
+            <div style={{ padding: "16px 20px", background: "rgba(178,34,34,0.04)", border: "1px solid rgba(178,34,34,0.12)", borderRadius: 10 }}>
+              <span style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "11px", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "#B22222" }}>Refund Policy</span>
+              <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13px", color: "#3a3228", lineHeight: 1.7, margin: "6px 0 0 0" }}>
+                Once a service engagement has commenced, the service fee is non-refundable. For hourly services, if the engagement is terminated before completion, the fee will be prorated based on hours worked and the remaining balance refunded. By submitting this form, you acknowledge and agree to this policy.
+              </p>
+            </div>
+
+            <label style={{ display: "flex", alignItems: "flex-start", gap: 10, cursor: "pointer" }}>
+              <input type="checkbox" checked={agreed} onChange={() => setAgreed(!agreed)} style={{ marginTop: 3, accentColor: "#8B4513" }} />
+              <span style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13px", color: "#3a3228", lineHeight: 1.6 }}>
+                I acknowledge the service fee of <strong>${service.price} {service.unit}</strong> and agree to the refund policy stated above.
+              </span>
+            </label>
+
+            <button onClick={handleSubmit} disabled={status === "sending"} style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13px", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "#fff", background: status === "sending" ? "#7a7068" : "#2c2520", border: "none", borderRadius: 6, padding: "14px 32px", cursor: status === "sending" ? "wait" : "pointer", transition: "background 0.3s", alignSelf: "flex-start" }}>
+              {status === "sending" ? "Submitting..." : "Submit Service Request"}
+            </button>
+            {status === "incomplete" && <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#B8860B", margin: 0 }}>Please complete all fields and acknowledge the refund policy.</p>}
+            {status === "error" && <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#B22222", margin: 0 }}>Something went wrong. Please try again or contact Dr. Arigbede directly.</p>}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ── Service Card ──
+function ServiceCard({ service, onRequest }) {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        padding: "28px",
+        background: hovered ? "rgba(139,69,19,0.04)" : "rgba(255,255,255,0.6)",
+        border: "1px solid rgba(58,50,40,0.08)",
+        borderRadius: 12,
+        transition: "all 0.35s ease",
+        transform: hovered ? "translateY(-3px)" : "translateY(0)",
+        boxShadow: hovered ? "0 8px 30px rgba(58,50,40,0.06)" : "none",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
+        <span style={{ fontSize: 30 }}>{service.icon}</span>
+        <span style={{ fontFamily: "'Lora', serif", fontSize: "20px", fontWeight: 700, color: "#8B4513" }}>${service.price}<span style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "12px", fontWeight: 400, color: "#7a7068" }}> {service.unit}</span></span>
+      </div>
+      <h4 style={{ fontFamily: "'Lora', serif", fontSize: "17px", fontWeight: 600, color: "#2c2520", margin: "0 0 10px 0", lineHeight: 1.35 }}>{service.title}</h4>
+      <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#5c5147", lineHeight: 1.7, margin: "0 0 16px 0", flex: 1 }}>{service.description}</p>
+      <div style={{ marginBottom: 18 }}>
+        <span style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "11px", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "#8B4513", marginBottom: 8, display: "block" }}>Includes</span>
+        {service.includes.map((item, i) => (
+          <p key={i} style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13px", color: "#5c5147", lineHeight: 1.65, margin: "0 0 4px 0", paddingLeft: 14, position: "relative" }}>
+            <span style={{ position: "absolute", left: 0, color: "#8B4513" }}>·</span>{item}
+          </p>
+        ))}
+      </div>
+      <button onClick={() => onRequest(service)} style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "12px", fontWeight: 600, letterSpacing: "0.06em", textTransform: "uppercase", color: "#fff", background: "#2c2520", border: "none", borderRadius: 6, padding: "11px 22px", cursor: "pointer", transition: "all 0.25s", alignSelf: "flex-start" }}>
+        Request This Service →
+      </button>
+    </div>
+  );
+}
+
+// ── Volunteering Card ──
+function VolunteerCard({ role, onApply }) {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        padding: "26px 28px",
+        background: hovered ? "rgba(139,69,19,0.03)" : "rgba(255,255,255,0.5)",
+        border: "1px solid rgba(58,50,40,0.08)",
+        borderRadius: 12,
+        transition: "all 0.3s ease",
+        transform: hovered ? "translateY(-2px)" : "translateY(0)",
+        boxShadow: hovered ? "0 6px 24px rgba(58,50,40,0.05)" : "none",
+      }}
+    >
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 8, marginBottom: 10 }}>
+        <StatusBadge status={role.status === "open" ? "active" : "upcoming"} label={role.status === "open" ? "Open" : "Upcoming"} />
+        <span style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "12px", color: "#9a8e82" }}>{role.mode} · {role.commitment}</span>
+      </div>
+      <h4 style={{ fontFamily: "'Lora', serif", fontSize: "17px", fontWeight: 600, color: "#2c2520", margin: "0 0 6px 0", lineHeight: 1.35 }}>{role.title}</h4>
+      <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13px", color: "#8B4513", fontWeight: 500, margin: "0 0 10px 0" }}>Duration: {role.duration}</p>
+      <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#5c5147", lineHeight: 1.65, margin: "0 0 14px 0" }}>{role.description}</p>
+
+      <div style={{ marginBottom: 12 }}>
+        <span style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "11px", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "#8B4513", marginBottom: 6, display: "block" }}>Qualifications</span>
+        {role.qualifications.map((q, i) => (
+          <p key={i} style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13px", color: "#5c5147", lineHeight: 1.6, margin: "0 0 3px 0", paddingLeft: 14, position: "relative" }}>
+            <span style={{ position: "absolute", left: 0, color: "#8B4513" }}>·</span>{q}
+          </p>
+        ))}
+      </div>
+      <div style={{ marginBottom: 16 }}>
+        <span style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "11px", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "#228B22", marginBottom: 6, display: "block" }}>Benefits</span>
+        {role.benefits.map((b, i) => (
+          <p key={i} style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13px", color: "#5c5147", lineHeight: 1.6, margin: "0 0 3px 0", paddingLeft: 14, position: "relative" }}>
+            <span style={{ position: "absolute", left: 0, color: "#228B22" }}>✓</span>{b}
+          </p>
+        ))}
+      </div>
+
+      {role.status === "open" && (
+        <button onClick={() => onApply()} style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "12px", fontWeight: 600, letterSpacing: "0.06em", textTransform: "uppercase", color: "#8B4513", background: "none", border: "none", padding: 0, cursor: "pointer" }}>Apply Now →</button>
+      )}
+    </div>
+  );
+}
+
+// ── Volunteer Application Form ──
+function VolunteerApplicationForm({ role, onClose }) {
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    phone: "",
+    country: "",
+    affiliation: "",
+    experience: "",
+    motivation: "",
+  });
+  const [status, setStatus] = useState("idle");
+
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = ""; };
+  }, []);
+
+  const inputStyle = { fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#2c2520", background: "rgba(255,255,255,0.7)", border: "1px solid rgba(58,50,40,0.15)", borderRadius: 8, padding: "11px 14px", width: "100%", outline: "none", transition: "border-color 0.25s" };
+  const labelStyle = { fontFamily: "'Source Sans 3', sans-serif", fontSize: "11.5px", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "#5c5147", display: "block", marginBottom: 5 };
+  const handleChange = (field) => (e) => setFormData((p) => ({ ...p, [field]: e.target.value }));
+
+  const handleSubmit = async () => {
+    const required = ["fullName", "email", "phone", "country", "affiliation", "motivation"];
+    if (required.some((f) => !formData[f].trim())) { setStatus("incomplete"); return; }
+    setStatus("sending");
+    try {
+      const res = await fetch("https://formspree.io/f/maqdznwd", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({ _subject: `Volunteer Application: ${role.title} — ${formData.fullName}`, role: role.title, ...formData }),
+      });
+      setStatus(res.ok ? "success" : "error");
+    } catch { setStatus("error"); }
+  };
+
+  return (
+    <div style={{ position: "fixed", inset: 0, zIndex: 200, background: "rgba(44,37,32,0.5)", backdropFilter: "blur(4px)", display: "flex", justifyContent: "center", alignItems: "flex-start", padding: "40px 16px", overflowY: "auto" }} onClick={onClose}>
+      <div style={{ background: "#faf7f3", borderRadius: 16, maxWidth: 640, width: "100%", padding: "40px 36px", position: "relative", boxShadow: "0 20px 60px rgba(44,37,32,0.15)", marginBottom: 40 }} onClick={(e) => e.stopPropagation()}>
+        <button onClick={onClose} style={{ position: "absolute", top: 18, right: 18, background: "none", border: "none", cursor: "pointer", fontSize: "24px", color: "#7a7068", lineHeight: 1 }} aria-label="Close">×</button>
+
+        <StatusBadge status="active" label="Volunteer Application" />
+        <h2 style={{ fontFamily: "'Lora', serif", fontSize: "clamp(20px, 2.8vw, 24px)", fontWeight: 600, color: "#2c2520", margin: "14px 0 6px 0" }}>Apply: {role.title}</h2>
+        <div style={{ width: 40, height: 2, background: "#8B4513", borderRadius: 1, margin: "12px 0 24px 0" }} />
+
+        {status === "success" ? (
+          <div style={{ textAlign: "center", padding: "40px 20px" }}>
+            <div style={{ fontSize: 48, marginBottom: 16 }}>✓</div>
+            <h3 style={{ fontFamily: "'Lora', serif", fontSize: "22px", fontWeight: 600, color: "#228B22", margin: "0 0 12px 0" }}>Application Submitted</h3>
+            <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "15px", color: "#3a3228", lineHeight: 1.7 }}>Thank you for your interest in volunteering. You will hear back within 5–7 business days.</p>
+            <button onClick={onClose} style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13px", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "#fff", background: "#2c2520", border: "none", borderRadius: 6, padding: "12px 28px", cursor: "pointer", marginTop: 24 }}>Close</button>
+          </div>
+        ) : (
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }} className="scholarship-form-grid">
+              <div><label style={labelStyle}>Full Name</label><input type="text" value={formData.fullName} onChange={handleChange("fullName")} placeholder="Your full name" style={inputStyle} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} /></div>
+              <div><label style={labelStyle}>Email Address</label><input type="email" value={formData.email} onChange={handleChange("email")} placeholder="you@example.com" style={inputStyle} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} /></div>
+              <div><label style={labelStyle}>Phone Number</label><input type="tel" value={formData.phone} onChange={handleChange("phone")} placeholder="+1 000 000 0000" style={inputStyle} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} /></div>
+              <div><label style={labelStyle}>Country</label><input type="text" value={formData.country} onChange={handleChange("country")} placeholder="Country of residence" style={inputStyle} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} /></div>
+            </div>
+            <div><label style={labelStyle}>Current Affiliation</label><input type="text" value={formData.affiliation} onChange={handleChange("affiliation")} placeholder="University, organization, or independent" style={inputStyle} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} /></div>
+            <div><label style={labelStyle}>Relevant Experience (Optional)</label><textarea value={formData.experience} onChange={handleChange("experience")} placeholder="Describe any relevant skills, coursework, or experience..." rows={3} style={{ ...inputStyle, resize: "vertical", minHeight: 80 }} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} /></div>
+            <div><label style={labelStyle}>Why Are You Interested?</label><textarea value={formData.motivation} onChange={handleChange("motivation")} placeholder="What motivates you to volunteer for this role? What do you hope to gain?" rows={4} style={{ ...inputStyle, resize: "vertical", minHeight: 100 }} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} /></div>
+
+            <button onClick={handleSubmit} disabled={status === "sending"} style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13px", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "#fff", background: status === "sending" ? "#7a7068" : "#2c2520", border: "none", borderRadius: 6, padding: "14px 32px", cursor: status === "sending" ? "wait" : "pointer", transition: "background 0.3s", alignSelf: "flex-start" }}>
+              {status === "sending" ? "Submitting..." : "Submit Application"}
+            </button>
+            {status === "incomplete" && <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#B8860B", margin: 0 }}>Please complete all required fields.</p>}
+            {status === "error" && <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#B22222", margin: 0 }}>Something went wrong. Please try again.</p>}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 // ════════════════════════════════════════════
 // MAIN APP
 // ════════════════════════════════════════════
@@ -1421,6 +2105,10 @@ export default function AcademicWebsite() {
   const [oppFilter, setOppFilter] = useState("all");
   const [viewingScholarship, setViewingScholarship] = useState(null);
   const [applyingScholarship, setApplyingScholarship] = useState(null);
+const [showMentorshipForm, setShowMentorshipForm] = useState(false);
+const [showRecommendationForm, setShowRecommendationForm] = useState(false);
+const [requestingService, setRequestingService] = useState(null);
+const [applyingVolunteer, setApplyingVolunteer] = useState(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -1514,6 +2202,35 @@ export default function AcademicWebsite() {
           onClose={() => setApplyingScholarship(null)}
         />
       )}
+
+{/* ═══ BLOCK 5: Add these overlay renderers right AFTER the existing scholarship application overlay ═══ */}
+{/* ═══ i.e., right after: {applyingScholarship !== null && (<ScholarshipApplicationForm ... />)} ═══ */}
+
+{/* Mentorship form overlay */}
+{showMentorshipForm && (
+  <MentorshipForm onClose={() => setShowMentorshipForm(false)} />
+)}
+
+{/* Recommendation form overlay */}
+{showRecommendationForm && (
+  <RecommendationForm onClose={() => setShowRecommendationForm(false)} />
+)}
+
+{/* Service request form overlay */}
+{requestingService !== null && (
+  <ServiceRequestForm
+    service={SERVICES_DATA.find((s) => s.id === requestingService)}
+    onClose={() => setRequestingService(null)}
+  />
+)}
+
+{/* Volunteer application form overlay */}
+{applyingVolunteer !== null && (
+  <VolunteerApplicationForm
+    role={VOLUNTEERING_DATA.find((v) => v.id === applyingVolunteer)}
+    onClose={() => setApplyingVolunteer(null)}
+  />
+)}
 
       {/* ═══════════ HERO ═══════════ */}
       <Section id="home" style={{ paddingTop: 110, paddingBottom: 70 }}>
@@ -1979,6 +2696,162 @@ export default function AcademicWebsite() {
           </div>
         </div>
       </Section>
+
+{/* ═══ BLOCK 6: Insert these three sections BETWEEN the Scholarship section and the Contact section ═══ */}
+{/* ═══ i.e., right AFTER </Section> that closes Scholarship, and right BEFORE the {/* ═══════════ CONTACT ═══════════ */} comment ═══ */}
+
+{/* ═══════════ MENTORSHIP ═══════════ */}
+<Section id="mentorship" style={{ padding: "80px 0" }}>
+  <div style={containerStyle}>
+    <SectionLabel text="Mentorship" />
+    <SectionTitle text="Mentorship Program" />
+    <Divider />
+
+    <div style={{ display: "flex", flexDirection: "column", gap: 20, marginBottom: 40 }}>
+      <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "15.5px", lineHeight: 1.8, color: "#3a3228" }}>
+        The mentorship program is open to students, early-career professionals, and career changers from anywhere in the world who are interested in epidemiology, biostatistics, public health research, data science, or related disciplines. Whether you are preparing for graduate school, navigating your first research role, or seeking guidance on a career transition, this program is designed to provide structured, individualized support.
+      </p>
+      <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "15.5px", lineHeight: 1.8, color: "#3a3228" }}>
+        As a mentee, you will receive periodic one-on-one guidance, career development advice, support with research projects, and connections to professional networks and opportunities. The mentorship is flexible in format and cadence, adapted to your needs and goals.
+      </p>
+    </div>
+
+    {/* Program highlights */}
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16, marginBottom: 40 }} className="scholarship-grid">
+      {[
+        { icon: "🌐", label: "Open Globally", desc: "Mentees from any country are welcome" },
+        { icon: "🎯", label: "Personalized", desc: "Tailored to your career stage and goals" },
+        { icon: "📅", label: "Flexible Format", desc: "Virtual meetings on a mutually agreed schedule" },
+      ].map((item, i) => (
+        <div key={i} style={{ padding: "22px 20px", background: "rgba(139,69,19,0.03)", border: "1px solid rgba(139,69,19,0.1)", borderRadius: 10, textAlign: "center" }}>
+          <div style={{ fontSize: 28, marginBottom: 8 }}>{item.icon}</div>
+          <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13px", fontWeight: 600, color: "#2c2520", margin: "0 0 4px 0" }}>{item.label}</p>
+          <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "12.5px", color: "#7a7068", margin: 0 }}>{item.desc}</p>
+        </div>
+      ))}
+    </div>
+
+    {/* What you get */}
+    <div style={{ padding: "28px 32px", background: "rgba(255,255,255,0.5)", border: "1px solid rgba(58,50,40,0.08)", borderRadius: 12, marginBottom: 32 }}>
+      <h3 style={{ fontFamily: "'Lora', serif", fontSize: "18px", fontWeight: 600, color: "#2c2520", margin: "0 0 16px 0" }}>What to Expect as a Mentee</h3>
+      {[
+        "Regular one-on-one virtual sessions covering your goals, challenges, and progress",
+        "Guidance on graduate school applications, fellowship positioning, and career strategy",
+        "Research support, including study design, statistical analysis, and manuscript development",
+        "Constructive feedback on CVs, personal statements, and professional documents",
+        "Introductions to relevant professional networks and opportunities",
+        "Accountability and encouragement throughout your development journey",
+      ].map((item, i) => (
+        <p key={i} style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#3a3228", lineHeight: 1.7, margin: "0 0 6px 0", paddingLeft: 14, position: "relative" }}>
+          <span style={{ position: "absolute", left: 0, color: "#228B22" }}>✓</span>{item}
+        </p>
+      ))}
+    </div>
+
+    {/* Recommendation notice */}
+    <div style={{ padding: "22px 26px", background: "rgba(70,130,180,0.04)", border: "1px solid rgba(70,130,180,0.15)", borderRadius: 10, marginBottom: 32 }}>
+      <h4 style={{ fontFamily: "'Lora', serif", fontSize: "16px", fontWeight: 600, color: "#2c2520", margin: "0 0 8px 0" }}>Recommendation Letters</h4>
+      <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#3a3228", lineHeight: 1.7, margin: 0 }}>
+        Mentees who have been actively enrolled in the program for a minimum of <strong>6 continuous months</strong> become eligible to request a recommendation letter from Dr. Arigbede. Recommendation letters are provided for graduate school applications, fellowship and scholarship applications, employment, and other professional purposes.
+      </p>
+    </div>
+
+    <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+      <button
+        onClick={() => setShowMentorshipForm(true)}
+        style={{
+          fontFamily: "'Source Sans 3', sans-serif", fontSize: "13px", fontWeight: 600,
+          letterSpacing: "0.1em", textTransform: "uppercase",
+          color: "#fff", background: "#2c2520",
+          border: "none", borderRadius: 6, padding: "14px 28px",
+          cursor: "pointer", transition: "background 0.3s",
+        }}
+      >
+        Register as a Mentee →
+      </button>
+      <button
+        onClick={() => setShowRecommendationForm(true)}
+        style={{
+          fontFamily: "'Source Sans 3', sans-serif", fontSize: "13px", fontWeight: 600,
+          letterSpacing: "0.1em", textTransform: "uppercase",
+          color: "#2c2520", background: "transparent",
+          border: "1.5px solid rgba(44,37,32,0.25)", borderRadius: 6,
+          padding: "13px 28px", cursor: "pointer", transition: "border-color 0.3s",
+        }}
+      >
+        Request Recommendation
+      </button>
+    </div>
+  </div>
+</Section>
+
+{/* ═══════════ SERVICES ═══════════ */}
+<Section id="services" style={{ padding: "80px 0", background: "rgba(255,255,255,0.4)" }}>
+  <div style={containerStyle}>
+    <SectionLabel text="Services" />
+    <SectionTitle text="Professional Services" />
+    <Divider />
+
+    <div style={{ display: "flex", flexDirection: "column", gap: 20, marginBottom: 40 }}>
+      <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "15.5px", lineHeight: 1.8, color: "#3a3228" }}>
+        I offer a range of professional services for researchers, students, and organizations who need expert biostatistical, epidemiological, or scientific writing support. Each service is delivered with the rigor, attention to detail, and methodological soundness that your work deserves.
+      </p>
+      <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "15.5px", lineHeight: 1.8, color: "#3a3228" }}>
+        To request a service, select the service below, complete the request form with your contact information and a brief synopsis of what you need, and provide payment details. You will receive a confirmation and detailed engagement plan within 2–3 business days.
+      </p>
+    </div>
+
+    {/* Refund policy notice at the top */}
+    <div style={{ padding: "18px 22px", background: "rgba(178,34,34,0.04)", border: "1px solid rgba(178,34,34,0.12)", borderRadius: 10, marginBottom: 32 }}>
+      <span style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "11px", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "#B22222" }}>Payment & Refund Policy</span>
+      <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13.5px", color: "#3a3228", lineHeight: 1.7, margin: "6px 0 0 0" }}>
+        All services require payment at the time of request. <strong>Once a service engagement has commenced, the service fee is non-refundable.</strong> For hourly-rate services, if the engagement is terminated before completion, service hours will be calculated and deducted from the paid fee, and the remaining balance will be refunded where applicable.
+      </p>
+    </div>
+
+    <div className="opps-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))", gap: 20 }}>
+      {SERVICES_DATA.map((service) => (
+        <ServiceCard key={service.id} service={service} onRequest={(s) => setRequestingService(s.id)} />
+      ))}
+    </div>
+
+    <div style={{ marginTop: 32, padding: "20px 24px", background: "rgba(139,69,19,0.03)", border: "1px solid rgba(139,69,19,0.1)", borderRadius: 10 }}>
+      <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#5c5147", lineHeight: 1.7, margin: 0 }}>
+        <strong style={{ color: "#2c2520" }}>Custom or bundled services?</strong> If your project requires a combination of services or a scope not listed above, please <a href="#contact" style={{ color: "#8B4513", textDecoration: "underline" }}>get in touch</a> to discuss a tailored engagement and pricing.
+      </p>
+    </div>
+  </div>
+</Section>
+
+{/* ═══════════ VOLUNTEERING ═══════════ */}
+<Section id="volunteering" style={{ padding: "80px 0" }}>
+  <div style={containerStyle}>
+    <SectionLabel text="Volunteering" />
+    <SectionTitle text="Volunteer Opportunities" />
+    <Divider />
+
+    <div style={{ display: "flex", flexDirection: "column", gap: 20, marginBottom: 40 }}>
+      <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "15.5px", lineHeight: 1.8, color: "#3a3228" }}>
+        I offer remote volunteer positions for students and young professionals who want to gain hands-on experience in public health research, academic event coordination, and scientific communication. Volunteering is an excellent way to build your professional portfolio, develop practical skills, and earn strong letters of recommendation.
+      </p>
+      <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "15.5px", lineHeight: 1.8, color: "#3a3228" }}>
+        All positions are open to individuals worldwide. Select a role below to learn more and apply.
+      </p>
+    </div>
+
+    <div className="opps-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))", gap: 20 }}>
+      {VOLUNTEERING_DATA.map((role) => (
+        <VolunteerCard key={role.id} role={role} onApply={() => setApplyingVolunteer(role.id)} />
+      ))}
+    </div>
+
+    <div style={{ marginTop: 32, padding: "20px 24px", background: "rgba(139,69,19,0.03)", border: "1px solid rgba(139,69,19,0.1)", borderRadius: 10 }}>
+      <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#5c5147", lineHeight: 1.7, margin: 0 }}>
+        <strong style={{ color: "#2c2520" }}>Have a different skill to offer?</strong> If you have expertise in web development, graphic design, social media, or another area and would like to contribute, please <a href="#contact" style={{ color: "#8B4513", textDecoration: "underline" }}>reach out</a> — I am always open to creative collaborations.
+      </p>
+    </div>
+  </div>
+</Section>
 
       {/* ═══════════ CONTACT ═══════════ */}
       <Section id="contact" style={{ padding: "80px 0" }}>
