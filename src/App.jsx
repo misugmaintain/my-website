@@ -3086,7 +3086,7 @@ const [applyingVolunteer, setApplyingVolunteer] = useState(null);
                 Biostatistical consultant and an academic at SUNY Downstate Health Sciences
                 University, with over 8 years of expertise spanning the FDA, CDC, academic institutions, and
                 state/local health departments. My work spans cancer and infectious disease epidemiology, computational genomics, mathematical modeling, predictive modeling, health disparities, research methods,
-                and advanced biostatistics, and more recently, the application of AI and ML to population health events with the aim of transforming complex data into actionable public health insights.
+                advanced biostatistics, and the application of AI and ML to population health events with the aim of transforming complex data into actionable public health insights.
               </p>
               <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
                 <a href="#contact" style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13px", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "#fff", background: "#2c2520", padding: "13px 28px", borderRadius: 6, textDecoration: "none", transition: "background 0.3s" }}>Get in Touch</a>
