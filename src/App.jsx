@@ -1730,79 +1730,560 @@ function MentorshipForm({ onClose }) {
   );
 }
 
-// ── Recommendation Request Form ──
+// ── Recommendation Request Form (Updated) ──
 function RecommendationForm({ onClose }) {
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
+    relationship: "",
+    courseName: "",
+    programName: "",
+    otherRelationship: "",
     menteeStartDate: "",
     purpose: "",
     deadline: "",
+    lastInteraction: "",
     additionalInfo: "",
   });
   const [status, setStatus] = useState("idle");
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, []);
 
-  const inputStyle = { fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#2c2520", background: "rgba(255,255,255,0.7)", border: "1px solid rgba(58,50,40,0.15)", borderRadius: 8, padding: "11px 14px", width: "100%", outline: "none", transition: "border-color 0.25s" };
-  const labelStyle = { fontFamily: "'Source Sans 3', sans-serif", fontSize: "11.5px", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "#5c5147", display: "block", marginBottom: 5 };
-  const handleChange = (field) => (e) => setFormData((p) => ({ ...p, [field]: e.target.value }));
+  const inputStyle = {
+    fontFamily: "'Source Sans 3', sans-serif",
+    fontSize: "14px",
+    color: "#2c2520",
+    background: "rgba(255,255,255,0.7)",
+    border: "1px solid rgba(58,50,40,0.15)",
+    borderRadius: 8,
+    padding: "11px 14px",
+    width: "100%",
+    outline: "none",
+    transition: "border-color 0.25s",
+  };
+  const labelStyle = {
+    fontFamily: "'Source Sans 3', sans-serif",
+    fontSize: "11.5px",
+    fontWeight: 600,
+    letterSpacing: "0.08em",
+    textTransform: "uppercase",
+    color: "#5c5147",
+    display: "block",
+    marginBottom: 5,
+  };
+  const handleChange = (field) => (e) =>
+    setFormData((p) => ({ ...p, [field]: e.target.value }));
+
+  // Determine which fields are required based on relationship type
+  const getRequiredFields = () => {
+    const base = ["fullName", "email", "relationship", "purpose", "deadline"];
+    if (formData.relationship === "mentee") base.push("menteeStartDate");
+    if (formData.relationship === "student") base.push("courseName");
+    if (formData.relationship === "summer-participant") base.push("programName");
+    if (formData.relationship === "other") base.push("otherRelationship");
+    return base;
+  };
 
   const handleSubmit = async () => {
-    const required = ["fullName", "email", "menteeStartDate", "purpose", "deadline"];
-    if (required.some((f) => !formData[f].trim())) { setStatus("incomplete"); return; }
+    const required = getRequiredFields();
+    if (required.some((f) => !formData[f].trim())) {
+      setStatus("incomplete");
+      return;
+    }
     setStatus("sending");
+
+    // Build a clean relationship label for the email subject
+    const relationshipLabels = {
+      mentee: "Mentee (6+ months)",
+      student: `Former Student (${formData.courseName})`,
+      "summer-participant": `Summer Program Participant (${formData.programName})`,
+      colleague: "Junior Colleague / Collaborator",
+      friend: "Friend / Personal Acquaintance",
+      other: formData.otherRelationship,
+    };
+
     try {
       const res = await fetch("https://formspree.io/f/maqdznwd", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({ _subject: `Recommendation Request: ${formData.fullName}`, ...formData }),
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          _subject: `Recommendation Request: ${formData.fullName} (${relationshipLabels[formData.relationship] || formData.relationship})`,
+          fullName: formData.fullName,
+          email: formData.email,
+          relationship: relationshipLabels[formData.relationship] || formData.relationship,
+          menteeStartDate: formData.menteeStartDate || "N/A",
+          courseName: formData.courseName || "N/A",
+          programName: formData.programName || "N/A",
+          purpose: formData.purpose,
+          deadline: formData.deadline,
+          lastInteraction: formData.lastInteraction || "Not specified",
+          additionalInfo: formData.additionalInfo || "None provided",
+        }),
       });
       setStatus(res.ok ? "success" : "error");
-    } catch { setStatus("error"); }
+    } catch {
+      setStatus("error");
+    }
   };
 
+  // Helper: should we show the mentee start date field?
+  const showMenteeDate = formData.relationship === "mentee";
+  const showCourseName = formData.relationship === "student";
+  const showProgramName = formData.relationship === "summer-participant";
+  const showOtherField = formData.relationship === "other";
+
   return (
-    <div style={{ position: "fixed", inset: 0, zIndex: 200, background: "rgba(44,37,32,0.5)", backdropFilter: "blur(4px)", display: "flex", justifyContent: "center", alignItems: "flex-start", padding: "40px 16px", overflowY: "auto" }} onClick={onClose}>
-      <div style={{ background: "#faf7f3", borderRadius: 16, maxWidth: 640, width: "100%", padding: "40px 36px", position: "relative", boxShadow: "0 20px 60px rgba(44,37,32,0.15)", marginBottom: 40 }} onClick={(e) => e.stopPropagation()}>
-        <button onClick={onClose} style={{ position: "absolute", top: 18, right: 18, background: "none", border: "none", cursor: "pointer", fontSize: "24px", color: "#7a7068", lineHeight: 1 }} aria-label="Close">×</button>
+    <div
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: 200,
+        background: "rgba(44,37,32,0.5)",
+        backdropFilter: "blur(4px)",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "flex-start",
+        padding: "40px 16px",
+        overflowY: "auto",
+      }}
+      onClick={onClose}
+    >
+      <div
+        style={{
+          background: "#faf7f3",
+          borderRadius: 16,
+          maxWidth: 680,
+          width: "100%",
+          padding: "40px 36px",
+          position: "relative",
+          boxShadow: "0 20px 60px rgba(44,37,32,0.15)",
+          marginBottom: 40,
+        }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          onClick={onClose}
+          style={{
+            position: "absolute",
+            top: 18,
+            right: 18,
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            fontSize: "24px",
+            color: "#7a7068",
+            lineHeight: 1,
+          }}
+          aria-label="Close"
+        >
+          ×
+        </button>
 
-        <h2 style={{ fontFamily: "'Lora', serif", fontSize: "clamp(20px, 2.8vw, 26px)", fontWeight: 600, color: "#2c2520", margin: "0 0 6px 0" }}>Request a Recommendation Letter</h2>
-        <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13.5px", color: "#7a7068", margin: "0 0 8px 0" }}>You must have been an active mentee for at least 6 months to qualify.</p>
-        <div style={{ width: 40, height: 2, background: "#8B4513", borderRadius: 1, margin: "12px 0 24px 0" }} />
+        <h2
+          style={{
+            fontFamily: "'Lora', serif",
+            fontSize: "clamp(20px, 2.8vw, 26px)",
+            fontWeight: 600,
+            color: "#2c2520",
+            margin: "0 0 6px 0",
+          }}
+        >
+          Request a Recommendation Letter
+        </h2>
+        <p
+          style={{
+            fontFamily: "'Source Sans 3', sans-serif",
+            fontSize: "13.5px",
+            color: "#7a7068",
+            margin: "0 0 8px 0",
+          }}
+        >
+          Open to mentees, former students, summer program participants, junior
+          colleagues, and others.
+        </p>
+        <div
+          style={{
+            width: 40,
+            height: 2,
+            background: "#8B4513",
+            borderRadius: 1,
+            margin: "12px 0 24px 0",
+          }}
+        />
 
-        <div style={{ padding: "14px 18px", background: "rgba(178,34,34,0.04)", border: "1px solid rgba(178,34,34,0.12)", borderRadius: 10, marginBottom: 24 }}>
-          <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13px", color: "#3a3228", lineHeight: 1.7, margin: 0 }}>
-            <strong style={{ color: "#B22222" }}>Eligibility Requirement:</strong> Only mentees who have been actively enrolled in the mentorship program for a minimum of 6 continuous months are eligible to request a recommendation letter. Your mentee start date will be verified against program records.
+        {/* Important notice */}
+        <div
+          style={{
+            padding: "16px 20px",
+            background: "rgba(139,69,19,0.03)",
+            border: "1px solid rgba(139,69,19,0.12)",
+            borderRadius: 10,
+            marginBottom: 24,
+          }}
+        >
+          <span
+            style={{
+              fontFamily: "'Source Sans 3', sans-serif",
+              fontSize: "11px",
+              fontWeight: 600,
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+              color: "#8B4513",
+            }}
+          >
+            Please Note
+          </span>
+          <p
+            style={{
+              fontFamily: "'Source Sans 3', sans-serif",
+              fontSize: "13px",
+              color: "#3a3228",
+              lineHeight: 1.7,
+              margin: "6px 0 0 0",
+            }}
+          >
+            Recommendation letters are provided at Dr. Arigbede's discretion.
+            Priority is given to individuals with whom there has been a
+            meaningful, sustained professional or academic relationship. If we
+            have not had a substantive interaction within the last several
+            months, or if our prior engagement was limited, I may respectfully
+            decline the request in order to ensure that any recommendation I
+            provide is both honest and genuinely useful to you.
           </p>
         </div>
 
         {status === "success" ? (
           <div style={{ textAlign: "center", padding: "40px 20px" }}>
             <div style={{ fontSize: 48, marginBottom: 16 }}>✓</div>
-            <h3 style={{ fontFamily: "'Lora', serif", fontSize: "22px", fontWeight: 600, color: "#228B22", margin: "0 0 12px 0" }}>Request Submitted</h3>
-            <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "15px", color: "#3a3228", lineHeight: 1.7 }}>Your recommendation request has been received. Dr. Arigbede will review your eligibility and respond within 7–10 business days.</p>
-            <button onClick={onClose} style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13px", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "#fff", background: "#2c2520", border: "none", borderRadius: 6, padding: "12px 28px", cursor: "pointer", marginTop: 24 }}>Close</button>
+            <h3
+              style={{
+                fontFamily: "'Lora', serif",
+                fontSize: "22px",
+                fontWeight: 600,
+                color: "#228B22",
+                margin: "0 0 12px 0",
+              }}
+            >
+              Request Submitted
+            </h3>
+            <p
+              style={{
+                fontFamily: "'Source Sans 3', sans-serif",
+                fontSize: "15px",
+                color: "#3a3228",
+                lineHeight: 1.7,
+              }}
+            >
+              Your recommendation request has been received. Dr. Arigbede will
+              review your request and respond within 7–10 business days.
+            </p>
+            <button
+              onClick={onClose}
+              style={{
+                fontFamily: "'Source Sans 3', sans-serif",
+                fontSize: "13px",
+                fontWeight: 600,
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+                color: "#fff",
+                background: "#2c2520",
+                border: "none",
+                borderRadius: 6,
+                padding: "12px 28px",
+                cursor: "pointer",
+                marginTop: 24,
+              }}
+            >
+              Close
+            </button>
           </div>
         ) : (
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }} className="scholarship-form-grid">
-              <div><label style={labelStyle}>Full Name</label><input type="text" value={formData.fullName} onChange={handleChange("fullName")} placeholder="Your full name" style={inputStyle} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} /></div>
-              <div><label style={labelStyle}>Email Address</label><input type="email" value={formData.email} onChange={handleChange("email")} placeholder="you@example.com" style={inputStyle} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} /></div>
-              <div><label style={labelStyle}>Mentee Start Date</label><input type="date" value={formData.menteeStartDate} onChange={handleChange("menteeStartDate")} style={inputStyle} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} /></div>
-              <div><label style={labelStyle}>Letter Deadline</label><input type="date" value={formData.deadline} onChange={handleChange("deadline")} style={inputStyle} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} /></div>
+            {/* ── Contact Information ── */}
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: 14,
+              }}
+              className="scholarship-form-grid"
+            >
+              <div>
+                <label style={labelStyle}>Full Name</label>
+                <input
+                  type="text"
+                  value={formData.fullName}
+                  onChange={handleChange("fullName")}
+                  placeholder="Your full name"
+                  style={inputStyle}
+                  onFocus={(e) => (e.target.style.borderColor = "#8B4513")}
+                  onBlur={(e) =>
+                    (e.target.style.borderColor = "rgba(58,50,40,0.15)")
+                  }
+                />
+              </div>
+              <div>
+                <label style={labelStyle}>Email Address</label>
+                <input
+                  type="email"
+                  value={formData.email}
+                  onChange={handleChange("email")}
+                  placeholder="you@example.com"
+                  style={inputStyle}
+                  onFocus={(e) => (e.target.style.borderColor = "#8B4513")}
+                  onBlur={(e) =>
+                    (e.target.style.borderColor = "rgba(58,50,40,0.15)")
+                  }
+                />
+              </div>
             </div>
-            <div><label style={labelStyle}>Purpose of Recommendation</label><textarea value={formData.purpose} onChange={handleChange("purpose")} placeholder="e.g., Graduate school application, fellowship, employment (include program name and institution)..." rows={3} style={{ ...inputStyle, resize: "vertical", minHeight: 80 }} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} /></div>
-            <div><label style={labelStyle}>Additional Context (Optional)</label><textarea value={formData.additionalInfo} onChange={handleChange("additionalInfo")} placeholder="Any specific achievements, skills, or experiences you would like highlighted..." rows={3} style={{ ...inputStyle, resize: "vertical", minHeight: 80 }} onFocus={(e) => (e.target.style.borderColor = "#8B4513")} onBlur={(e) => (e.target.style.borderColor = "rgba(58,50,40,0.15)")} /></div>
 
-            <button onClick={handleSubmit} disabled={status === "sending"} style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13px", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "#fff", background: status === "sending" ? "#7a7068" : "#2c2520", border: "none", borderRadius: 6, padding: "14px 32px", cursor: status === "sending" ? "wait" : "pointer", transition: "background 0.3s", alignSelf: "flex-start" }}>
+            {/* ── Relationship to Dr. Arigbede ── */}
+            <div>
+              <label style={labelStyle}>
+                Your Relationship to Dr. Arigbede
+              </label>
+              <select
+                value={formData.relationship}
+                onChange={handleChange("relationship")}
+                style={{
+                  ...inputStyle,
+                  cursor: "pointer",
+                  appearance: "auto",
+                }}
+              >
+                <option value="">Select your relationship...</option>
+                <option value="mentee">
+                  Current or Former Mentee (6+ months in mentorship program)
+                </option>
+                <option value="student">
+                  Former Student (took one of my courses)
+                </option>
+                <option value="summer-participant">
+                  Summer Program Participant (e.g., SCOREs, workshops)
+                </option>
+                <option value="colleague">
+                  Junior Colleague or Research Collaborator
+                </option>
+                <option value="friend">
+                  Friend or Personal Acquaintance
+                </option>
+                <option value="other">Other (please specify below)</option>
+              </select>
+            </div>
+
+            {/* ── Conditional fields based on relationship type ── */}
+            {showMenteeDate && (
+              <div>
+                <label style={labelStyle}>
+                  Mentee Start Date (approximate)
+                </label>
+                <input
+                  type="date"
+                  value={formData.menteeStartDate}
+                  onChange={handleChange("menteeStartDate")}
+                  style={inputStyle}
+                  onFocus={(e) => (e.target.style.borderColor = "#8B4513")}
+                  onBlur={(e) =>
+                    (e.target.style.borderColor = "rgba(58,50,40,0.15)")
+                  }
+                />
+              </div>
+            )}
+
+            {showCourseName && (
+              <div>
+                <label style={labelStyle}>
+                  Course Name and Semester (e.g., BIOS 5203, Spring 2026)
+                </label>
+                <input
+                  type="text"
+                  value={formData.courseName}
+                  onChange={handleChange("courseName")}
+                  placeholder="Course code, title, and semester/year"
+                  style={inputStyle}
+                  onFocus={(e) => (e.target.style.borderColor = "#8B4513")}
+                  onBlur={(e) =>
+                    (e.target.style.borderColor = "rgba(58,50,40,0.15)")
+                  }
+                />
+              </div>
+            )}
+
+            {showProgramName && (
+              <div>
+                <label style={labelStyle}>
+                  Program Name and Year (e.g., SCOREs Summer 2025)
+                </label>
+                <input
+                  type="text"
+                  value={formData.programName}
+                  onChange={handleChange("programName")}
+                  placeholder="Name of the program and the year you participated"
+                  style={inputStyle}
+                  onFocus={(e) => (e.target.style.borderColor = "#8B4513")}
+                  onBlur={(e) =>
+                    (e.target.style.borderColor = "rgba(58,50,40,0.15)")
+                  }
+                />
+              </div>
+            )}
+
+            {showOtherField && (
+              <div>
+                <label style={labelStyle}>
+                  Please Describe Your Relationship
+                </label>
+                <input
+                  type="text"
+                  value={formData.otherRelationship}
+                  onChange={handleChange("otherRelationship")}
+                  placeholder="How do you know Dr. Arigbede? Provide context."
+                  style={inputStyle}
+                  onFocus={(e) => (e.target.style.borderColor = "#8B4513")}
+                  onBlur={(e) =>
+                    (e.target.style.borderColor = "rgba(58,50,40,0.15)")
+                  }
+                />
+              </div>
+            )}
+
+            {/* ── Dates row ── */}
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: 14,
+              }}
+              className="scholarship-form-grid"
+            >
+              <div>
+                <label style={labelStyle}>Letter Deadline</label>
+                <input
+                  type="date"
+                  value={formData.deadline}
+                  onChange={handleChange("deadline")}
+                  style={inputStyle}
+                  onFocus={(e) => (e.target.style.borderColor = "#8B4513")}
+                  onBlur={(e) =>
+                    (e.target.style.borderColor = "rgba(58,50,40,0.15)")
+                  }
+                />
+              </div>
+              <div>
+                <label style={labelStyle}>
+                  Last Meaningful Interaction (approx.)
+                </label>
+                <input
+                  type="text"
+                  value={formData.lastInteraction}
+                  onChange={handleChange("lastInteraction")}
+                  placeholder="e.g., January 2026, ongoing"
+                  style={inputStyle}
+                  onFocus={(e) => (e.target.style.borderColor = "#8B4513")}
+                  onBlur={(e) =>
+                    (e.target.style.borderColor = "rgba(58,50,40,0.15)")
+                  }
+                />
+              </div>
+            </div>
+
+            {/* ── Purpose ── */}
+            <div>
+              <label style={labelStyle}>Purpose of Recommendation</label>
+              <textarea
+                value={formData.purpose}
+                onChange={handleChange("purpose")}
+                placeholder="e.g., Graduate school application (MPH at Columbia), fellowship (CDC EIS Program), employment (Biostatistician at NIH). Include the institution and program name where applicable."
+                rows={3}
+                style={{
+                  ...inputStyle,
+                  resize: "vertical",
+                  minHeight: 80,
+                }}
+                onFocus={(e) => (e.target.style.borderColor = "#8B4513")}
+                onBlur={(e) =>
+                  (e.target.style.borderColor = "rgba(58,50,40,0.15)")
+                }
+              />
+            </div>
+
+            {/* ── Additional Context ── */}
+            <div>
+              <label style={labelStyle}>
+                Additional Context (Optional)
+              </label>
+              <textarea
+                value={formData.additionalInfo}
+                onChange={handleChange("additionalInfo")}
+                placeholder="Any specific achievements, skills, or experiences you would like highlighted in the letter..."
+                rows={3}
+                style={{
+                  ...inputStyle,
+                  resize: "vertical",
+                  minHeight: 80,
+                }}
+                onFocus={(e) => (e.target.style.borderColor = "#8B4513")}
+                onBlur={(e) =>
+                  (e.target.style.borderColor = "rgba(58,50,40,0.15)")
+                }
+              />
+            </div>
+
+            <button
+              onClick={handleSubmit}
+              disabled={status === "sending"}
+              style={{
+                fontFamily: "'Source Sans 3', sans-serif",
+                fontSize: "13px",
+                fontWeight: 600,
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                color: "#fff",
+                background: status === "sending" ? "#7a7068" : "#2c2520",
+                border: "none",
+                borderRadius: 6,
+                padding: "14px 32px",
+                cursor: status === "sending" ? "wait" : "pointer",
+                transition: "background 0.3s",
+                alignSelf: "flex-start",
+              }}
+            >
               {status === "sending" ? "Submitting..." : "Submit Request"}
             </button>
-            {status === "incomplete" && <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#B8860B", margin: 0 }}>Please complete all required fields.</p>}
-            {status === "error" && <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#B22222", margin: 0 }}>Something went wrong. Please try again or contact Dr. Arigbede directly.</p>}
+            {status === "incomplete" && (
+              <p
+                style={{
+                  fontFamily: "'Source Sans 3', sans-serif",
+                  fontSize: "14px",
+                  color: "#B8860B",
+                  margin: 0,
+                }}
+              >
+                Please complete all required fields.
+              </p>
+            )}
+            {status === "error" && (
+              <p
+                style={{
+                  fontFamily: "'Source Sans 3', sans-serif",
+                  fontSize: "14px",
+                  color: "#B22222",
+                  margin: 0,
+                }}
+              >
+                Something went wrong. Please try again or contact Dr. Arigbede
+                directly.
+              </p>
+            )}
           </div>
         )}
       </div>
@@ -2642,12 +3123,12 @@ const [applyingVolunteer, setApplyingVolunteer] = useState(null);
           <Divider />
           <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
             <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "15.5px", lineHeight: 1.8, color: "#3a3228" }}>
-              Dr. Olu Arigbede is a health/research scientist, biostatistician, and epidemiologist with over eight years of progressive
+              Dr. Olu Arigbede is a health/research scientist, biostatistician, and epidemiologist with several years of progressive
               expertise in public health, epidemiology, and biostatistics. His specializations include infectious diseases, health disparities, health outcomes, research methods, health policy, computational genomics, cancer education, and cardiovascular disease surveillance, among other research that he has carried out
               across federal agencies, academic institutions, and state- and county-level public health departments.
             </p>
             <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "15.5px", lineHeight: 1.8, color: "#3a3228" }}>
-              Currently serving as an Associate for Institutional Research and Biostatistics instructor at
+              Currently serving as an Associate for Institutional Research and Biostatistics Faculty at
               <strong> SUNY Downstate Health Sciences University</strong>, Office of the Senior Vice President for Research and School of Public Health, respectively, where he provides comprehensive biostatistical
               consulting services, develop a webinar series on statistical methodologies, teach biostatistics courses, and mentor graduate students
               and junior researchers. Previously, Dr. Arigbede contributed to regulatory science analysis at the
@@ -2686,7 +3167,7 @@ const [applyingVolunteer, setApplyingVolunteer] = useState(null);
           <div style={{ marginTop: 48 }}>
             <h3 style={{ fontFamily: "'Lora', serif", fontSize: "20px", fontWeight: 600, color: "#2c2520", marginBottom: 16 }}>Technical Proficiencies</h3>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-              {["R (Shiny, Markdown, ggplot2, tidyverse)", "SAS (Macros, PROC SQL)", "Python", "SQL", "Tableau", "Power BI", "ArcGIS", "ESSENCE", "REDCap", "Machine Learning", "Survival Analysis", "Longitudinal Data", "Meta-Analysis", "Causal Inference", "Time Series", "Spatial Epidemiology"].map((s) => (
+              {["R (Shiny, Markdown, ggplot2, tidyverse)", "SAS (Macros, Viya)", "Python", "SQL", "Tableau", "Power BI", "ArcGIS", "ESSENCE", "REDCap", "Machine Learning", "Survival Analysis", "Predictive Analysis", "Longitudinal Data", "Meta-Analysis", "Causal Inference", "Time Series", "Spatial Epidemiology"].map((s) => (
                 <SkillTag key={s} label={s} />
               ))}
             </div>
@@ -2700,12 +3181,13 @@ const [applyingVolunteer, setApplyingVolunteer] = useState(null);
           <SectionLabel text="Experience" />
           <SectionTitle text="Professional Journey" />
           <Divider />
-          <ExpEntry org="SUNY Downstate Health Sciences University" role="Associate for Institutional Research" unit="Office of the Senior Vice President for Research" period="Feb 2025 – Present" highlights={["Teach biostatistics and epidemiology courses, such as survival analysis, among others, in the School of Public Health and the School of Health Professions, SUNY Downstate.",
+          <ExpEntry org="SUNY Downstate Health Sciences University" role="Associate for Institutional Research/Biostatistician" unit="Office of the Senior Vice President for Research" period="Feb 2025 – Present" highlights={["Teach biostatistics and epidemiology courses, such as survival analysis, among others, in the School of Public Health and the School of Health Professions, SUNY Downstate.",
               "Provide biostatistical consulting to 20+ researchers monthly across study design, analysis, and interpretation",
               "Develop and lead a monthly biostatistical webinar series attended by 15+ faculty, students, and fellows",
               "Design hands-on SAS/R training modules with real-world biomedical applications for multiple departments",
               "Deliver invited lectures bridging traditional statistics with machine learning for medical students"]} />
-          <ExpEntry org="SUNY Downstate Health Sciences University" role="Instructor" unit="HINF 5111 – Research Methods, School of Health Professions" period="Fall 2025" highlights={["Taught graduate-level biostatistical concepts to 25+ health informatics students", "Designed hands-on assignments using real healthcare datasets to foster applied learning"]} />
+<ExpEntry org="SUNY Downstate Health Sciences University" role="Biostatistics Faculty" unit="BIOS 5203/7303 – Survival Analysis, Department of Epidemiology and Biostatistics, School of Public Health" period="Spring 2026" highlights={["Design and deliver a graduate-level, 3-credit survival analysis course for MPH and doctoral students, covering foundational through advanced time-to-event methods including censoring mechanisms, nonparametric estimation, parametric survival distributions, and the Cox proportional hazards model with diagnostics and extensions", "Develop all original course materials, including lecture slide decks, structured student notes, homework assignment packages with annotated datasets and codebooks, project rubrics, and assessment instruments aligned with MPH Biostatistics Concentration Competencies (T1, T3, T4)", "Provide rigorous, dual-software instruction in SAS (primary) and R to equip students with practical programming competencies for time-to-event data analysis in public health and biomedical research contexts", "Supervise a 10-module curriculum encompassing competing risks, time-dependent covariates, stratified proportional hazards models, sample size calculations for survival studies, and an introduction to causal inference frameworks in survival analysis", "Lead synchronous virtual sessions via Zoom for a mixed campus-based and remote graduate student cohort, fostering an interactive and equitable learning environment consistent with program accessibility standards", "Guide students through a capstone research project requiring independent application of survival analysis methods to real-world health data, with formal written reporting and oral presentation components"]} />
+          <ExpEntry org="SUNY Downstate Health Sciences University" role="Guest Instructor" unit="HINF 5111 – Research Methods, School of Health Professions" period="Fall 2025" highlights={["Taught graduate-level biostatistical concepts to 25+ health informatics students", "Designed hands-on assignments using real healthcare datasets to foster applied learning"]} />
           <ExpEntry org="Food and Drug Administration (FDA)" role="Health Scientist" unit="Office of Minority Health — Office of the Commissioner" period="Nov 2024 – Jun 2025" highlights={["Developed an automated data extraction (ADE) tool in R achieving over 90% reduction in processing time", "Provided demographic analyses and interactive dashboards for regulatory submission data (NDA)", "Collaborated with CDER to enhance safety and efficacy data analysis from pivotal clinical studies"]} />
           <ExpEntry org="Centers for Disease Control and Prevention (CDC)" role="Health Scientist & Epidemiologist Fellow (ORISE)" unit="National Syndromic Surveillance Program (NSSP)" period="Jun 2022 – Nov 2024" highlights={["Developed syndromic case definitions using ICD-10-CM, ICD-9-CM, and SNOMED classification systems", "Implemented electronic surveillance system improving outbreak detection timeliness by 31%", "Applied machine learning techniques to free-text data, improving signal detection accuracy", "Built interactive dashboards and optimized data pipelines for ED, mortality, and laboratory data"]} />
           <ExpEntry org="Florida A&M University" role="Graduate Teaching / Research Assistant" unit="Division of Epidemiology and Biostatistics" period="Aug 2020 – Nov 2024" highlights={["Mentored 47+ students in public health statistics and data epidemiology", "Assisted with teaching graduate-level biostatistics, computational statistics, and epidemiology"]} />
@@ -2769,6 +3251,15 @@ const [applyingVolunteer, setApplyingVolunteer] = useState(null);
             </p>
           </div>
           <h3 style={{ fontFamily: "'Lora', serif", fontSize: "20px", fontWeight: 600, color: "#2c2520", marginBottom: 16 }}>Courses Taught</h3>
+<div style={{ padding: "16px 0 28px 0", borderBottom: "1px solid rgba(58,50,40,0.06)" }}>
+            <span style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "15px", fontWeight: 600, color: "#2c2520" }}>BIOS 5203/7303 — Survival Analysis</span><br />
+            <span style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13.5px", color: "#7a7068" }}>SUNY Downstate Health Sciences University, School of Public Health · Spring 2026 · Graduate Level</span>
+            <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#5c5147", lineHeight: 1.7, marginTop: 10 }}>
+              Comprehensive lectures on the application of survival analysis for public health and medical students, that equips them with theoretical foundations and applied skills in time-to-event data analysis, spanning nonparametric methods (Kaplan-Meier estimation, log-rank testing), parametric survival distributions (Weibull, exponential, log-normal), Cox proportional hazards regression and its extensions, and advanced topics including competing risks, time-dependent covariates, and causal inference frameworks, with hands-on implementation in SAS and R.
+            </p>
+          </div>
+
+
           <div style={{ padding: "16px 0 28px 0", borderBottom: "1px solid rgba(58,50,40,0.06)" }}>
             <span style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "15px", fontWeight: 600, color: "#2c2520" }}>HINF 5111 — Research Methods</span><br />
             <span style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13.5px", color: "#7a7068" }}>SUNY Downstate Health Sciences University, School of Health Professions · Fall 2025 · Graduate Level</span>
@@ -3107,10 +3598,26 @@ const [applyingVolunteer, setApplyingVolunteer] = useState(null);
 
     {/* Recommendation notice */}
     <div style={{ padding: "22px 26px", background: "rgba(70,130,180,0.04)", border: "1px solid rgba(70,130,180,0.15)", borderRadius: 10, marginBottom: 32 }}>
-      <h4 style={{ fontFamily: "'Lora', serif", fontSize: "16px", fontWeight: 600, color: "#2c2520", margin: "0 0 8px 0" }}>Recommendation Letters</h4>
-      <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#3a3228", lineHeight: 1.7, margin: 0 }}>
-        Mentees who have been actively enrolled in the program for a minimum of <strong>6 continuous months</strong> become eligible to request a recommendation letter from Dr. Arigbede. Recommendation letters are provided for graduate school applications, fellowship and scholarship applications, employment, and other professional purposes.
+      <h4 style={{ fontFamily: "'Lora', serif", fontSize: "16px", fontWeight: 600, color: "#2c2520", margin: "0 0 10px 0" }}>Recommendation Letters</h4>
+      <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#3a3228", lineHeight: 1.7, margin: "0 0 12px 0" }}>
+        Recommendation letters are available to individuals with whom Dr. Arigbede has had a meaningful professional or academic relationship. This includes, but is not limited to:
       </p>
+      {[
+        "Current or former mentees who have been actively enrolled for at least 6 continuous months",
+        "Former students who have taken any of my courses (e.g., BIOS 5203, HHI 5111, or others)",
+        "Summer program participants (e.g., SUNY SCOREs and similar programs)",
+        "Junior colleagues, research collaborators, and co-investigators",
+        "Friends and professional acquaintances with relevant shared history",
+      ].map((item, i) => (
+        <p key={i} style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13.5px", color: "#3a3228", lineHeight: 1.65, margin: "0 0 5px 0", paddingLeft: 16, position: "relative" }}>
+          <span style={{ position: "absolute", left: 0, color: "#4682B4" }}>·</span>{item}
+        </p>
+      ))}
+      <div style={{ marginTop: 14, padding: "12px 16px", background: "rgba(178,34,34,0.03)", border: "1px solid rgba(178,34,34,0.08)", borderRadius: 8 }}>
+        <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "12.5px", color: "#5c5147", lineHeight: 1.65, margin: 0 }}>
+          <strong style={{ color: "#B22222" }}>Please note:</strong> To write a strong and credible letter, I need to know you and your work well enough to speak meaningfully about your abilities. If we have not had a substantive interaction within the past several months or years, I may respectfully decline in order to ensure that any recommendation I provide genuinely serves your interests. If you are unsure whether to request, feel free to <a href="#contact" style={{ color: "#8B4513", textDecoration: "underline" }}>reach out first</a> to discuss.
+        </p>
+      </div>
     </div>
 
     <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
