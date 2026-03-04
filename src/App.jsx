@@ -504,7 +504,7 @@ function Nav({ active, scrolled, menuOpen, setMenuOpen, navigateTo }) {
           letterSpacing: "0.03em",
         }}
       >
-        O.M. Arigbede
+        Dr. O.M. Arigbede
       </a>
 
       <div style={{ display: "flex", gap: "24px", alignItems: "center" }} className="desktop-nav">
@@ -2936,6 +2936,57 @@ function VolunteerApplicationForm({ role, onClose }) {
 // ════════════════════════════════════════════
 // MAIN APP
 // ════════════════════════════════════════════
+
+function ScholarshipProgramCard({ prog, onView, onApply }) {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <div
+      key={prog.id}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        padding: "32px 28px",
+        background: hovered ? "rgba(139,69,19,0.04)" : "rgba(255,255,255,0.6)",
+        border: "1px solid rgba(58,50,40,0.08)",
+        borderRadius: 12,
+        transition: "all 0.35s ease",
+        transform: hovered ? "translateY(-3px)" : "translateY(0)",
+        boxShadow: hovered ? "0 8px 30px rgba(58,50,40,0.06)" : "none",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
+        <span style={{ fontSize: 32 }}>{prog.icon}</span>
+        <StatusBadge status="active" label="Open" />
+      </div>
+      <h4 style={{ fontFamily: "'Lora', serif", fontSize: "19px", fontWeight: 600, color: "#2c2520", margin: "0 0 6px 0", lineHeight: 1.3 }}>
+        {prog.title}
+      </h4>
+      <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#8B4513", fontWeight: 600, margin: "0 0 12px 0" }}>
+        Award: {prog.award} · {prog.slots} recipients
+      </p>
+      <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#5c5147", lineHeight: 1.7, margin: "0 0 16px 0", flex: 1 }}>
+        {prog.description}
+      </p>
+      <div style={{ padding: "12px 16px", background: "rgba(139,69,19,0.04)", border: "1px solid rgba(139,69,19,0.1)", borderRadius: 8, marginBottom: 20 }}>
+        <span style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "10.5px", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "#8B4513" }}>2025/2026 Theme</span>
+        <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13px", color: "#2c2520", fontWeight: 500, lineHeight: 1.5, margin: "4px 0 0 0" }}>
+          {prog.theme}
+        </p>
+      </div>
+      <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+        <button onClick={() => onView(prog.id)} style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "12px", fontWeight: 600, letterSpacing: "0.06em", textTransform: "uppercase", color: "#fff", background: "#2c2520", border: "none", borderRadius: 6, padding: "11px 22px", cursor: "pointer", transition: "all 0.25s" }}>
+          View Details & Apply →
+        </button>
+        <button onClick={() => onApply(prog.id)} style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "12px", fontWeight: 600, letterSpacing: "0.06em", textTransform: "uppercase", color: "#2c2520", background: "transparent", border: "1.5px solid rgba(44,37,32,0.2)", borderRadius: 6, padding: "10px 22px", cursor: "pointer", transition: "all 0.25s" }}>
+          Quick Apply
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export default function AcademicWebsite() {
   const [currentPage, setCurrentPage] = useState("home");
   const [scrolled, setScrolled] = useState(false);
@@ -2989,7 +3040,7 @@ export default function AcademicWebsite() {
     const pageLabel = PAGE_TITLES[currentPage] || "Dr. Olumide M. Arigbede";
     document.title = currentPage === "home"
       ? "Dr. Olumide M. Arigbede | Biostatistician & Epidemiologist"
-      : `${pageLabel} | O.M. Arigbede`;
+      : `${pageLabel} | Dr. O.M. Arigbede`;
 
     // Generate and set the favicon
     try {
@@ -3515,78 +3566,9 @@ export default function AcademicWebsite() {
 
           {/* Scholarship program cards */}
           <div className="scholarship-grid" style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 20, marginBottom: 36 }}>
-            {SCHOLARSHIP_PROGRAMS.map((prog) => {
-              const [hovered, setHovered] = useState(false);
-              return (
-                <div
-                  key={prog.id}
-                  onMouseEnter={() => setHovered(true)}
-                  onMouseLeave={() => setHovered(false)}
-                  style={{
-                    padding: "32px 28px",
-                    background: hovered ? "rgba(139,69,19,0.04)" : "rgba(255,255,255,0.6)",
-                    border: "1px solid rgba(58,50,40,0.08)",
-                    borderRadius: 12,
-                    transition: "all 0.35s ease",
-                    transform: hovered ? "translateY(-3px)" : "translateY(0)",
-                    boxShadow: hovered ? "0 8px 30px rgba(58,50,40,0.06)" : "none",
-                    display: "flex",
-                    flexDirection: "column",
-                  }}
-                >
-                  <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
-                    <span style={{ fontSize: 32 }}>{prog.icon}</span>
-                    <StatusBadge status="active" label="Open" />
-                  </div>
-
-                  <h4 style={{ fontFamily: "'Lora', serif", fontSize: "19px", fontWeight: 600, color: "#2c2520", margin: "0 0 6px 0", lineHeight: 1.3 }}>
-                    {prog.title}
-                  </h4>
-                  <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#8B4513", fontWeight: 600, margin: "0 0 12px 0" }}>
-                    Award: {prog.award} · {prog.slots} recipients
-                  </p>
-
-                  <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#5c5147", lineHeight: 1.7, margin: "0 0 16px 0", flex: 1 }}>
-                    {prog.description}
-                  </p>
-
-                  {/* Theme callout */}
-                  <div style={{ padding: "12px 16px", background: "rgba(139,69,19,0.04)", border: "1px solid rgba(139,69,19,0.1)", borderRadius: 8, marginBottom: 20 }}>
-                    <span style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "10.5px", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "#8B4513" }}>2025/2026 Theme</span>
-                    <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13px", color: "#2c2520", fontWeight: 500, lineHeight: 1.5, margin: "4px 0 0 0" }}>
-                      {prog.theme}
-                    </p>
-                  </div>
-
-                  <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-                    <button
-                      onClick={() => setViewingScholarship(prog.id)}
-                      style={{
-                        fontFamily: "'Source Sans 3', sans-serif", fontSize: "12px", fontWeight: 600,
-                        letterSpacing: "0.06em", textTransform: "uppercase",
-                        color: "#8B4513", background: "rgba(139,69,19,0.06)",
-                        border: "1px solid rgba(139,69,19,0.15)", borderRadius: 6,
-                        padding: "10px 18px", cursor: "pointer", transition: "all 0.25s",
-                      }}
-                    >
-                      Full Details & Requirements
-                    </button>
-                    <button
-                      onClick={() => setApplyingScholarship(prog.id)}
-                      style={{
-                        fontFamily: "'Source Sans 3', sans-serif", fontSize: "12px", fontWeight: 600,
-                        letterSpacing: "0.06em", textTransform: "uppercase",
-                        color: "#fff", background: "#2c2520",
-                        border: "none", borderRadius: 6,
-                        padding: "10px 18px", cursor: "pointer", transition: "all 0.25s",
-                      }}
-                    >
-                      Apply Now →
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
+            {SCHOLARSHIP_PROGRAMS.map((prog) => (
+  <ScholarshipProgramCard key={prog.id} prog={prog} onView={(id) => setViewingScholarship(id)} onApply={(id) => setApplyingScholarship(id)} />
+))}
           </div>
 
           {/* Important note */}
