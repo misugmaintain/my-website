@@ -484,7 +484,6 @@ const HOMEPAGE_PHOTOS = [
 { src: "/Photos/1000239176.jpeg", caption: "APHA Annual Meeting, Washington DC, 2025" },
 { src: "/Photos/1000238257.jpeg", caption: "APHA Annual Meeting, Washington DC, 2025 with Ms. James" },
 { src: "/Photos/1000237944.jpeg", caption: "APHA Annual Meeting, Washington DC, 2025" },
-{ src: "/Photos/1000239611.DNG", caption: "APHA Annual Meeting, Washington DC, 2025" },
   { src: "/Photos/1000108588.JPG", caption: "DrPH Graduation Ceremony at FAMU, December 2024" },
 { src: "/Photos/1000089726.JPG", caption: "DrPH Hooding with Dr. Buxbaum, 2024" },
 { src: "/Photos/1000090091.JPG", caption: "Doctoral Graduation After Party, 2024" },
