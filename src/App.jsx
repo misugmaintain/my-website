@@ -1033,6 +1033,11 @@ function PodcastCard({ episode }) {
       <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13.5px", color: "#8B4513", fontWeight: 500, margin: "0 0 10px 0" }}>
         Guest: {episode.guest}
       </p>
+{episode.shortBio && episode.shortBio !== "TBD" && (
+  <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "13px", color: "#7a7068", lineHeight: 1.6, margin: "0 0 10px 0", fontStyle: "italic" }}>
+    {episode.shortBio}
+  </p>
+)}
       <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "14px", color: "#5c5147", lineHeight: 1.65, margin: "0 0 12px 0" }}>
         {episode.description}
       </p>
