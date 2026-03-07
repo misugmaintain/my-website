@@ -3052,7 +3052,7 @@ function PhotoGallery({ photos }) {
   return (
     <div style={{ marginTop: 48 }}>
       <h3 style={{ fontFamily: "'Lora', serif", fontSize: "20px", fontWeight: 600, color: "#2c2520", marginBottom: 16 }}>In Action</h3>
-      <div style={{ position: "relative", width: "100%", height: 360, borderRadius: 12, overflow: "hidden", background: "rgba(44,37,32,0.05)" }}>
+      <div style={{ position: "relative", width: "100%", height: 500, borderRadius: 12, overflow: "hidden", background: "rgba(44,37,32,0.05)" }}>
         {photos.map((photo, i) => (
           <img
             key={i}
@@ -3061,7 +3061,7 @@ function PhotoGallery({ photos }) {
             onError={() => setImgError((prev) => ({ ...prev, [i]: true }))}
             style={{
               position: "absolute", inset: 0, width: "100%", height: "100%",
-              objectFit: "cover", borderRadius: 12,
+              objectFit: "contain", borderRadius: 12, background: "rgba(44,37,32,0.03)",
               opacity: i === activeIndex ? 1 : 0,
               transition: "opacity 0.8s ease-in-out",
             }}
