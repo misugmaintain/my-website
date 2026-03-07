@@ -480,18 +480,18 @@ const RECENT_UPDATES_DATA = [
 // Add your conference and professional event photos to the /public folder
 // and list them here with captions
 const HOMEPAGE_PHOTOS = [
-  { src: "/Photos/1000239728.jpeg", caption: "APHA Annual Meeting, Washington DC, 2025" },
-{ src: "/Photos/1000239176.jpeg", caption: "APHA Annual Meeting, Washington DC, 2025" },
-{ src: "/Photos/1000238257.jpeg", caption: "APHA Annual Meeting, Washington DC, 2025 with Ms. James" },
-{ src: "/Photos/1000237944.jpeg", caption: "APHA Annual Meeting, Washington DC, 2025" },
-{ src: "/Photos/1000239611.DNG", caption: "APHA Annual Meeting, Washington DC, 2025" },
-  { src: "/Photos/1000108588.JPG", caption: "DrPH Graduation Ceremony at FAMU, December 2024" },
-{ src: "/Photos/1000089726.JPG", caption: "DrPH Hooding with Dr. Buxbaum, 2024" },
-{ src: "/Photos/1000090091.JPG", caption: "Doctoral Graduation After Party, 2024" },
-  { src: "/Photos/1000078907.JPG", caption: "Xavier University Health Disparities Conference, 2024" },
-  { src: "/Photos/1000081887.jpeg", caption: "Emory University AI Summit, Atlanta, GA, 2024" },
-  { src: "/Photos/HBCU_health-disparities-conf.JPG", caption: "9th Annual HBCU Climate Change Conference, 2023" },
-  { src: "/Photos/1000082074.JPG", caption: "FAMU/AbbVie Science Research Forum, 2022" },
+  { src: "/Users/olumidearigbede/Desktop/Olumide's Archive/My CV_andotherDOCS/TOA Data Clinic/TOA-photos/Photos/1000239728.jpeg", caption: "APHA Annual Meeting, Washington DC, 2025" },
+{ src: "/Users/olumidearigbede/Desktop/Olumide's Archive/My CV_andotherDOCS/TOA Data Clinic/TOA-photos/Photos/1000239176.jpeg", caption: "APHA Annual Meeting, Washington DC, 2025" },
+{ src: "/Users/olumidearigbede/Desktop/Olumide's Archive/My CV_andotherDOCS/TOA Data Clinic/TOA-photos/Photos/1000238257.jpeg", caption: "APHA Annual Meeting, Washington DC, 2025 with Ms. James" },
+{ src: "/Users/olumidearigbede/Desktop/Olumide's Archive/My CV_andotherDOCS/TOA Data Clinic/TOA-photos/Photos/1000237944.jpeg", caption: "APHA Annual Meeting, Washington DC, 2025" },
+{ src: "/Users/olumidearigbede/Desktop/Olumide's Archive/My CV_andotherDOCS/TOA Data Clinic/TOA-photos/Photos/1000239611.DNG", caption: "APHA Annual Meeting, Washington DC, 2025" },
+  { src: "/Users/olumidearigbede/Desktop/Olumide's Archive/My CV_andotherDOCS/TOA Data Clinic/TOA-photos/Photos/1000108588.JPG", caption: "DrPH Graduation Ceremony at FAMU, December 2024" },
+{ src: "/Users/olumidearigbede/Desktop/Olumide's Archive/My CV_andotherDOCS/TOA Data Clinic/TOA-photos/Photos/1000089726.JPG", caption: "DrPH Hooding with Dr. Buxbaum, 2024" },
+{ src: "/Users/olumidearigbede/Desktop/Olumide's Archive/My CV_andotherDOCS/TOA Data Clinic/TOA-photos/Photos/1000090091.JPG", caption: "Doctoral Graduation After Party, 2024" },
+  { src: "/Users/olumidearigbede/Desktop/Olumide's Archive/My CV_andotherDOCS/TOA Data Clinic/TOA-photos/Photos/1000078907.JPG", caption: "Xavier University Health Disparities Conference, 2024" },
+  { src: "/Users/olumidearigbede/Desktop/Olumide's Archive/My CV_andotherDOCS/TOA Data Clinic/TOA-photos/Photos/1000081887.jpeg", caption: "Emory University AI Summit, Atlanta, GA, 2024" },
+  { src: "/Users/olumidearigbede/Desktop/Olumide's Archive/My CV_andotherDOCS/TOA Data Clinic/TOA-photos/Photos/HBCU_health-disparities-conf.JPG", caption: "9th Annual HBCU Climate Change Conference, 2023" },
+  { src: "/Users/olumidearigbede/Desktop/Olumide's Archive/My CV_andotherDOCS/TOA Data Clinic/TOA-photos/Photos/1000082074.JPG", caption: "FAMU/AbbVie Science Research Forum, 2022" },
   // Replace the src paths with your actual photo filenames once you add them
 ];
 
