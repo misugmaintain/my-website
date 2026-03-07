@@ -180,6 +180,7 @@ const PODCASTS_DATA = [
   {
     title: "The Role of Biostatistics in Modern Medicine",
     guest: "Coming Soon",
+    Short Biography: "TBD",
     date: "March 2026",
     status: "upcoming",
     description: "An in-depth conversation on how biostatistical methods are shaping clinical decision-making and precision medicine.",
