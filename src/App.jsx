@@ -202,7 +202,7 @@ const PODCASTS_DATA = [
     date: "May 2026",
     status: "upcoming",
     description: "In this session, we explore how existing and future public health professionals can embrace technology, data, and novel digital tools and statistical methods to enhance their practice, drive meaningful impact, and stay relevant in an increasingly data-driven field.",
-    tags: ["Biostatistics", "Epidemiology", Data Science],
+    tags: ["Biostatistics", "Epidemiology", "Data Science"],
   },
 ];
 
