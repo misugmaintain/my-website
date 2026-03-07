@@ -462,7 +462,7 @@ const RECENT_UPDATES_DATA = [
     type: "conference",
     title: "APHA 2025 Annual Meeting Recap",
     description: "Presented research on social support systems among pregnant adolescents and moderated sessions in public health statistics and epidemiology at the APHA Annual Meeting in Washington, DC.",
-    link: "",
+    link: "https://apha.confex.com/apha/2025/meetingapp.cgi/Paper/578076",
     source: "APHA",
   },
   {
