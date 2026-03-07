@@ -195,6 +195,15 @@ const PODCASTS_DATA = [
     description: "A discussion on career pathways in epidemiology, from graduate school to federal agencies, with practical advice for emerging professionals.",
     tags: ["Career Development", "Epidemiology"],
   },
+{
+    title: "Becoming Techy in Public Health: A Conversation with Dr. Azondekon",
+    guest: "Dr. Roseric Azondekon",
+    shortBio: "ROSERIC AZONDEKON, PHD, is a qualified Medical Informaticist, Epidemiologist, and Medical Entomologist with a strong background in independent and group laboratory research. He has a long tenure in malaria entomology research. He is the creator, maintainer, and the lead developer of the popular Rnssp R package, the Rnssp R Markdown templates, the Rnssp Shiny Apps, and related documentation websites.",
+    date: "May 2026",
+    status: "upcoming",
+    description: "In this session, we explore how existing and future public health professionals can embrace technology, data, and novel digital tools and statistical methods to enhance their practice, drive meaningful impact, and stay relevant in an increasingly data-driven field.",
+    tags: ["Biostatistics", "Epidemiology", Data Science],
+  },
 ];
 
 // ── Scholarship Programs Data ──
