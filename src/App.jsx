@@ -180,7 +180,7 @@ const PODCASTS_DATA = [
   {
     title: "The Role of Biostatistics in Modern Medicine",
     guest: "Coming Soon",
-    ShortBio: "TBD",
+    shortBio: "TBD",
     date: "March 2026",
     status: "upcoming",
     description: "An in-depth conversation on how biostatistical methods are shaping clinical decision-making and precision medicine.",
@@ -189,7 +189,7 @@ const PODCASTS_DATA = [
   {
     title: "Navigating Careers in Public Health Epidemiology",
     guest: "Dr. Roseric Azondekon",
-    ShortBio: "ROSERIC AZONDEKON, PHD, is a qualified Medical Informaticist, Epidemiologist, and Medical Entomologist with a strong background in independent and group laboratory research. He has a long tenure in malaria entomology research. He is the creator, maintainer, and the lead developer of the popular Rnssp R package, the Rnssp R Markdown templates, the Rnssp Shiny Apps, and related documentation websites.",
+    shortBio: "ROSERIC AZONDEKON, PHD, is a qualified Medical Informaticist, Epidemiologist, and Medical Entomologist with a strong background in independent and group laboratory research. He has a long tenure in malaria entomology research. He is the creator, maintainer, and the lead developer of the popular Rnssp R package, the Rnssp R Markdown templates, the Rnssp Shiny Apps, and related documentation websites.",
     date: "April 2026",
     status: "upcoming",
     description: "A discussion on career pathways in epidemiology, from graduate school to federal agencies, with practical advice for emerging professionals.",
