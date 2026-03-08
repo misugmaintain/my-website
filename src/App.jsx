@@ -480,7 +480,7 @@ const RECENT_UPDATES_DATA = [
     date: "February 2026",
     type: "media",
     title: "TOA Data Clinic LLC Established",
-    description: "Launched TOA Data Clinic LLC, a biostatistical consulting and data analysis firm based in McKinney, Texas, serving researchers, academic institutions, and healthcare organizations.",
+    description: "Launched TOA Data Clinic LLC, a biostatistical consulting and data analysis firm based in Texas, serving researchers, academic institutions, and healthcare organizations.",
     link: "",
     source: "TOA Data Clinic",
   },
