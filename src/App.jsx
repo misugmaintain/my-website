@@ -189,8 +189,8 @@ const PODCASTS_DATA = [
   {
     title: "Navigating Careers in Public Health Epidemiology",
     guest: "Dr. Roseric Azondekon",
-    shortBio: "ROSERIC AZONDEKON, PHD, is a qualified Medical Informaticist, Epidemiologist, and Medical Entomologist with a strong background in independent and group laboratory research. He has a long tenure in malaria entomology research. He is the creator, maintainer, and the lead developer of the popular Rnssp R package, the Rnssp R Markdown templates, the Rnssp Shiny Apps, and related documentation websites.",
-    date: "April 2026",
+    shortBio: "ROSERIC AZONDEKON, PHD, is a qualified Medical and Public Health Informaticist, Epidemiologist, and Medical Entomologist with a strong background in independent and group laboratory research. He has a long tenure in malaria entomology research. He is currently a distinguished Public Health Informaticist at the CDC, helping to bridge the gap between complex data science and infectious disease research. He possesses over 15 years of data science expertise, specializing in R, Python, and productivity tool development to improve public health surveillance. He is the creator, maintainer, and lead developer of the popular Rnssp R package, the Rnssp R Markdown templates, the Rnssp Shiny Apps, and related documentation websites. Complementing his technical skills is a 20-year background in malaria vector control in Benin. He has led national strategies and research studies in resource-limited areas. A prolific researcher, Dr. Azondekon has authored and co-authored over 30 peer-reviewed articles.",
+    date: "May 2026",
     status: "upcoming",
     description: "A discussion on career pathways in epidemiology, from graduate school to federal agencies, with practical advice for emerging professionals.",
     tags: ["Career Development", "Epidemiology"],
@@ -198,8 +198,8 @@ const PODCASTS_DATA = [
 {
     title: "Becoming Techy in Public Health: A Conversation with Dr. Azondekon",
     guest: "Dr. Roseric Azondekon",
-    shortBio: "ROSERIC AZONDEKON, PHD, is a qualified Medical Informaticist, Epidemiologist, and Medical Entomologist with a strong background in independent and group laboratory research. He has a long tenure in malaria entomology research. He is the creator, maintainer, and the lead developer of the popular Rnssp R package, the Rnssp R Markdown templates, the Rnssp Shiny Apps, and related documentation websites.",
-    date: "May 2026",
+    shortBio: "ROSERIC AZONDEKON, PHD, is a qualified Medical and Public Health Informaticist, Epidemiologist, and Medical Entomologist with a strong background in independent and group laboratory research. He has a long tenure in malaria entomology research. He is currently a distinguished Public Health Informaticist at the CDC, helping to bridge the gap between complex data science and infectious disease research. He possesses over 15 years of data science expertise, specializing in R, Python, and productivity tool development to improve public health surveillance. He is the creator, maintainer, and lead developer of the popular Rnssp R package, the Rnssp R Markdown templates, the Rnssp Shiny Apps, and related documentation websites. Complementing his technical skills is a 20-year background in malaria vector control in Benin. He has led national strategies and research studies in resource-limited areas. A prolific researcher, Dr. Azondekon has authored and co-authored over 30 peer-reviewed articles.",
+    date: "June 2026",
     status: "upcoming",
     description: "In this session, we explore how existing and future public health professionals can embrace technology, data, and novel digital tools and statistical methods to enhance their practice, drive meaningful impact, and stay relevant in an increasingly data-driven field.",
     tags: ["Biostatistics", "Epidemiology", "Data Science"],
