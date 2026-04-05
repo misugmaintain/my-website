@@ -87,6 +87,15 @@ const EVENTS_DATA = [
 ];
 
 const ARTICLES_DATA = [
+{
+    title: "Essential Biostatistical Methods for Epidemiologists in the Era of Artificial Intelligence and Robotics: An Educational Review",
+    date: "March 2026",
+    category: "Biostatistics & AI",
+    readTime: "Educational Review",
+    excerpt: "This educational review systematically characterizes the spectrum of biostatistical competencies that both practicing and emerging epidemiologists must cultivate — from foundational probability theory and regression modeling through survival analysis, longitudinal methods, causal inference, spatial epidemiology, Bayesian inference, and machine learning — and situates each within the realities imposed by AI-augmented research environments and robotic data-collection platforms.",
+    pdfUrl: "/arigbede_biostatistics_AI_article.pdf",
+    content: "",
+  },
   {
     title: "Understanding Syndromic Surveillance: Why Emergency Department Data, Laboratory Data, and Mortality Data Matter",
     date: "February 2026",
@@ -871,11 +880,37 @@ function ArticleReader({ article, onClose }) {
         </p>
         <div style={{ width: 40, height: 2, background: "#8B4513", borderRadius: 1, marginBottom: 28 }} />
 
-        {article.content.split("\n\n").map((para, i) => (
-          <p key={i} style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "15.5px", lineHeight: 1.85, color: "#3a3228", margin: "0 0 20px 0" }}>
-            {para}
-          </p>
-        ))}
+        {article.pdfUrl ? (
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            <div style={{ width: "100%", height: 600, borderRadius: 8, overflow: "hidden", border: "1px solid rgba(58,50,40,0.1)" }}>
+              <iframe
+                src={article.pdfUrl}
+                title={article.title}
+                style={{ width: "100%", height: "100%", border: "none" }}
+              />
+            </div>
+            
+              href={article.pdfUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                fontFamily: "'Source Sans 3', sans-serif", fontSize: "13px", fontWeight: 600,
+                letterSpacing: "0.08em", textTransform: "uppercase",
+                color: "#fff", background: "#2c2520", border: "none", borderRadius: 6,
+                padding: "12px 24px", textDecoration: "none", alignSelf: "flex-start",
+                display: "inline-block", textAlign: "center",
+              }}
+            >
+              Open Full PDF in New Tab →
+            </a>
+          </div>
+        ) : (
+          article.content.split("\n\n").map((para, i) => (
+            <p key={i} style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "15.5px", lineHeight: 1.85, color: "#3a3228", margin: "0 0 20px 0" }}>
+              {para}
+            </p>
+          ))
+        )}
 
         {/* Citation block */}
         <div style={{ marginTop: 36, borderTop: "1px solid rgba(58,50,40,0.1)", paddingTop: 24 }}>
