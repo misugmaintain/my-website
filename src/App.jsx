@@ -889,6 +889,7 @@ function ArticleReader({ article, onClose }) {
                 style={{ width: "100%", height: "100%", border: "none" }}
               />
             </div>
+	<a
             
               href={article.pdfUrl}
               target="_blank"
