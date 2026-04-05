@@ -280,7 +280,7 @@ const SERVICES_DATA = [
     id: "international exposure",
     title: "International Graduate Education",
     icon: "🌍",
-    price: 500,
+    price: "Vary",
     unit: "per engagement",
     description:
       "Structured guidance for international students planning to relocate for graduate education in the United States. Covers program selection strategy, application positioning, visa preparation, personal statement/statement of purpose, funding identification, and cultural transition planning.",
@@ -314,7 +314,7 @@ stripeLink: "https://buy.stripe.com/test_5kQeVd5Qp0pD3AnaOY5AQ02",
     id: "grant-writing",
     title: "Grant Writing",
     icon: "✍️",
-    price: 2500,
+    price: 4000,
     unit: "per grant",
     description:
       "End-to-end grant writing support for NIH, NSF, PCORI, foundation, and institutional grant applications. Includes specific aims development, research strategy drafting, budget justification, and iterative review.",
@@ -331,7 +331,7 @@ stripeLink: "https://buy.stripe.com/test_6oU5kDceN6O18UH2is5AQ01",
     id: "grant-assessment",
     title: "Grant Proposal Assessment",
     icon: "🔍",
-    price: 800,
+    price: 1500,
     unit: "per proposal",
     description:
       "Critical review and scoring of draft grant proposals using NIH-style review criteria. Provides detailed written feedback on significance, innovation, approach, investigator qualifications, and environment with actionable recommendations.",
@@ -3392,12 +3392,12 @@ export default function AcademicWebsite() {
           <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
             <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "15.5px", lineHeight: 1.8, color: "#3a3228" }}>
               Dr. Olu Arigbede is a health/research scientist, biostatistician, and epidemiologist with several years of progressive
-              expertise in public health, epidemiology, and biostatistics. His specializations include infectious diseases, health disparities, health outcomes, research methods, health policy, computational genomics, cancer education, and cardiovascular disease surveillance, among other research that he has carried out
+              expertise in epidemiology, biostatistics, research methods, and public health AI/ML sciences. His specializations include infectious diseases, health disparities, health outcomes, research methods, health policy, computational genomics, cancer education, and cardiovascular disease surveillance, among other research that he has carried out
               across federal agencies, academic institutions, and state- and county-level public health departments.
             </p>
             <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "15.5px", lineHeight: 1.8, color: "#3a3228" }}>
-              Currently serving as an Associate for Institutional Research and Biostatistics Faculty at
-              <strong> SUNY Downstate Health Sciences University</strong>, Office of the Senior Vice President for Research and School of Public Health, respectively, where he provides comprehensive biostatistical
+              Currently serving as an Associate for Institutional Research and Biostatistics Instructor at
+              <strong> SUNY Downstate Health Sciences University</strong>, Office of the Senior Vice President for Research and the Department of Epidemiology and Biostatistics, School of Public Health, respectively, where he provides comprehensive biostatistical
               consulting services, develop a webinar series on statistical methodologies, teach biostatistics courses, and mentor graduate students
               and junior researchers. Previously, Dr. Arigbede contributed to regulatory science analysis at the
               <strong> Food and Drug Administration (FDA)</strong>, developed syndromic surveillance systems at the
@@ -3435,7 +3435,7 @@ export default function AcademicWebsite() {
           <div style={{ marginTop: 48 }}>
             <h3 style={{ fontFamily: "'Lora', serif", fontSize: "20px", fontWeight: 600, color: "#2c2520", marginBottom: 16 }}>Technical Proficiencies</h3>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-              {["R (Shiny, Markdown, ggplot2, tidyverse)", "SAS (Macros, Viya)", "Python", "SQL", "Tableau", "Power BI", "ArcGIS", "ESSENCE", "REDCap", "Machine Learning", "Survival Analysis", "Predictive Analysis", "Longitudinal Data", "Meta-Analysis", "Causal Inference", "Time Series", "Spatial Epidemiology"].map((s) => (
+              {["AI tools (Claude Code, OpenAI Codex, etc.)", "R (Shiny, Markdown, ggplot2, tidyverse)", "SAS (Macros, Viya)", "Python", "SQL", "Visual Studio Code", "Tableau", "Power BI", "ArcGIS", "ESSENCE", "REDCap", "Machine Learning", "Survival Analysis", "Predictive Analysis", "Longitudinal Data", "Meta-Analysis", "Causal Inference", "Time Series", "Spatial Epidemiology"].map((s) => (
                 <SkillTag key={s} label={s} />
               ))}
             </div>
@@ -3453,7 +3453,7 @@ export default function AcademicWebsite() {
     <SectionTitle text="News, Mentions & Activities" />
     <Divider />
     <p style={{ fontFamily: "'Source Sans 3', sans-serif", fontSize: "15.5px", lineHeight: 1.8, color: "#3a3228", marginBottom: 28 }}>
-      Recent professional activities, conference appearances, publications, media mentions, and community engagement. Follow along to stay current with my work in biostatistics, epidemiology, and public health.
+      Recent professional activities, conference appearances, publications, media mentions, and community engagement. Follow along to stay up to date on my work in biostatistics, epidemiology, and public health.
     </p>
 
     {/* Filter buttons */}
@@ -3513,7 +3513,7 @@ export default function AcademicWebsite() {
               "Develop and lead a monthly biostatistical webinar series attended by 15+ faculty, students, and fellows",
               "Design hands-on SAS/R training modules with real-world biomedical applications for multiple departments",
               "Deliver invited lectures bridging traditional statistics with machine learning for medical students"]} />
-<ExpEntry org="SUNY Downstate Health Sciences University" role="Biostatistics Faculty" unit="BIOS 5203/7303 – Survival Analysis, Department of Epidemiology and Biostatistics, School of Public Health" period="Spring 2026" highlights={["Design and deliver a graduate-level, 3-credit survival analysis course for MPH and doctoral students, covering foundational through advanced time-to-event methods including censoring mechanisms, nonparametric estimation, parametric survival distributions, and the Cox proportional hazards model with diagnostics and extensions", "Develop all original course materials, including lecture slide decks, structured student notes, homework assignment packages with annotated datasets and codebooks, project rubrics, and assessment instruments aligned with MPH Biostatistics Concentration Competencies (T1, T3, T4)", "Provide rigorous, dual-software instruction in SAS (primary) and R to equip students with practical programming competencies for time-to-event data analysis in public health and biomedical research contexts", "Supervise a 10-module curriculum encompassing competing risks, time-dependent covariates, stratified proportional hazards models, sample size calculations for survival studies, and an introduction to causal inference frameworks in survival analysis", "Lead synchronous virtual sessions via Zoom for a mixed campus-based and remote graduate student cohort, fostering an interactive and equitable learning environment consistent with program accessibility standards", "Guide students through a capstone research project requiring independent application of survival analysis methods to real-world health data, with formal written reporting and oral presentation components"]} />
+<ExpEntry org="SUNY Downstate Health Sciences University" role="Biostatistics Instructor" unit="BIOS 5203/7303 – Survival Analysis, Department of Epidemiology and Biostatistics, School of Public Health" period="Spring 2026" highlights={["Design and deliver a graduate-level, 3-credit survival analysis course for MPH and doctoral students, covering foundational through advanced time-to-event methods including censoring mechanisms, nonparametric estimation, parametric survival distributions, and the Cox proportional hazards model with diagnostics and extensions", "Develop all original course materials, including lecture slide decks, structured student notes, homework assignment packages with annotated datasets and codebooks, project rubrics, and assessment instruments aligned with MPH Biostatistics Concentration Competencies (T1, T3, T4)", "Provide rigorous, dual-software instruction in SAS (primary) and R to equip students with practical programming competencies for time-to-event data analysis in public health and biomedical research contexts", "Supervise a 10-module curriculum encompassing competing risks, time-dependent covariates, stratified proportional hazards models, sample size calculations for survival studies, and an introduction to causal inference frameworks in survival analysis", "Lead synchronous virtual sessions via Zoom for a mixed campus-based and remote graduate student cohort, fostering an interactive and equitable learning environment consistent with program accessibility standards", "Guide students through a capstone research project requiring independent application of survival analysis methods to real-world health data, with formal written reporting and oral presentation components"]} />
           <ExpEntry org="SUNY Downstate Health Sciences University" role="Guest Instructor" unit="HINF 5111 – Research Methods, School of Health Professions" period="Fall 2025" highlights={["Taught graduate-level biostatistical concepts to 25+ health informatics students", "Designed hands-on assignments using real healthcare datasets to foster applied learning"]} />
           <ExpEntry org="Food and Drug Administration (FDA)" role="Health Scientist" unit="Office of Minority Health — Office of the Commissioner" period="Nov 2024 – Jun 2025" highlights={["Developed an automated data extraction (ADE) tool in R achieving over 90% reduction in processing time", "Provided demographic analyses and interactive dashboards for regulatory submission data (NDA)", "Collaborated with CDER to enhance safety and efficacy data analysis from pivotal clinical studies"]} />
           <ExpEntry org="Centers for Disease Control and Prevention (CDC)" role="Health Scientist & Epidemiologist Fellow (ORISE)" unit="National Syndromic Surveillance Program (NSSP)" period="Jun 2022 – Nov 2024" highlights={["Developed syndromic case definitions using ICD-10-CM, ICD-9-CM, and SNOMED classification systems", "Implemented electronic surveillance system improving outbreak detection timeliness by 31%", "Applied machine learning techniques to free-text data, improving signal detection accuracy", "Built interactive dashboards and optimized data pipelines for ED, mortality, and laboratory data"]} />
