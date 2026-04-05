@@ -89,7 +89,7 @@ const EVENTS_DATA = [
 const ARTICLES_DATA = [
 {
     title: "Essential Biostatistical Methods for Epidemiologists in the Era of Artificial Intelligence and Robotics: An Educational Review",
-    date: "March 2026",
+    date: "April 2026",
     category: "Biostatistics & AI",
     readTime: "Educational Review",
     excerpt: "This educational review systematically characterizes the spectrum of biostatistical competencies that both practicing and emerging epidemiologists must cultivate — from foundational probability theory and regression modeling through survival analysis, longitudinal methods, causal inference, spatial epidemiology, Bayesian inference, and machine learning — and situates each within the realities imposed by AI-augmented research environments and robotic data-collection platforms.",
