@@ -88,6 +88,15 @@ const EVENTS_DATA = [
 
 const ARTICLES_DATA = [
 {
+    title: "Loud the Sound: The Brazilian Butt Lift Has Come to Stay, But the Epidemiological Evidence Says It May Be the Deadliest Cosmetic Surgery of Our Time",
+    date: "April 2026",
+    category: "Epidemiology & Public Health",
+    readTime: "Research Commentary",
+    excerpt: "In just 12 years, global Brazilian Butt Lift procedure volume surged from approximately 14,705 in 2012 to over 600,000 in 2024. This is an estimated 4,000% increase. Yet behind this extraordinary demand lies a mortality signal that no epidemiologist can ignore. This commentary examines the epidemiological evidence, the geographic clustering of fatalities, the medical tourism amplifier, and the modifiable risk factors that distinguish catastrophic outcomes from safe practice.",
+    pdfUrl: "/arigbede_bbl_commentary.pdf",
+    content: "",
+  },
+{
     title: "Essential Biostatistical Methods for Epidemiologists in the Era of Artificial Intelligence and Robotics: An Educational Review",
     date: "April 2026",
     category: "Biostatistics & AI",
