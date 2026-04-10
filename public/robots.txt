@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://www.theoluarigbede.com/sitemap.xml
