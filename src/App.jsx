@@ -3259,6 +3259,21 @@ export default function AcademicWebsite() {
     document.title = currentPage === "home"
       ? "Dr. Olumide M. Arigbede | Biostatistician & Epidemiologist"
       : `${pageLabel} | Dr. O.M. Arigbede`;
+// Update meta description for SEO
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      const descriptions = {
+        home: "Dr. Olumide M. Arigbede — Biostatistician, epidemiologist, and health scientist at SUNY Downstate. Expertise in biostatistics, cancer epidemiology, infectious disease modeling, and AI/ML in public health.",
+        updates: "Latest professional activities, conference appearances, and publications by Dr. Olumide Arigbede in biostatistics, epidemiology, and public health.",
+        about: "Background, education, and expertise of Dr. Olumide M. Arigbede — DrPH in Epidemiology and Biostatistics from Florida A&M University.",
+        articles: "Educational articles and commentary on biostatistics, epidemiology, cancer genomics, and public health by Dr. Olumide Arigbede.",
+        publications: "Peer-reviewed publications by Dr. Olumide Arigbede in cancer epidemiology, infectious disease modeling, biostatistics, and public health.",
+        services: "Professional biostatistical consulting, data analysis, scientific writing, and grant writing services from TOA Data Clinic LLC.",
+        mentorship: "Global mentorship program for students and early-career professionals in epidemiology, biostatistics, and public health research.",
+        scholarship: "The Olu Arigbede Scholarship for outstanding undergraduate students at Nigerian universities pursuing research and innovation in healthcare.",
+      };
+      metaDesc.content = descriptions[currentPage] || descriptions.home;
+    }
 
     // Generate and set the favicon
     try {
