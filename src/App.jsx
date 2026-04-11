@@ -3159,6 +3159,66 @@ function PhotoGallery({ photos }) {
   );
 }
 
+// ── News Ticker Component ──
+function NewsTicker({ items, navigateTo }) {
+  const tickerContent = items.map((item) => `${item.category}:  ${item.title}  (${item.date})`).join("     ◆     ");
+  const doubled = tickerContent + "     ◆     " + tickerContent;
+
+  return (
+    <div style={{
+      marginTop: 40,
+      background: "rgba(44,37,32,0.03)",
+      border: "1px solid rgba(58,50,40,0.08)",
+      borderRadius: 8,
+      overflow: "hidden",
+      cursor: "pointer",
+      position: "relative",
+    }}
+      onClick={() => navigateTo("articles")}
+    >
+      <div style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 0,
+      }}>
+        <div style={{
+          flexShrink: 0,
+          background: "#2c2520",
+          color: "#faf7f3",
+          fontFamily: "'Source Sans 3', sans-serif",
+          fontSize: "10.5px",
+          fontWeight: 700,
+          letterSpacing: "0.12em",
+          textTransform: "uppercase",
+          padding: "11px 16px",
+          zIndex: 2,
+          whiteSpace: "nowrap",
+        }}>
+          Latest
+        </div>
+        <div style={{
+          overflow: "hidden",
+          flex: 1,
+          position: "relative",
+        }}>
+          <div style={{
+            display: "inline-block",
+            whiteSpace: "nowrap",
+            animation: "tickerScroll 45s linear infinite",
+            fontFamily: "'Source Sans 3', sans-serif",
+            fontSize: "13px",
+            color: "#3a3228",
+            padding: "11px 0",
+            letterSpacing: "0.01em",
+          }}>
+            {doubled}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ════════════════════════════════════════════
 // MAIN APP
 // ════════════════════════════════════════════
@@ -3340,6 +3400,10 @@ export default function AcademicWebsite() {
         @media (min-width: 901px) {
           .mobile-menu-btn { display: none !important; }
         }
+        @keyframes tickerScroll {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
       `}</style>
 
       <Nav active={active} scrolled={scrolled} menuOpen={menuOpen} setMenuOpen={setMenuOpen} navigateTo={navigateTo} />
@@ -3440,6 +3504,7 @@ export default function AcademicWebsite() {
             </div>
           </div>
 	   <PhotoGallery photos={HOMEPAGE_PHOTOS} />
+           <NewsTicker items={ARTICLES_DATA} navigateTo={navigateTo} />
         </div>
       </Section>
 
